@@ -1,4 +1,4 @@
-# VIBE-CODE
+# VIBE CODE
 
 **One day. One piece of code. Every single day.**
 
