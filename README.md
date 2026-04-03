@@ -25,3 +25,34 @@ Each file includes minimal, direct comments where needed.
 ---
 
 ## Structure
+HumanReadableName.ext
+AnotherSmartTool.py
+etc
+
+Pick any file and use it.
+
+---
+
+## Explore & Collaborate
+
+**Fork this repo.** Run the code. Break it. Improve it.
+
+Have ideas or feedback? Reach out.
+
+**Follow** this repo for daily updates.
+
+---
+
+## Contact
+
+Ideas, suggestions, or want to collaborate?
+
+**Email:** kspavankrishna@gmail.com
+
+---
+
+## License
+
+MIT — use it, build on it, learn from it.
+
+*— Pavan*
