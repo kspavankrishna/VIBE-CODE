@@ -2,16 +2,14 @@
 
 **One day. One piece of code. Every single day.**
 
-This is my personal coding lab — a collection of small, self-contained scripts and programs I write and push daily. Each file is a standalone idea: some practical, some experimental, all built to stay sharp and explore what's possible with code right now.
-
+This is my personal coding lab. A collection of small self contained scripts and programs I write and push daily. Each file is a standalone idea: some practical, some experimental, all built to stay sharp and explore what's possible with code right now.
 Languages rotate. Topics shift. The only constant is showing up.
 
 ---
 
 ## What You'll Find Here
 
-Code spanning Python, JavaScript, TypeScript, Rust, Go, Shell, and whatever else fits the idea. Topics range across:
-
+Code spanning Python, JavaScript, TypeScript, Rust, Go, Shell and whatever else fits the idea. Topics range across:
 - AI/ML utilities and LLM tooling
 - Automation scripts and CLI tools
 - Web components and API helpers
@@ -38,7 +36,6 @@ Pick any file and use it.
 **Fork this repo.** Run the code. Break it. Improve it.
 
 Have ideas or feedback? Reach out.
-
 **Follow** this repo for daily updates.
 
 ---
@@ -46,13 +43,12 @@ Have ideas or feedback? Reach out.
 ## Contact
 
 Ideas, suggestions, or want to collaborate?
-
 **Email:** kspavankrishna@gmail.com
 
 ---
 
 ## License
 
-MIT — use it, build on it, learn from it.
+@kspavankrishna.com
 
-*— Pavan*
+* Pavan*
