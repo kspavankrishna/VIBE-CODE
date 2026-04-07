@@ -26,12 +26,7 @@ Each file includes minimal, direct comments where needed.
 
 ## Structure
 
-```
-HumanReadableName.ext
-AnotherSmartTool.py
-etc
-```
-
+All codes keep getting added in alphabetical order day by day.
 Pick any file and use it.
 
 
