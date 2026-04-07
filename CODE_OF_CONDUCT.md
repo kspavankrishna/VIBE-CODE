@@ -1,6 +1,6 @@
 # Code of Conduct
 
-## Our Pledge
+## My Pledge
 
 I am committed to making participation in VIBE-CODE a harassment free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, caste, color, religion or sexual identity and orientation.
 
