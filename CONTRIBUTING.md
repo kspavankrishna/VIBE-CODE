@@ -13,7 +13,7 @@ Thanks for your interest in contributing. This document explains how to get invo
 ## Development Setup
 
 ```bash
-git clone https://github.com/<your-username>/VIBE-CODE.git
+git clone https://github.com/kspavankrishna/VIBE-CODE.git
 cd VIBE-CODE
 # Install dependencies as described in README.md
 ```
