@@ -1,0 +1,189 @@
+name: Code Validation
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install validation dependencies
+        run: |
+          pip install pyyaml
+
+      - name: Validate shell scripts
+        id: shell_validation
+        run: |
+          echo "Shell Script Validation"
+          echo "======================="
+          shell_files=$(find . -type f \( -name "*.sh" -o -name "*.bash" \) | grep -v ".git" || true)
+          if [ -z "$shell_files" ]; then
+            echo "No shell scripts found"
+          else
+            failed=0
+            while IFS= read -r file; do
+              if bash -n "$file" 2>/dev/null; then
+                echo "PASS: $file"
+              else
+                echo "FAIL: $file"
+                failed=$((failed + 1))
+              fi
+            done <<< "$shell_files"
+            if [ $failed -gt 0 ]; then
+              echo "Shell script validation failed for $failed file(s)"
+              exit 1
+            fi
+          fi
+
+      - name: Validate Python files
+        id: python_validation
+        run: |
+          echo "Python File Validation"
+          echo "====================="
+          python_files=$(find . -type f -name "*.py" | grep -v ".git" || true)
+          if [ -z "$python_files" ]; then
+            echo "No Python files found"
+          else
+            failed=0
+            while IFS= read -r file; do
+              if python3 -m py_compile "$file" 2>/dev/null; then
+                echo "PASS: $file"
+              else
+                echo "FAIL: $file"
+                failed=$((failed + 1))
+              fi
+            done <<< "$python_files"
+            if [ $failed -gt 0 ]; then
+              echo "Python validation failed for $failed file(s)"
+              exit 1
+            fi
+          fi
+
+      - name: Validate JSON files
+        id: json_validation
+        run: |
+          echo "JSON File Validation"
+          echo "===================="
+          json_files=$(find . -type f -name "*.json" | grep -v ".git" | grep -v "node_modules" || true)
+          if [ -z "$json_files" ]; then
+            echo "No JSON files found"
+          else
+            failed=0
+            while IFS= read -r file; do
+              if python3 -m json.tool "$file" > /dev/null 2>&1; then
+                echo "PASS: $file"
+              else
+                echo "FAIL: $file"
+                failed=$((failed + 1))
+              fi
+            done <<< "$json_files"
+            if [ $failed -gt 0 ]; then
+              echo "JSON validation failed for $failed file(s)"
+              exit 1
+            fi
+          fi
+
+      - name: Validate YAML files
+        id: yaml_validation
+        run: |
+          echo "YAML File Validation"
+          echo "===================="
+          yaml_files=$(find . -type f \( -name "*.yaml" -o -name "*.yml" \) | grep -v ".git" || true)
+          if [ -z "$yaml_files" ]; then
+            echo "No YAML files found"
+          else
+            python3 << 'PYTHON_SCRIPT'
+          import yaml
+          import sys
+          import os
+
+          failed = 0
+          yaml_files_list = []
+          for root, dirs, files in os.walk('.'):
+              if '.git' in dirs:
+                  dirs.remove('.git')
+              for file in files:
+                  if file.endswith(('.yaml', '.yml')):
+                      yaml_files_list.append(os.path.join(root, file))
+
+          for file in yaml_files_list:
+              try:
+                  with open(file, 'r') as f:
+                      yaml.safe_load(f)
+                  print(f"PASS: {file}")
+              except Exception as e:
+                  print(f"FAIL: {file} - {str(e)}")
+                  failed += 1
+
+          if failed > 0:
+              print(f"YAML validation failed for {failed} file(s)")
+              sys.exit(1)
+          PYTHON_SCRIPT
+          fi
+
+      - name: Check for trailing whitespace
+        id: whitespace_check
+        continue-on-error: true
+        run: |
+          echo "Trailing Whitespace Check"
+          echo "========================="
+          code_files=$(find . -type f \( -name "*.sh" -o -name "*.bash" -o -name "*.py" -o -name "*.json" -o -name "*.yaml" -o -name "*.yml" \) | grep -v ".git" | grep -v "node_modules" || true)
+          if [ -z "$code_files" ]; then
+            echo "No code files found"
+          else
+            files_with_whitespace=0
+            while IFS= read -r file; do
+              if grep -q '[[:space:]]$' "$file"; then
+                echo "WARNING: Trailing whitespace in $file"
+                files_with_whitespace=$((files_with_whitespace + 1))
+              fi
+            done <<< "$code_files"
+            if [ $files_with_whitespace -gt 0 ]; then
+              echo "Found trailing whitespace in $files_with_whitespace file(s) (non-blocking)"
+            else
+              echo "No trailing whitespace found"
+            fi
+          fi
+
+      - name: Detect Markdown files
+        id: markdown_detection
+        run: |
+          echo "Markdown File Detection"
+          echo "======================"
+          md_files=$(find . -type f -name "*.md" | grep -v ".git" || true)
+          if [ -z "$md_files" ]; then
+            echo "No Markdown files found"
+          else
+            count=$(echo "$md_files" | wc -l)
+            echo "Found $count Markdown file(s):"
+            echo "$md_files"
+          fi
+
+      - name: Validation Summary
+        if: always()
+        run: |
+          echo ""
+          echo "Validation Summary"
+          echo "=================="
+          echo "Shell scripts: ${{ steps.shell_validation.outcome }}"
+          echo "Python files: ${{ steps.python_validation.outcome }}"
+          echo "JSON files: ${{ steps.json_validation.outcome }}"
+          echo "YAML files: ${{ steps.yaml_validation.outcome }}"
+          echo "Markdown detection: ${{ steps.markdown_detection.outcome }}"
+          echo "Trailing whitespace check: ${{ steps.whitespace_check.outcome }} (non-blocking)"
