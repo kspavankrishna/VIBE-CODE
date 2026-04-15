@@ -7,24 +7,24 @@ Languages rotate. Topics shift. The only constant is showing up.
 
 ## What You'll Find Here
 
-Code spanning Python, JavaScript, TypeScript, Rust, Go, Shell and whatever else fits the idea.
+Code across Python, TypeScript, Rust, Go, C++, Swift, Bash and whatever fits the problem.
 
 Topics range across:
 
-- AI/ML utilities and LLM tooling
-- Automation scripts and CLI tools
-- Web components and API helpers
-- Data pipelines and analysis tools
-- Creative coding and generative art
-- Developer productivity hacks
-- Systems programming experiments
+•	LLM systems, streaming, and token control
+•	MCP, agent tooling, and AI infrastructure
+•	Data pipelines, parsing, and real-time processing
+•	DevOps utilities and backend performance
+•	JSON handling, schema safety, and recovery
+•	Rate limiting, caching, and concurrency control
+•	Edge cases in production systems most people ignore
 
-Each file includes minimal, direct comments where needed.
+Each file includes minimal, direct comments where needed. Clear intent. Built to be used, not explained.
 
 
 ## Structure
 
-All codes keep getting added in alphabetical order day by day.
+All codes keep getting added day by day(At least I try to).
 Pick any file and use it.
 
 
@@ -43,5 +43,6 @@ Email: kspavankrishna@gmail.com
 
 ## License
 
-@kspavankrishna.com
+@kspavankrishna
+www.kspavankrishna.com
 Pavan
