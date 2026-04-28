@@ -1033,7 +1033,7 @@ defmodule InferenceAdmissionLedger do
   defp rejection_reason(:tenant, :input_tokens), do: :tenant_input_budget
   defp rejection_reason(:tenant, :output_tokens), do: :tenant_output_budget
   defp rejection_reason(:tenant, :cost_micros), do: :tenant_cost_budget
-  defp rejection_reason(:workload, metric), do: {:workload_budget, metric}
+  defp rejection_reason(:workload, _metric), do: :workload_budget
 
   defp usage_fits?(current, needed, limits) do
     Enum.all?(@usage_metrics, fn metric ->
@@ -1123,26 +1123,23 @@ defmodule InferenceAdmissionLedger do
   defp min_expiry_delta(leases, now) do
     leases
     |> Enum.map(&max(&1.expires_at_ms - now, 0))
-    |> Enum.min(fn -> nil end)
+    |> case do
+      [] -> nil
+      deltas -> Enum.min(deltas)
+    end
   end
 
   defp compact_state(state) do
     tenant_windows =
-      Enum.into(state.tenant_windows, %{}, fn {tenant, window} ->
+      Enum.reduce(state.tenant_windows, %{}, fn {tenant, window}, acc ->
         if zero_usage?(window.totals) and :queue.is_empty(window.entries) do
-          nil
+          acc
         else
-          {tenant, window}
+          Map.put(acc, tenant, window)
         end
       end)
-      |> Enum.reject(&is_nil/1)
-      |> Map.new()
 
-    %{
-      state
-      | tenant_windows: tenant_windows,
-        cleanup_timer: state.cleanup_timer
-    }
+    %{state | tenant_windows: tenant_windows}
   end
 
   defp schedule_cleanup(state) do
