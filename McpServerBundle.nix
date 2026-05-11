@@ -676,7 +676,7 @@ let
           export PATH=${lib.escapeShellArg doctorRuntimePath}:''${PATH:-}
         '')
         ''
-          mode="${"${1-}"}"
+          mode="''${1-}"
           case "$mode" in
             ""|--check-env|--json|--manifest)
               ;;
