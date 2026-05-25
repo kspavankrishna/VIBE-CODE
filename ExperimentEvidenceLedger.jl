@@ -10,7 +10,7 @@ export main, create_snapshot, verify_snapshot, diff_snapshots
 const FORMAT_MAGIC = "EXPERIMENT_EVIDENCE_LEDGER"
 const FORMAT_VERSION = "1"
 const HASH_ALGORITHM = "sha256"
-const TIMESTAMP_FORMAT = dateformat"yyyy-mm-ddTHH:MM:SS.sssZ"
+const TIMESTAMP_FORMAT = dateformat"yyyy-mm-ddTHH:MM:SS.sss"
 const BUFFER_SIZE = 1024 * 1024
 const DEFAULT_EXCLUSIONS = [
     ".git",
@@ -21,6 +21,14 @@ const DEFAULT_EXCLUSIONS = [
     "__pycache__",
     "node_modules",
 ]
+const METADATA_FIELDS = Set([
+    "algorithm",
+    "root_label",
+    "created_utc",
+    "self_exclude",
+    "entry_count",
+    "evidence_root",
+])
 
 struct LedgerError <: Exception
     message::String
@@ -53,7 +61,7 @@ function valid_digest(value::AbstractString)::Bool
 end
 
 function require_digest(value::AbstractString, label::AbstractString)::String
-    text = lowercase(String(value))
+    text = String(value)
     valid_digest(text) || fail("$(label) must be a lowercase 64-character SHA-256 digest")
     return text
 end
@@ -120,6 +128,12 @@ function relative_if_inside(root::String, candidate::String)::Union{Nothing,Stri
         return nothing
     end
     return validate_relative_path(relative, "manifest path inside root")
+end
+
+function exact_omit_set(path::Union{Nothing,String})::Set{String}
+    paths = Set{String}()
+    isnothing(path) || push!(paths, path)
+    return paths
 end
 
 function is_omitted(path::String, exclusions::Vector{String}, exact_omits::Set{String})::Bool
@@ -315,6 +329,7 @@ function read_manifest(path::String)::Manifest
             (kind == 'F' || kind == 'L') || fail("unknown entry type: $(kind)")
             mode = tryparse(UInt32, fields[3]; base = 8)
             isnothing(mode) && fail("invalid permission mode for entry")
+            mode > UInt32(0o777) && fail("entry permission mode has unsupported bits")
             size = tryparse(Int64, fields[4])
             (isnothing(size) || size < 0) && fail("invalid size for entry")
             digest = require_digest(fields[5], "entry digest")
@@ -324,6 +339,7 @@ function read_manifest(path::String)::Manifest
             kind == 'L' && mode != UInt32(0) && fail("symbolic link entry has file permissions")
             push!(entries, Entry(kind, mode::UInt32, size::Int64, digest, entry_path, target))
         else
+            key in METADATA_FIELDS || fail("unknown metadata field in manifest: $(key)")
             length(fields) == 2 || fail("invalid metadata line in manifest")
             store_once!(metadata, key, fields[2])
         end
@@ -333,7 +349,8 @@ function read_manifest(path::String)::Manifest
     root_label = decode_field(require_metadata(metadata, "root_label"))
     isempty(root_label) && fail("manifest root label cannot be empty")
     created_utc = require_metadata(metadata, "created_utc")
-    tryparse(DateTime, replace(created_utc, "Z" => ""), TIMESTAMP_FORMAT) === nothing &&
+    endswith(created_utc, "Z") || fail("manifest creation timestamp must use a UTC Z suffix")
+    tryparse(DateTime, chop(created_utc; tail = 1), TIMESTAMP_FORMAT) === nothing &&
         fail("manifest creation timestamp is invalid")
     encoded_self = require_metadata(metadata, "self_exclude")
     self_exclude = isempty(encoded_self) ? nothing : validate_relative_path(decode_field(encoded_self), "self exclusion")
@@ -365,10 +382,10 @@ function create_snapshot(
     output == root && fail("manifest path cannot be the snapshot root directory")
     normalized = normalized_exclusions(exclusions)
     self_exclude = relative_if_inside(root, output)
-    exact_omits = isnothing(self_exclude) ? Set{String}() : Set([self_exclude])
+    exact_omits = exact_omit_set(self_exclude)
     root_label = isnothing(label) ? basename(root) : String(label)
     isempty(root_label) && fail("root label cannot be empty")
-    created_utc = Dates.format(now(UTC), TIMESTAMP_FORMAT)
+    created_utc = Dates.format(now(UTC), TIMESTAMP_FORMAT) * "Z"
     entries = scan_entries(root, normalized, exact_omits)
     manifest = materialize_manifest(root_label, created_utc, normalized, self_exclude, entries)
     write_manifest_atomically(output, manifest; force = force)
@@ -456,7 +473,7 @@ function verify_snapshot(
         end
     end
     root = normpath(abspath(root_path))
-    exact_omits = isnothing(manifest.self_exclude) ? Set{String}() : Set([manifest.self_exclude])
+    exact_omits = exact_omit_set(manifest.self_exclude)
     current = scan_entries(root, manifest.exclusions, exact_omits)
     expected_map, actual_map, missing, unexpected, changed = compare_entries(manifest.entries, current)
     for path in missing
