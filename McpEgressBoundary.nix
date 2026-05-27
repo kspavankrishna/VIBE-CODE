@@ -2,7 +2,7 @@
 #
 # A NixOS module for running MCP servers and agent-side tool workers with
 # explicit credentials, filesystem access, network egress, and resource limits.
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
   inherit (lib)
@@ -28,6 +28,7 @@ let
 
   absoluteRuntimePath = types.strMatching "^/.*";
   unitFragmentPattern = "^[A-Za-z0-9][A-Za-z0-9_.-]*$";
+  credentialNamePattern = "^[A-Za-z0-9][A-Za-z0-9_.-]*$";
   environmentVariablePattern = "^[A-Za-z_][A-Za-z0-9_]*$";
   likelySecretEnvironmentPattern =
     ".*(TOKEN|SECRET|PASSWORD|API_KEY|PRIVATE_KEY|ACCESS_KEY).*";
@@ -46,7 +47,7 @@ let
 
       command = mkOption {
         type = types.str;
-        example = lib.literalExpression ''"${pkgs.my-mcp-server}/bin/server"'';
+        example = lib.literalExpression ''"''${pkgs.my-mcp-server}/bin/server"'';
         description = ''
           Absolute executable path. Interpolate a Nix package path here so the
           deployed binary is pinned by the NixOS configuration.
@@ -566,6 +567,13 @@ let
         '';
       }
       {
+        assertion = builtins.match "^/.*" server.command != null;
+        message = ''
+          services.mcpEgressBoundary.servers.${name}: command must be an
+          absolute path, normally obtained from a pinned Nix package.
+        '';
+      }
+      {
         assertion = server.identity.dynamicUser
           || server.identity.user != null;
         message = ''
@@ -617,6 +625,17 @@ let
       }
       {
         assertion = lib.all
+          (credentialName:
+            builtins.match credentialNamePattern credentialName != null)
+          allCredentialNames;
+        message = ''
+          services.mcpEgressBoundary.servers.${name}: credential names must be
+          safe single-file names made from letters, digits, dot, underscore,
+          or dash.
+        '';
+      }
+      {
+        assertion = lib.all
           (environmentName:
             builtins.match environmentVariablePattern environmentName != null)
           (attrNames server.credentialEnvironment);
@@ -650,6 +669,22 @@ let
         message = ''
           services.mcpEgressBoundary.servers.${name}: managed directory names
           must be simple relative systemd names without slashes.
+        '';
+      }
+      {
+        assertion = server.resources.tasksMax > 0
+          && server.resources.openFilesMax > 0;
+        message = ''
+          services.mcpEgressBoundary.servers.${name}: tasksMax and
+          openFilesMax must both be positive integers.
+        '';
+      }
+      {
+        assertion = server.resources.ioWeight == null
+          || (server.resources.ioWeight >= 1 && server.resources.ioWeight <= 10000);
+        message = ''
+          services.mcpEgressBoundary.servers.${name}: ioWeight must be between
+          1 and 10000 when it is set.
         '';
       }
     ];
