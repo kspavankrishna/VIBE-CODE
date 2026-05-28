@@ -1,11 +1,10 @@
 /*
  * AgentRunSloGovernor.ts
  *
- * A dependency-free TypeScript gate for deciding whether an AI agent or LLM
- * workflow can move from shadow traffic to canary or production traffic. It
- * reads JSONL telemetry, pairs baseline and candidate runs by run id, and uses
- * deterministic paired bootstrap intervals to block regressions in p95 latency,
- * token cost, quality score, and error rate before the rollout reaches users.
+ * Dependency-free TypeScript for gating AI agent rollouts with paired JSONL
+ * telemetry. It compares baseline and candidate runs by run id, measures the
+ * real p95 latency statistic through paired bootstrap resampling, and blocks
+ * canary promotion when latency, token cost, quality, or error rate regress.
  */
 
 declare const require: any;
@@ -14,6 +13,7 @@ declare const module: any;
 
 export type Variant = "baseline" | "candidate";
 export type OutputFormat = "json" | "markdown";
+export type Direction = "higher_is_worse" | "lower_is_worse";
 
 export interface AgentRun {
   runId: string;
@@ -69,7 +69,7 @@ export interface MetricSummary {
   interval: Interval;
   threshold: number;
   sampleSize: number;
-  direction: "higher_is_worse" | "lower_is_worse";
+  direction: Direction;
   passed: boolean;
 }
 
@@ -97,8 +97,7 @@ export interface GateEvaluation {
 }
 
 type AnyRecord = Record<string, unknown>;
-
-type MetricExtractor = (pair: PairedRun) => number | null;
+type Statistic = (pairs: PairedRun[]) => number;
 
 const DEFAULT_CONFIG: GateConfig = {
   maxP95LatencyDeltaPct: 8,
@@ -112,13 +111,6 @@ const DEFAULT_CONFIG: GateConfig = {
   strictParsing: false,
 };
 
-const EMPTY_INTERVAL: Interval = {
-  lower: Number.NaN,
-  median: Number.NaN,
-  upper: Number.NaN,
-  confidence: DEFAULT_CONFIG.confidence,
-};
-
 export class AgentRunSloGovernor {
   private readonly config: GateConfig;
 
@@ -128,10 +120,9 @@ export class AgentRunSloGovernor {
 
   evaluate(runs: AgentRun[], rejectedRecords: RejectedRecord[] = []): GateEvaluation {
     const paired = pairRuns(runs);
-    const grouped = groupPairsByCohort(paired.pairs);
+    const grouped = groupByCohort(paired.pairs);
     const seed = this.config.seed ?? stableSeedForPairs(paired.pairs, this.config);
     const random = mulberry32(hashString(seed));
-
     const global = summarizeCohort("all", paired.pairs, this.config, random);
     const cohorts = [...grouped.entries()]
       .sort(([left], [right]) => left.localeCompare(right))
@@ -141,9 +132,7 @@ export class AgentRunSloGovernor {
     const warnings: string[] = [];
 
     if (paired.pairs.length < this.config.minPairs) {
-      reasons.push(
-        `Only ${paired.pairs.length} paired runs were available; require at least ${this.config.minPairs}.`,
-      );
+      reasons.push(`Only ${paired.pairs.length} paired runs were available; require at least ${this.config.minPairs}.`);
     }
 
     if (rejectedRecords.length > 0) {
@@ -159,24 +148,22 @@ export class AgentRunSloGovernor {
       warnings.push(`${paired.unpairedCount} record(s) were not paired by run id and cohort.`);
     }
 
-    collectMetricFailures(global, "global", reasons);
+    collectFailures(global, "global", reasons);
     for (const cohort of cohorts) {
       if (cohort.pairs >= this.config.minCohortPairs) {
-        collectMetricFailures(cohort, `cohort ${cohort.cohort}`, reasons);
+        collectFailures(cohort, `cohort ${cohort.cohort}`, reasons);
       } else {
-        warnings.push(
-          `Cohort ${cohort.cohort} has ${cohort.pairs} paired run(s); cohort-level blocking needs ${this.config.minCohortPairs}.`,
-        );
+        warnings.push(`Cohort ${cohort.cohort} has ${cohort.pairs} paired run(s); cohort blocking needs ${this.config.minCohortPairs}.`);
       }
     }
 
     if (global.meanQualityDelta === null) {
-      warnings.push("Quality regression was skipped because paired quality_score values were not present.");
+      warnings.push("Quality regression was skipped because paired qualityScore values were not present.");
     }
 
     return {
       status: reasons.length === 0 ? "pass" : "fail",
-      generatedAt: new Date(0).toISOString(),
+      generatedAt: new Date().toISOString(),
       config: this.config,
       totalRecords: runs.length + rejectedRecords.length,
       rejectedRecords,
@@ -190,16 +177,13 @@ export class AgentRunSloGovernor {
   }
 }
 
-export function parseJsonlTelemetry(input: string, options: { strict?: boolean } = {}): {
-  runs: AgentRun[];
-  rejected: RejectedRecord[];
-} {
+export function parseJsonlTelemetry(input: string, options: { strict?: boolean } = {}): { runs: AgentRun[]; rejected: RejectedRecord[] } {
   const runs: AgentRun[] = [];
   const rejected: RejectedRecord[] = [];
   const lines = input.split(/\r?\n/);
 
   for (let index = 0; index < lines.length; index += 1) {
-    const lineNumber = index + 1;
+    const line = index + 1;
     const raw = lines[index].trim();
     if (raw.length === 0) {
       continue;
@@ -209,15 +193,18 @@ export function parseJsonlTelemetry(input: string, options: { strict?: boolean }
     try {
       parsed = JSON.parse(raw);
     } catch (error) {
-      rejected.push({ line: lineNumber, reason: `Invalid JSON: ${messageOf(error)}`, raw });
+      rejected.push({ line, reason: `Invalid JSON: ${messageOf(error)}`, raw });
+      if (options.strict) {
+        break;
+      }
       continue;
     }
 
-    const normalized = normalizeRecord(parsed, lineNumber, raw);
+    const normalized = normalizeRecord(parsed, line, raw);
     if (normalized.ok) {
       runs.push(normalized.run);
     } else {
-      rejected.push({ line: lineNumber, reason: normalized.reason, raw });
+      rejected.push({ line, reason: normalized.reason, raw });
       if (options.strict) {
         break;
       }
@@ -225,6 +212,10 @@ export function parseJsonlTelemetry(input: string, options: { strict?: boolean }
   }
 
   return { runs, rejected };
+}
+
+export function renderJson(evaluation: GateEvaluation): string {
+  return `${JSON.stringify(evaluation, null, 2)}\n`;
 }
 
 export function renderMarkdown(evaluation: GateEvaluation): string {
@@ -237,7 +228,7 @@ export function renderMarkdown(evaluation: GateEvaluation): string {
 
   const cohortLines = evaluation.cohorts.map((cohort) => {
     const state = cohortHasFailure(cohort) ? "fail" : "pass";
-    return `- ${cohort.cohort}: ${state}, ${cohort.pairs} pairs, p95 latency ${formatNumber(cohort.latencyP95DeltaPct.observed)}%, cost ${formatNumber(cohort.meanCostDeltaPct.observed)}%`;
+    return `- ${cohort.cohort}: ${state}, ${cohort.pairs} pairs, p95 ${formatNumber(cohort.latencyP95DeltaPct.observed)}%, cost ${formatNumber(cohort.meanCostDeltaPct.observed)}%`;
   });
 
   return [
@@ -263,10 +254,6 @@ export function renderMarkdown(evaluation: GateEvaluation): string {
   ].join("\n");
 }
 
-export function renderJson(evaluation: GateEvaluation): string {
-  return `${JSON.stringify(evaluation, null, 2)}\n`;
-}
-
 function validateConfig(config: GateConfig): GateConfig {
   const checks: Array<[string, number]> = [
     ["maxP95LatencyDeltaPct", config.maxP95LatencyDeltaPct],
@@ -281,10 +268,9 @@ function validateConfig(config: GateConfig): GateConfig {
 
   for (const [name, value] of checks) {
     if (!Number.isFinite(value)) {
-      throw new Error(`${name} must be a finite number.`);
+      throw new Error(`${name} must be finite.`);
     }
   }
-
   if (config.minPairs < 1 || Math.floor(config.minPairs) !== config.minPairs) {
     throw new Error("minPairs must be a positive integer.");
   }
@@ -297,7 +283,6 @@ function validateConfig(config: GateConfig): GateConfig {
   if (config.confidence <= 0 || config.confidence >= 1) {
     throw new Error("confidence must be greater than 0 and less than 1.");
   }
-
   return config;
 }
 
@@ -325,8 +310,6 @@ function normalizeRecord(value: unknown, line: number, raw: string): { ok: true;
   const outputTokens = readNumber(value, ["outputTokens", "output_tokens", "completionTokens", "completion_tokens"], 0);
   const costUsd = readNumber(value, ["costUsd", "cost_usd", "usd", "cost", "estimatedCostUsd", "estimated_cost_usd"], 0);
   const qualityScore = readQuality(value);
-  const failed = readFailure(value, raw);
-  const timestampMs = readTimestamp(value);
   const cohort = readString(value, ["cohort", "segment", "route", "model", "provider", "region"]) ?? "all";
 
   if (inputTokens === null || outputTokens === null || costUsd === null) {
@@ -350,8 +333,8 @@ function normalizeRecord(value: unknown, line: number, raw: string): { ok: true;
       outputTokens,
       costUsd,
       qualityScore,
-      failed,
-      timestampMs,
+      failed: readFailure(value, raw),
+      timestampMs: readTimestamp(value),
       line,
     },
   };
@@ -359,31 +342,26 @@ function normalizeRecord(value: unknown, line: number, raw: string): { ok: true;
 
 function pairRuns(runs: AgentRun[]): { pairs: PairedRun[]; unpairedCount: number } {
   const buckets = new Map<string, { baseline?: AgentRun; candidate?: AgentRun; count: number }>();
-
   for (const run of runs) {
     const key = `${run.cohort}\u001f${run.runId}`;
     const bucket = buckets.get(key) ?? { count: 0 };
     bucket.count += 1;
-
     if (run.variant === "baseline") {
       bucket.baseline = chooseLater(bucket.baseline, run);
     } else {
       bucket.candidate = chooseLater(bucket.candidate, run);
     }
-
     buckets.set(key, bucket);
   }
 
   const pairs: PairedRun[] = [];
   let pairedRecords = 0;
-
   for (const [key, bucket] of buckets.entries()) {
     if (bucket.baseline && bucket.candidate) {
       pairs.push({ key, cohort: bucket.baseline.cohort, baseline: bucket.baseline, candidate: bucket.candidate });
       pairedRecords += 2;
     }
   }
-
   pairs.sort((left, right) => left.key.localeCompare(right.key));
   return { pairs, unpairedCount: Math.max(0, runs.length - pairedRecords) };
 }
@@ -397,75 +375,63 @@ function chooseLater(existing: AgentRun | undefined, next: AgentRun): AgentRun {
   return nextRank >= existingRank ? next : existing;
 }
 
-function groupPairsByCohort(pairs: PairedRun[]): Map<string, PairedRun[]> {
+function groupByCohort(pairs: PairedRun[]): Map<string, PairedRun[]> {
   const grouped = new Map<string, PairedRun[]>();
   for (const pair of pairs) {
-    const existing = grouped.get(pair.cohort) ?? [];
-    existing.push(pair);
-    grouped.set(pair.cohort, existing);
+    const list = grouped.get(pair.cohort) ?? [];
+    list.push(pair);
+    grouped.set(pair.cohort, list);
   }
   return grouped;
 }
 
 function summarizeCohort(cohort: string, pairs: PairedRun[], config: GateConfig, random: () => number): CohortSummary {
-  const latencyP95DeltaPct = summarizeMetric({
-    name: "p95 latency delta",
-    units: "%",
-    pairs,
-    extractor: latencyDeltaExtractor,
-    observed: () => p95DeltaPct(pairs, (pair, variant) => pair[variant].latencyMs),
-    threshold: config.maxP95LatencyDeltaPct,
-    direction: "higher_is_worse",
-    config,
-    random,
-  });
-
-  const meanCostDeltaPct = summarizeMetric({
-    name: "mean cost delta",
-    units: "%",
-    pairs,
-    extractor: meanCostDeltaExtractor,
-    observed: () => meanDeltaPct(pairs, (pair, variant) => pair[variant].costUsd),
-    threshold: config.maxMeanCostDeltaPct,
-    direction: "higher_is_worse",
-    config,
-    random,
-  });
-
-  const errorRateDeltaPercentagePoints = summarizeMetric({
-    name: "error rate delta",
-    units: "percentage points",
-    pairs,
-    extractor: errorRateDeltaExtractor,
-    observed: () => meanDelta(pairs, failedNumber) * 100,
-    threshold: config.maxErrorRateDeltaPercentagePoints,
-    direction: "higher_is_worse",
-    config,
-    random,
-  });
-
   const qualityPairs = pairs.filter((pair) => pair.baseline.qualityScore !== null && pair.candidate.qualityScore !== null);
-  const meanQualityDelta = qualityPairs.length === 0
-    ? null
-    : summarizeMetric({
-        name: "mean quality delta",
-        units: "score",
-        pairs: qualityPairs,
-        extractor: qualityDeltaExtractor,
-        observed: () => meanDelta(qualityPairs, qualityNumber),
-        threshold: config.minMeanQualityDelta,
-        direction: "lower_is_worse",
-        config,
-        random,
-      });
-
   return {
     cohort,
     pairs: pairs.length,
-    latencyP95DeltaPct,
-    meanCostDeltaPct,
-    errorRateDeltaPercentagePoints,
-    meanQualityDelta,
+    latencyP95DeltaPct: summarizeMetric({
+      name: "p95 latency delta",
+      units: "%",
+      pairs,
+      statistic: latencyP95DeltaPct,
+      threshold: config.maxP95LatencyDeltaPct,
+      direction: "higher_is_worse",
+      config,
+      random,
+    }),
+    meanCostDeltaPct: summarizeMetric({
+      name: "mean cost delta",
+      units: "%",
+      pairs,
+      statistic: meanCostDeltaPct,
+      threshold: config.maxMeanCostDeltaPct,
+      direction: "higher_is_worse",
+      config,
+      random,
+    }),
+    errorRateDeltaPercentagePoints: summarizeMetric({
+      name: "error rate delta",
+      units: "percentage points",
+      pairs,
+      statistic: errorRateDeltaPercentagePoints,
+      threshold: config.maxErrorRateDeltaPercentagePoints,
+      direction: "higher_is_worse",
+      config,
+      random,
+    }),
+    meanQualityDelta: qualityPairs.length === 0
+      ? null
+      : summarizeMetric({
+          name: "mean quality delta",
+          units: "score",
+          pairs: qualityPairs,
+          statistic: meanQualityDelta,
+          threshold: config.minMeanQualityDelta,
+          direction: "lower_is_worse",
+          config,
+          random,
+        }),
   };
 }
 
@@ -473,18 +439,16 @@ function summarizeMetric(input: {
   name: string;
   units: string;
   pairs: PairedRun[];
-  extractor: MetricExtractor;
-  observed: () => number;
+  statistic: Statistic;
   threshold: number;
-  direction: "higher_is_worse" | "lower_is_worse";
+  direction: Direction;
   config: GateConfig;
   random: () => number;
 }): MetricSummary {
-  const usable = input.pairs.filter((pair) => input.extractor(pair) !== null);
-  const observed = usable.length === 0 ? Number.NaN : input.observed();
-  const interval = usable.length === 0
-    ? { ...EMPTY_INTERVAL, confidence: input.config.confidence }
-    : bootstrapInterval(usable, input.extractor, input.config.bootstrapRounds, input.config.confidence, input.random);
+  const observed = input.pairs.length === 0 ? Number.NaN : input.statistic(input.pairs);
+  const interval = input.pairs.length === 0
+    ? emptyInterval(input.config.confidence)
+    : bootstrapInterval(input.pairs, input.statistic, input.config.bootstrapRounds, input.config.confidence, input.random);
   const passed = input.direction === "higher_is_worse"
     ? interval.upper <= input.threshold
     : interval.lower >= input.threshold;
@@ -495,45 +459,13 @@ function summarizeMetric(input: {
     observed,
     interval,
     threshold: input.threshold,
-    sampleSize: usable.length,
+    sampleSize: input.pairs.length,
     direction: input.direction,
     passed,
   };
 }
 
-function collectMetricFailures(summary: CohortSummary, label: string, reasons: string[]): void {
-  const metrics = [
-    summary.latencyP95DeltaPct,
-    summary.meanCostDeltaPct,
-    summary.errorRateDeltaPercentagePoints,
-    summary.meanQualityDelta,
-  ].filter((metric): metric is MetricSummary => metric !== null);
-
-  for (const metric of metrics) {
-    if (!metric.passed) {
-      const edge = metric.direction === "higher_is_worse" ? metric.interval.upper : metric.interval.lower;
-      const comparator = metric.direction === "higher_is_worse" ? ">" : "<";
-      reasons.push(
-        `${label} ${metric.name} ${formatNumber(edge)} ${metric.units} ${comparator} threshold ${formatNumber(metric.threshold)} ${metric.units}.`,
-      );
-    }
-  }
-}
-
-function cohortHasFailure(summary: CohortSummary): boolean {
-  return !summary.latencyP95DeltaPct.passed
-    || !summary.meanCostDeltaPct.passed
-    || !summary.errorRateDeltaPercentagePoints.passed
-    || summary.meanQualityDelta?.passed === false;
-}
-
-function bootstrapInterval(
-  pairs: PairedRun[],
-  extractor: MetricExtractor,
-  rounds: number,
-  confidence: number,
-  random: () => number,
-): Interval {
+function bootstrapInterval(pairs: PairedRun[], statistic: Statistic, rounds: number, confidence: number, random: () => number): Interval {
   const values: number[] = [];
   const sample: PairedRun[] = new Array(pairs.length);
 
@@ -541,7 +473,7 @@ function bootstrapInterval(
     for (let index = 0; index < pairs.length; index += 1) {
       sample[index] = pairs[Math.floor(random() * pairs.length)];
     }
-    const value = aggregateExtracted(sample, extractor);
+    const value = statistic(sample);
     if (Number.isFinite(value)) {
       values.push(value);
     }
@@ -557,61 +489,51 @@ function bootstrapInterval(
   };
 }
 
-function aggregateExtracted(pairs: PairedRun[], extractor: MetricExtractor): number {
-  const values: number[] = [];
-  for (const pair of pairs) {
-    const value = extractor(pair);
-    if (value !== null && Number.isFinite(value)) {
-      values.push(value);
+function latencyP95DeltaPct(pairs: PairedRun[]): number {
+  const baseline = pairs.map((pair) => pair.baseline.latencyMs).sort(numberOrder);
+  const candidate = pairs.map((pair) => pair.candidate.latencyMs).sort(numberOrder);
+  return pctDelta(quantileSorted(baseline, 0.95), quantileSorted(candidate, 0.95));
+}
+
+function meanCostDeltaPct(pairs: PairedRun[]): number {
+  return pctDelta(mean(pairs.map((pair) => pair.baseline.costUsd)), mean(pairs.map((pair) => pair.candidate.costUsd)));
+}
+
+function errorRateDeltaPercentagePoints(pairs: PairedRun[]): number {
+  const baseline = mean(pairs.map((pair) => pair.baseline.failed ? 1 : 0));
+  const candidate = mean(pairs.map((pair) => pair.candidate.failed ? 1 : 0));
+  return (candidate - baseline) * 100;
+}
+
+function meanQualityDelta(pairs: PairedRun[]): number {
+  return mean(pairs.map((pair) => (pair.candidate.qualityScore ?? Number.NaN) - (pair.baseline.qualityScore ?? Number.NaN)));
+}
+
+function collectFailures(summary: CohortSummary, label: string, reasons: string[]): void {
+  const metrics = [
+    summary.latencyP95DeltaPct,
+    summary.meanCostDeltaPct,
+    summary.errorRateDeltaPercentagePoints,
+    summary.meanQualityDelta,
+  ].filter((metric): metric is MetricSummary => metric !== null);
+
+  for (const metric of metrics) {
+    if (!metric.passed) {
+      const bound = metric.direction === "higher_is_worse" ? metric.interval.upper : metric.interval.lower;
+      const comparator = metric.direction === "higher_is_worse" ? ">" : "<";
+      reasons.push(`${label} ${metric.name} ${formatNumber(bound)} ${metric.units} ${comparator} threshold ${formatNumber(metric.threshold)} ${metric.units}.`);
     }
   }
-  return mean(values);
 }
 
-function latencyDeltaExtractor(pair: PairedRun): number {
-  return safePctDelta(pair.baseline.latencyMs, pair.candidate.latencyMs);
+function cohortHasFailure(summary: CohortSummary): boolean {
+  return !summary.latencyP95DeltaPct.passed
+    || !summary.meanCostDeltaPct.passed
+    || !summary.errorRateDeltaPercentagePoints.passed
+    || summary.meanQualityDelta?.passed === false;
 }
 
-function meanCostDeltaExtractor(pair: PairedRun): number {
-  return safePctDelta(pair.baseline.costUsd, pair.candidate.costUsd);
-}
-
-function errorRateDeltaExtractor(pair: PairedRun): number {
-  return (failedNumber(pair, "candidate") - failedNumber(pair, "baseline")) * 100;
-}
-
-function qualityDeltaExtractor(pair: PairedRun): number | null {
-  if (pair.baseline.qualityScore === null || pair.candidate.qualityScore === null) {
-    return null;
-  }
-  return pair.candidate.qualityScore - pair.baseline.qualityScore;
-}
-
-function p95DeltaPct(pairs: PairedRun[], read: (pair: PairedRun, variant: Variant) => number): number {
-  const baseline = pairs.map((pair) => read(pair, "baseline")).sort((left, right) => left - right);
-  const candidate = pairs.map((pair) => read(pair, "candidate")).sort((left, right) => left - right);
-  return safePctDelta(quantileSorted(baseline, 0.95), quantileSorted(candidate, 0.95));
-}
-
-function meanDeltaPct(pairs: PairedRun[], read: (pair: PairedRun, variant: Variant) => number): number {
-  const baseline = mean(pairs.map((pair) => read(pair, "baseline")));
-  const candidate = mean(pairs.map((pair) => read(pair, "candidate")));
-  return safePctDelta(baseline, candidate);
-}
-
-function meanDelta(pairs: PairedRun[], read: (pair: PairedRun, variant: Variant) => number): number {
-  return mean(pairs.map((pair) => read(pair, "candidate") - read(pair, "baseline")));
-}
-
-function failedNumber(pair: PairedRun, variant: Variant): number {
-  return pair[variant].failed ? 1 : 0;
-}
-
-function qualityNumber(pair: PairedRun, variant: Variant): number {
-  return pair[variant].qualityScore ?? Number.NaN;
-}
-
-function safePctDelta(baseline: number, candidate: number): number {
+function pctDelta(baseline: number, candidate: number): number {
   if (baseline === 0) {
     return candidate === 0 ? 0 : Number.POSITIVE_INFINITY;
   }
@@ -619,14 +541,15 @@ function safePctDelta(baseline: number, candidate: number): number {
 }
 
 function mean(values: number[]): number {
-  if (values.length === 0) {
+  const finite = values.filter(Number.isFinite);
+  if (finite.length === 0) {
     return Number.NaN;
   }
   let total = 0;
-  for (const value of values) {
+  for (const value of finite) {
     total += value;
   }
-  return total / values.length;
+  return total / finite.length;
 }
 
 function quantileSorted(values: number[], q: number): number {
@@ -636,15 +559,19 @@ function quantileSorted(values: number[], q: number): number {
   if (values.length === 1) {
     return values[0];
   }
-  const position = (values.length - 1) * clamp(q, 0, 1);
+  const position = (values.length - 1) * Math.max(0, Math.min(1, q));
   const lower = Math.floor(position);
   const upper = Math.ceil(position);
   const weight = position - lower;
   return values[lower] * (1 - weight) + values[upper] * weight;
 }
 
-function clamp(value: number, lower: number, upper: number): number {
-  return Math.max(lower, Math.min(upper, value));
+function numberOrder(left: number, right: number): number {
+  return left - right;
+}
+
+function emptyInterval(confidence: number): Interval {
+  return { lower: Number.NaN, median: Number.NaN, upper: Number.NaN, confidence };
 }
 
 function readString(record: AnyRecord, keys: string[]): string | null {
@@ -682,10 +609,7 @@ function readQuality(record: AnyRecord): number | null {
     return numeric;
   }
   const pass = record["passed"] ?? record["pass"] ?? record["accepted"];
-  if (typeof pass === "boolean") {
-    return pass ? 1 : 0;
-  }
-  return null;
+  return typeof pass === "boolean" ? (pass ? 1 : 0) : null;
 }
 
 function readFailure(record: AnyRecord, raw: string): boolean {
@@ -693,12 +617,10 @@ function readFailure(record: AnyRecord, raw: string): boolean {
   if (typeof failed === "boolean") {
     return failed;
   }
-
   const ok = record["ok"] ?? record["success"];
   if (typeof ok === "boolean") {
     return !ok;
   }
-
   const status = readString(record, ["status", "outcome", "finishReason", "finish_reason"]);
   if (status !== null) {
     const lower = status.toLowerCase();
@@ -709,7 +631,6 @@ function readFailure(record: AnyRecord, raw: string): boolean {
       return false;
     }
   }
-
   return /\b(error|failed|timeout|rate_limited)\b/i.test(raw);
 }
 
@@ -718,7 +639,6 @@ function readTimestamp(record: AnyRecord): number | null {
   if (numeric !== null) {
     return numeric;
   }
-
   const text = readString(record, ["timestamp", "time", "startedAt", "started_at", "createdAt", "created_at"]);
   if (text === null) {
     return null;
@@ -786,8 +706,7 @@ function mulberry32(seed: number): () => number {
 
 function metricRow(metric: MetricSummary): string {
   const interval = `[${formatNumber(metric.interval.lower)}, ${formatNumber(metric.interval.upper)}]`;
-  const result = metric.passed ? "pass" : "fail";
-  return `| ${metric.name} | ${formatNumber(metric.observed)} ${metric.units} | ${interval} ${metric.units} | ${formatNumber(metric.threshold)} ${metric.units} | ${result} |`;
+  return `| ${metric.name} | ${formatNumber(metric.observed)} ${metric.units} | ${interval} ${metric.units} | ${formatNumber(metric.threshold)} ${metric.units} | ${metric.passed ? "pass" : "fail"} |`;
 }
 
 function formatNumber(value: number): string {
@@ -857,7 +776,7 @@ function helpText(): string {
   return [
     "Usage: ts-node AgentRunSloGovernor.ts --input=runs.jsonl --format=json",
     "",
-    "Input must be JSONL with baseline and candidate records sharing a runId and cohort.",
+    "Input is JSONL with baseline and candidate records sharing a runId and cohort.",
     "Useful fields: runId, variant, cohort, latencyMs, inputTokens, outputTokens, costUsd, qualityScore, failed.",
     "",
     "Options:",
@@ -877,20 +796,17 @@ function helpText(): string {
 function buildSelfTestJsonl(): string {
   const rows: string[] = [];
   const random = mulberry32(42);
-
   for (let index = 0; index < 260; index += 1) {
     const cohort = index % 5 === 0 ? "tool-heavy" : "default";
     const baseLatency = 800 + Math.floor(random() * 220);
     const candidateLatency = baseLatency + Math.floor(random() * 35) - 12;
     const baseCost = 0.014 + random() * 0.003;
-    const candidateCost = baseCost * (1 + (random() * 0.02));
+    const candidateCost = baseCost * (1 + random() * 0.02);
     const quality = 0.87 + random() * 0.08;
     const id = `run-${index.toString().padStart(4, "0")}`;
-
     rows.push(JSON.stringify({ runId: id, variant: "baseline", cohort, latencyMs: baseLatency, costUsd: baseCost, qualityScore: quality, failed: false }));
     rows.push(JSON.stringify({ runId: id, variant: "candidate", cohort, latencyMs: candidateLatency, costUsd: candidateCost, qualityScore: quality - 0.001, failed: false }));
   }
-
   return rows.join("\n");
 }
 
@@ -902,12 +818,9 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
     : input === null || input === "-"
       ? fs.readFileSync(0, "utf8")
       : fs.readFileSync(input, "utf8");
-
   const parser = parseJsonlTelemetry(text, { strict: config.strictParsing });
-  const governor = new AgentRunSloGovernor(config);
-  const evaluation = governor.evaluate(parser.runs, parser.rejected);
-  const output = format === "markdown" ? renderMarkdown(evaluation) : renderJson(evaluation);
-  process.stdout.write(output);
+  const evaluation = new AgentRunSloGovernor(config).evaluate(parser.runs, parser.rejected);
+  process.stdout.write(format === "markdown" ? renderMarkdown(evaluation) : renderJson(evaluation));
   return evaluation.status === "pass" ? 0 : 2;
 }
 
@@ -921,5 +834,5 @@ if (typeof require !== "undefined" && typeof module !== "undefined" && require.m
 }
 
 /*
-This solves the boring but painful rollout problem where an AI agent looks fine in a dashboard, then quietly ships a worse p95 latency, a higher LLM token bill, or a lower evaluation score because baseline and candidate runs were compared as loose averages. Built because April 2026 teams are running MCP tools, OpenTelemetry traces, streaming model calls, edge inference routes, and JSONL eval exports, but the promotion gate is often still a spreadsheet or a one-off notebook. Use it when you have paired baseline and candidate agent runs and need a repeatable TypeScript SLO gate for canary release, shadow traffic, LLM cost control, quality regression detection, and production AI workflow reliability. The trick: it pairs by run id and cohort first, then uses deterministic paired bootstrap intervals, so noisy prompts, long-tail tools, provider retries, and cache misses do not hide the real delta. Drop this into a CI job, a GitHub Actions workflow, a Vercel or Netlify build step, an internal AI gateway, or a research eval pipeline that reads JSONL telemetry from stdin and must fail loudly before an expensive or unreliable agent release reaches users.
+This solves the boring but painful rollout problem where an AI agent looks fine in a dashboard, then quietly ships a worse p95 latency, a higher LLM token bill, or a lower evaluation score because baseline and candidate runs were compared as loose averages. Built because April 2026 teams are running MCP tools, OpenTelemetry traces, streaming model calls, edge inference routes, and JSONL eval exports, but the promotion gate is often still a spreadsheet or a one-off notebook. Use it when you have paired baseline and candidate agent runs and need a repeatable TypeScript SLO gate for canary release, shadow traffic, LLM cost control, quality regression detection, and production AI workflow reliability. The trick: it pairs by run id and cohort first, then uses deterministic paired bootstrap intervals on the actual gate statistic, so noisy prompts, long-tail tools, provider retries, and cache misses do not hide the real delta. Drop this into a CI job, a GitHub Actions workflow, a Vercel or Netlify build step, an internal AI gateway, or a research eval pipeline that reads JSONL telemetry from stdin and must fail loudly before an expensive or unreliable agent release reaches users.
 */
