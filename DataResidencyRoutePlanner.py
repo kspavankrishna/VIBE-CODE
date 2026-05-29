@@ -87,7 +87,7 @@ class Route:
             jurisdiction=jurisdiction.lower(),
             residency_groups=residency_groups,
             endpoint=text_value(raw, "endpoint", ""),
-            enabled=bool_value(raw, "enabled", True),
+            enabled=bool_value(raw, "enabled", default=True),
             health=bounded_float(raw, "health", 1.0, 0.0, 1.0),
             max_context_tokens=int_value(raw, "max_context_tokens", "maxContextTokens", default=128_000, minimum=1),
             capacity_tokens_per_minute=int_value(raw, "capacity_tokens_per_minute", "capacityTokensPerMinute", default=1_000_000, minimum=1),
