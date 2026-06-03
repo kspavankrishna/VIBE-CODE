@@ -79,7 +79,7 @@ note() { printf '%s\n' "$*" >&2; }
 warn() { WARNINGS=$((WARNINGS + 1)); printf 'warn: %s\n' "$*" >&2; }
 fail() { FAILURES=$((FAILURES + 1)); printf 'fail: %s\n' "$*" >&2; }
 die() { printf 'error: %s\n' "$*" >&2; exit 2; }
-need_value() { [[ $# -ge 2 && -n $2 ]] || die "$1 requires a value"; }
+need_value() { [[ $# -ge 2 && -n ${2:-} ]] || die "$1 requires a value"; }
 
 cleanup() {
   [[ -n ${TMPDIR:-} && -d ${TMPDIR:-} ]] && rm -rf "$TMPDIR"
@@ -163,7 +163,7 @@ resolve_inputs() {
 }
 
 parse_args() {
-  if [[ $# -gt 0 && $1 != --* ]]; then
+  if [[ $# -gt 0 && ${1:-} != --* ]]; then
     MODE=$1
     shift
   fi
@@ -222,7 +222,7 @@ check_symlinks() {
     included_path "$path" || continue
     fail "artifact path is a symlink, not a regular file: $path"
     found=1
-  done < <((cd "$ROOT" && find . -type l -print))
+  done < <(cd "$ROOT" && find . -type l -print)
   return $found
 }
 
