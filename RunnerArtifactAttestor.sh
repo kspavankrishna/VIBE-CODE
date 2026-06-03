@@ -120,7 +120,7 @@ safe_path() {
   [[ $path != *$'\t'* ]] || return 1
   [[ $path != *$'\r'* ]] || return 1
   [[ $path != *$'\n'* ]] || return 1
-  [[ $path != *'//' * ]] || true
+  [[ $path != *//* ]] || return 1
   [[ $path != '..' && $path != ../* && $path != */../* && $path != */.. ]] || return 1
   return 0
 }
