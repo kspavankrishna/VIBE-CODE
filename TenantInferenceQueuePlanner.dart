@@ -500,15 +500,15 @@ final class TenantInferenceQueuePlanner {
       outputTokens: job.estimatedOutputTokens,
     );
     final double tenantSpendable = math.max(0.000001, tenant.usdRemaining);
-    final double costPressure = (estimatedCostUsd / tenantSpendable).clamp(0.0, 1.0);
+    final double costPressure = (estimatedCostUsd / tenantSpendable).clamp(0.0, 1.0).toDouble();
     final double tokenHeadroom = 1 - _ratio(load.tokensReservedThisMinute + job.totalEstimatedTokens, provider.maxTokensPerMinute);
     final double requestHeadroom = 1 - _ratio(load.requestsReservedThisMinute + 1, provider.maxRequestsPerMinute);
     final double inFlightHeadroom = 1 - _ratio(load.inFlight + 1, provider.maxInFlight);
-    final double headroom = ((tokenHeadroom * 0.45) + (requestHeadroom * 0.25) + (inFlightHeadroom * 0.30)).clamp(0.0, 1.0);
+    final double headroom = ((tokenHeadroom * 0.45) + (requestHeadroom * 0.25) + (inFlightHeadroom * 0.30)).clamp(0.0, 1.0).toDouble();
     final Duration latency = load.latencyFor(provider);
     final Duration slack = job.timeToDeadline(now) - latency;
     final double deadlineFit = _deadlineFit(slack, latency);
-    final double priorityFit = (job.priority.weight / InferencePriority.incident.weight).clamp(0.0, 1.0);
+    final double priorityFit = (job.priority.weight / InferencePriority.incident.weight).clamp(0.0, 1.0).toDouble();
     final double queuePenalty = load.queued * options.queueDepthPenalty;
     final double score = (headroom * options.headroomWeight) +
         (deadlineFit * options.deadlineWeight) +
