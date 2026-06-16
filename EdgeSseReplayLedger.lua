@@ -804,12 +804,15 @@ end
 EdgeSseReplayLedger._main = main
 EdgeSseReplayLedger._self_test = run_self_test
 
-if ... == nil then
-  local ok, err = pcall(main, arg or {})
+local chunk_name = ...
+local running_as_module = type(chunk_name) == "string" and chunk_name:match("EdgeSseReplayLedger$") ~= nil
+if not running_as_module then
+  local ok, code_or_err = pcall(main, arg or {})
   if not ok then
-    io.stderr:write(tostring(err), "\n")
+    io.stderr:write(tostring(code_or_err), "\n")
     os.exit(1)
   end
+  os.exit(code_or_err or 0)
 end
 
 return EdgeSseReplayLedger
