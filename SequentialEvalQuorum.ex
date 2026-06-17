@@ -763,10 +763,7 @@ defmodule SequentialEvalQuorum do
   defp normalize_outcome(value) when value in [:tie, :draw, :equal, :same], do: :tie
 
   defp normalize_outcome(value) when is_binary(value) do
-    value
-    |> String.trim()
-    |> String.downcase()
-    |> case do
+    case value |> String.trim() |> String.downcase() do
       "win" -> :win
       "candidate" -> :win
       "candidate_win" -> :win
@@ -801,9 +798,7 @@ defmodule SequentialEvalQuorum do
   defp normalize_stratum(nil), do: "default"
 
   defp normalize_stratum(value) when is_binary(value) do
-    value
-    |> String.trim()
-    |> case do
+    case String.trim(value) do
       "" -> "default"
       other -> other
     end
@@ -865,9 +860,14 @@ defmodule SequentialEvalQuorum do
     trimmed = String.trim(value)
 
     case Float.parse(trimmed) do
-      {parsed, ""} -> {:ok, parsed}
-      {parsed, rest} when String.trim(rest) == "" -> {:ok, parsed}
-      _ -> {:error, :not_number}
+      {parsed, ""} ->
+        {:ok, parsed}
+
+      {parsed, rest} ->
+        if String.trim(rest) == "", do: {:ok, parsed}, else: {:error, :not_number}
+
+      _ ->
+        {:error, :not_number}
     end
   end
 
