@@ -1,5 +1,3 @@
-module StringSet = Set.Make (String)
-
 type priority =
   | Bulk
   | Interactive
@@ -118,6 +116,7 @@ type lease = {
   lease_tenant_id : string;
   admitted_at_ms : int;
   expires_at_ms : int;
+  reserved_tokens : int;
   estimated_cost_microusd : int64;
   estimated_carbon_mg : int64;
   estimated_latency_ms : int;
@@ -162,8 +161,6 @@ let ceil_div_i64 a b =
   if b <= 0L then invalid_arg "ceil_div_i64: denominator must be positive";
   if a <= 0L then 0L else Int64.add (Int64.div (Int64.sub a 1L) b) 1L
 
-let min_i64 a b = if Int64.compare a b <= 0 then a else b
-
 let int64_of_nonnegative_int value = Int64.of_int (max0 value)
 
 let priority_to_string = function
@@ -197,21 +194,19 @@ let data_class_equal left right =
   | _ -> false
 
 let data_class_allowed requested accepted =
-  let accepts_public_only accepted_class = data_class_rank requested = 0 && data_class_rank accepted_class = 0 in
-  let accepts_regulated_wildcard accepted_class =
-    match (requested, accepted_class) with
-    | Regulated _, Regulated regime -> String.equal (String.lowercase_ascii (trim regime)) "*"
-    | _ -> false
+  let accepts_by_rank accepted_class =
+    match accepted_class with
+    | Regulated "*" -> is_regulated requested
+    | Regulated _ -> data_class_equal requested accepted_class
+    | _ -> (not (is_regulated requested)) && data_class_rank requested <= data_class_rank accepted_class
   in
-  List.exists
-    (fun accepted_class -> data_class_equal requested accepted_class || accepts_public_only accepted_class || accepts_regulated_wildcard accepted_class)
-    accepted
+  List.exists accepts_by_rank accepted
+
+and is_regulated = function Regulated _ -> true | _ -> false
 
 let list_contains needle values = List.exists (String.equal needle) values
 
 let has_residency_hints (req : request) = req.allowed_regions <> [] || req.allowed_jurisdictions <> []
-
-let is_regulated = function Regulated _ -> true | _ -> false
 
 let residency_allowed (req : request) (p : provider) =
   let region_ok = req.allowed_regions = [] || list_contains p.region req.allowed_regions in
@@ -450,6 +445,7 @@ let lease_from_candidate (req : request) (candidate : candidate) =
   let lease_seed = String.concat ":" [ req.tenant_id; req.request_id; req.idempotency_key; p.provider_id; string_of_int req.now_ms ] in
   let lease_id = "lease_" ^ stable_hash lease_seed in
   let expires_at_ms = req.now_ms + candidate.estimated_latency_ms + 30_000 in
+  let reserved_tokens = total_requested_tokens req in
   let explanation =
     String.concat " "
       [ "selected"; p.provider_id; "model=" ^ p.model; "region=" ^ p.region; "because"; String.concat "," candidate.notes ]
@@ -467,6 +463,7 @@ let lease_from_candidate (req : request) (candidate : candidate) =
     ("priority", priority_to_string req.priority);
     ("routing", routing_mode_to_string req.routing_mode);
     ("data_class", data_class_to_string req.data_class);
+    ("reserved_tokens", string_of_int reserved_tokens);
     ("cost_microusd", Int64.to_string candidate.estimated_cost_microusd);
     ("carbon_mg", Int64.to_string candidate.estimated_carbon_mg);
     ("latency_ms", string_of_int candidate.estimated_latency_ms);
@@ -482,6 +479,7 @@ let lease_from_candidate (req : request) (candidate : candidate) =
     lease_tenant_id = req.tenant_id;
     admitted_at_ms = req.now_ms;
     expires_at_ms;
+    reserved_tokens;
     estimated_cost_microusd = candidate.estimated_cost_microusd;
     estimated_carbon_mg = candidate.estimated_carbon_mg;
     estimated_latency_ms = candidate.estimated_latency_ms;
@@ -568,7 +566,7 @@ let apply_lease (tenant : tenant_state) (providers : provider list) (lease : lea
       tenant with
       daily_microusd_remaining = Int64.sub tenant.daily_microusd_remaining lease.estimated_cost_microusd;
       monthly_microusd_remaining = Int64.sub tenant.monthly_microusd_remaining lease.estimated_cost_microusd;
-      token_budget_remaining = max 0 (tenant.token_budget_remaining - 1);
+      token_budget_remaining = max 0 (tenant.token_budget_remaining - lease.reserved_tokens);
       active_leases = tenant.active_leases + 1;
     }
   in
@@ -688,7 +686,7 @@ let self_check () =
   let tenant = default_tenant "tenant-a" in
   let req = default_request () in
   let primary = default_provider () in
-  let backup = { default_provider ~provider_id:"edge-b" ~region:"eu-west-1" (); jurisdiction = "EU"; p95_latency_ms = 1_800 } in
+  let backup = { (default_provider ~provider_id:"edge-b" ~region:"eu-west-1" ()) with jurisdiction = "EU"; p95_latency_ms = 1_800 } in
   begin
     match allocate [ backup; primary ] tenant req with
     | Admit lease ->
