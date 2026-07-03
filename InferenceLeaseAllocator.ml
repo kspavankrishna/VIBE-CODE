@@ -193,6 +193,8 @@ let data_class_equal left right =
   | Regulated a, Regulated b -> String.equal (String.lowercase_ascii (trim a)) (String.lowercase_ascii (trim b))
   | _ -> false
 
+let is_regulated = function Regulated _ -> true | _ -> false
+
 let data_class_allowed requested accepted =
   let accepts_by_rank accepted_class =
     match accepted_class with
@@ -201,8 +203,6 @@ let data_class_allowed requested accepted =
     | _ -> (not (is_regulated requested)) && data_class_rank requested <= data_class_rank accepted_class
   in
   List.exists accepts_by_rank accepted
-
-and is_regulated = function Regulated _ -> true | _ -> false
 
 let list_contains needle values = List.exists (String.equal needle) values
 
