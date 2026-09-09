@@ -1,78 +1,72 @@
 # Gateway Failover Budget Governor
 
-Routing an LLM request across several model providers is a decision with money, latency, data residency and blast radius attached, yet in most systems it lives inside a retry loop nobody can read. This Dart CLI reads an endpoint inventory, tenant budgets and recent health observations, then emits one auditable JSON routing plan per request: primary, fallbacks, hedge delay, shadow endpoint, timeout and the scorecard of every candidate it rejected.
+Routing an LLM request across several providers, regions and fallback clusters is a decision nobody can audit once it is buried inside retry code. This Dart CLI makes it explicit: it scores every endpoint, prints the hard rejection reasons and emits one JSON routing plan per request.
 
 **Language:** Dart | **Lines:** 748 | **Added:** 2026-08-19
 
 ## What this solves
 
-The failure mode is familiar to anyone running an AI gateway. You have an OpenAI endpoint in us-east, an Anthropic endpoint in eu-west, a self hosted cluster and a canary carrying a new model, and the routing logic is spread across a client wrapper, a retry helper and a feature flag. When the primary throws 503s at 2am it fails over to whatever is next in a hardcoded list. That endpoint sits in the wrong region for a customer with an EU residency clause, and nobody notices until the compliance review three weeks later.
+The failure mode is familiar to anyone running AI inference through more than one gateway. A provider starts returning 503s, the retry wrapper flips to the next endpoint in a hardcoded list, and that endpoint sits in the wrong region for a customer with a data residency clause. Nobody notices until an audit. Or the fallback costs four times as much per million output tokens, so a burst of retries during a 20 minute incident quietly spends a tenant's whole daily budget.
 
-The second failure is the bill. Retry and hedge logic that fires a second request without checking budget doubles the cost of every call during a partial outage. A tenant with a 20 dollar daily cap burns it in twenty minutes because the fallback costs three times the primary and nothing in the path knows. You find out from the invoice, or from the tenant hitting a hard stop mid workday.
+None of that is exotic. It happens because the routing rule lives in imperative code paths: an if branch here, a config flag someone added during a previous outage. There is no single place that says why endpoint B was chosen over endpoint A for this request, so during an incident the on call engineer reads retry logic instead of reading a decision.
 
-The third is the tail. Naive failover waits out the full timeout before trying anything else, so one slow endpoint turns a 900ms p95 into a 30 second stall for everything in flight. Hedging fixes that only if the delay comes from the endpoint's real p95 and queue depth rather than a constant somebody picked in 2023. Too early and you double spend on healthy traffic. Too late and it never helps.
-
-This answers one question before any of that happens: given the state of the fleet, which endpoint gets this request, what does it fall back to, when does the hedge fire and what will it cost. Every candidate carries its rejection reasons and warnings, so during an incident you read the decision instead of guessing.
+This tool separates the decision from the execution. You give it an endpoint inventory with latency percentiles, success rates, capacity, prices and residency zones, plus tenant budgets, an optional stream of recent observations and the pending requests. It returns, per request, a primary endpoint, up to two fallbacks, an optional shadow endpoint, a hedge delay, a timeout and an estimated cost in USD. Rejected candidates come back with their reason, surviving ones with score, predicted latency, queue delay, risk points and carbon grams. That makes the routing layer testable in CI: replay a bad hour of observations against a proposed inventory and see what becomes unroutable.
 
 ## Why I built it
 
-Service meshes route traffic, not inference economics. They do not know a request carries a token budget, a model family requirement, a residency zone constraint and a per tenant daily cap that all have to hold at once. Cost aware LLM routers exist, but most return an endpoint name with no explanation and no way to replay the decision offline against a recorded snapshot.
+Service meshes and gateway products do weighted routing and circuit breaking, but they route on connection health, not on token cost, tenant budget, residency zone or model family. They do not know a request has a 2200 ms deadline and a two cent ceiling, and they will not refuse to route rather than blow a budget. The cost controls that do exist live in billing dashboards, after the fact.
 
-So: one file, no dependencies, JSON in and JSON out, shows its work. Replay last Tuesday's snapshot to explain a decision after the fact, or run it as a CI preflight on a config change.
+The gap is a planner that treats cost, latency, residency and fairness as one admission decision and shows its work. One file, no dependencies, so it runs as a CI preflight, inside a Dart edge service or as a control plane beside an existing gateway.
 
 ## When to use it
 
-- You run inference through more than one provider and need failover that respects data residency instead of picking the next name in a list.
-- A tenant has a hard daily spend cap and the request must be rejected before the call goes out.
-- You are rolling a new model to a percentage of traffic and want that allocation stable per request, not reshuffled on every retry.
-- Tail latency is the problem and you want the hedge delay computed from live p95 and queue depth, not a constant.
-- You want a CI gate that fails a config change if any request in your fixture set becomes unroutable.
+- You run one model family across two or more providers and need a defensible reason for each failover, not a hardcoded ordering.
+- A tenant has a hard daily spend limit and requests must be refused at admission, not discovered on the invoice.
+- Requests carry residency constraints and cross region fallback is allowed for only some of them.
+- You are rolling a new endpoint or self hosted cluster to a slice of traffic and want that allocation stable per request, not reshuffled on retry.
+- You want a CI gate that replays production request shapes against a candidate inventory and fails the build if anything becomes unroutable.
+- Tail latency is the problem and you want a computed hedge delay instead of a guessed constant.
 
 ## How it works
 
-The core is `GatewayFailoverBudgetGovernor.plan(Workload request, Snapshot snapshot)`. It scores every `Endpoint` in the snapshot, sorts ascending, and takes the best eligible candidate as primary. Lower score wins, and `Score` implements `Comparable` so the sort is plain and ascending on one scalar.
+`GatewayFailoverBudgetGovernor.plan(Workload, Snapshot)` is the whole entry point. It scores every endpoint with `_score`, sorts ascending (lower is better, `Score.compareTo` compares the `value` field) and takes the first eligible candidate as primary. A `Score` carries two separate lists: `hardFailures` and `warnings`. Only `hardFailures` makes a candidate ineligible, and `Score.eligible` is just `hardFailures.isEmpty`. That split is the point. A candidate predicted to miss the deadline gets a warning and stays in play. One that violates residency, cannot stream when streaming is required, has an open breaker, is inside its `cooldownUntilEpochMs`, does not match the requested model family, exceeds the request cost cap or exceeds the tenant's remaining budget is out.
 
-`_score` separates hard failures from soft warnings, and that split is the whole design. A hard failure removes the endpoint: missing id, model family mismatch via `Endpoint.matches`, no streaming when the request requires it, an open circuit breaker, an active cooldown against `snapshot.nowMs`, a residency violation from `_residencyOk`, a canary the request was not allocated to, cost above the request `maxUsd` cap, or cost above the tenant's remaining daily budget. Warnings disqualify nothing and ride along in the output: predicted latency over deadline, success rate under 95 percent.
+The score is a weighted sum. Latency is normalised against the deadline and multiplied by 100. Cost is multiplied by 70000, which is what makes a fraction of a cent comparable to a hundred milliseconds. Risk is `(1 - successRate) * 900` plus a recency penalty. Tail spread (`p99 - p95`) is divided by 35, carbon by 40, and priority is subtracted at `priority / 125`. Violating `preferredProvider` costs 12 points. A region mismatch costs 8 points when `allowCrossRegionFallback` is true and 100000 when it is false. Queue delay is `(queueDepth + inFlight) / capacityPerMinute * 60000`, a Little's law style estimate in milliseconds.
 
-Everything else folds into one scalar. Queue delay is `(queueDepth + inFlight) / capacityPerMinute * 60000`, a Little's law style estimate of the wait before work starts. Predicted latency is `p95 + queueMs + recentPenalty * 80`, where `_recentPenalty` keeps only observation rows for that endpoint inside a five minute window and returns `failures / total * 120 + throttles * 2.5`, a throttle being a 429 or an error class containing "timeout". Risk is `(1 - successRate) * 900 + recentPenalty`. The score adds latency as a fraction of deadline scaled by 100, cost times 70000, risk, 12 points for the wrong preferred provider, 8 for a region mismatch when cross region fallback is allowed and 100000 when it is not, a fairness term, the p99 minus p95 tail spread over 35, carbon grams over 40, and subtracts `priority / 125`. That 100000 is a soft ban, not a hard failure, so an otherwise unroutable request still lands somewhere and the output says why.
+`_recentPenalty` reads the observation stream over a fixed five minute window relative to `nowEpochMs`. It takes the failure ratio in that window, where a failure is `success: false` or a status code of 500 or above, multiplies by 120, then adds 2.5 per throttle, a throttle being a 429 or an `errorClass` containing "timeout". That penalty feeds both the risk term and the predicted latency, so an endpoint flaking for the last two minutes gets pushed down without waiting for a breaker to trip.
 
-`_fairness` carries multi tenancy: half the gap when a request's priority sits below the tenant's `reservedPriority`, plus 25 times concurrency pressure and 15 times budget pressure. A tenant that has burned 80 percent of its cap drifts toward cheaper endpoints without being cut off, and one already at its concurrency limit is rejected before scoring matters, with reason `tenant_concurrency_limit`.
+Canary and shadow allocation both use `_stablePercent`, a 32 bit FNV-1a hash (offset basis 2166136261, prime 16777619, masked to 32 bits) reduced modulo 100. The canary seed concatenates tenant, idempotency key, request id and endpoint id, so a retried request lands in the same bucket every time instead of shuffling across attempts. FNV-1a is used because it is short, deterministic across processes and allocation free, not because it is cryptographic. The shadow seed is separate, and `_shadowEndpoint` picks a candidate from a different provider than the primary so the comparison is informative.
 
-Canary and shadow allocation both use `_stablePercent`, a 32 bit FNV-1a hash mod 100. Canary seeds on `tenantId:idempotencyKey:requestId:endpointId`, so a retry with the same idempotency key lands on the same side of the split every time. No RNG, no sticky session store. Shadow seeds on `tenantId:requestId:shadow` and picks the first eligible endpoint from a different provider than the primary, so the comparison means something.
-
-Fallbacks are the next two eligible candidates passing `_pairedCostFits`: primary plus fallback cost must still fit under both the request cap and the tenant's remaining budget. That is what stops failover from doubling the bill. The hedge in `_hedgeMs` is `p95 * 0.65 + queueMs`, clamped between 50ms and deadline minus 50, and suppressed when there is no fallback, when the deadline is under 300ms, when predicted latency already exceeds the deadline, or when the hedge would land past 85 percent of the deadline. Timeout is `min(deadlineMs, max(100, primaryLatency * 1.35))`. Output is one JSON object per line on stdout.
+Fallbacks are filtered through `_pairedCostFits`, which checks primary plus that fallback against both the request `maxUsd` and the tenant's remaining budget. This is what matters during an incident: a retry that fits alone but blows the budget when paired with the attempt already made is never offered. At most two are returned. `_hedgeMs` computes `p95 * 0.65 + queueDelay`, clamped between 50 ms and the deadline minus 50 ms, returning 0 when there is no fallback, when the deadline is under 300 ms, when the primary already misses the deadline or when the hedge would land past 85 percent of the deadline. Timeout is `min(deadlineMs, max(100, primaryLatency * 1.35))`. Tenant admission runs first: if `inFlight >= concurrencyLimit` the request is rejected with `tenant_concurrency_limit` and the scores are still returned for inspection. Parsing goes through the `J` helper, which coerces types leniently. Endpoints and tenants are JSON arrays, requests and observations JSONL, with blank lines and `#` comments skipped by `_jsonLines`.
 
 ## Usage
 
 ```bash
-# built in fixture, exercises route, budget reject and canary paths
+# built in assertion test, no input files needed
 dart GatewayFailoverBudgetGovernor.dart --self-test
 
-# single snapshot file with endpoints, tenants, observations and requests
+# one snapshot file holding endpoints, tenantBudgets, observations and requests
 dart GatewayFailoverBudgetGovernor.dart --snapshot snapshot.json
 
-# separate files: endpoints JSON array, requests as JSON Lines
+# split inputs: JSON arrays for inventory, JSONL for requests and observations
 dart GatewayFailoverBudgetGovernor.dart \
   --endpoints endpoints.json \
-  --requests requests.jsonl \
-  --tenants tenants.json \
-  --observations observations.jsonl
+  --tenants tenant-budgets.json \
+  --observations observations.jsonl \
+  --requests requests.jsonl
 
-# CI gate: exit 2 if any request comes back rejected
+# CI gate: exit 2 if any request could not be routed
 dart GatewayFailoverBudgetGovernor.dart \
   --endpoints endpoints.json --requests requests.jsonl --fail-on-reject
-
-dart GatewayFailoverBudgetGovernor.dart --help
 ```
 
-`--providers` aliases `--endpoints`, `--tenant-budgets` aliases `--tenants`, and flags take `--key value` or `--key=value`. As a library: build a `Snapshot.fromJson` and a `Workload.fromJson`, call `plan`, read `Decision.toJson()`.
+`--providers` aliases `--endpoints`, `--tenant-budgets` aliases `--tenants` and `--help` prints usage. Output is one JSON object per line on stdout: `action` of `route` or `reject`, plus `primaryEndpointId`, `fallbackEndpointIds`, `shadowEndpointId`, `hedgeAfterMs`, `timeoutMs`, `estimatedUsd`, `reason`, `notes` and the full `candidateScores` array.
 
 ## Notes
 
-- It plans, it does not execute. No HTTP client, no retry loop, no hedge firing. `hedgeAfterMs`, `fallbackEndpointIds` and `shadowEndpointId` are instructions for the caller.
-- Scoring weights are constants inside `_score`. If your cost per token is an order of magnitude off the defaults, the `cost * 70000` term needs retuning.
-- Queue delay is a static snapshot estimate with no memory across requests, so a batch plan ignores load its own earlier decisions just added.
-- The observation window is hardcoded to five minutes, and rows with no `epochMs` default to `nowMs` so they always count as recent.
-- Exit codes: 0 normal, 2 when `--fail-on-reject` is set and something was rejected, 64 on malformed input or bad arguments, 66 on a missing or unreadable file.
-- `--self-test` relies on Dart `assert` statements, live under `dart run` but stripped by `dart compile exe` in release mode. Run it from source.
-- Tenant budget checks read `usedUsdToday` and write nothing back, so concurrent planners on one tenant all see the same pre spend figure.
+- Pure planner. It never sends a request, opens a socket or executes the plan. Your gateway still has to honour what it returns. It is also stateless per invocation, so canary and shadow percentages are hash based approximations over request identity, not exact traffic quotas.
+- Exit codes: 0 normal, 2 with `--fail-on-reject` when at least one request was rejected, 64 on a bad argument or malformed JSON, 66 on a missing or unreadable file. Anything else propagates uncaught.
+- `--self-test` relies on `assert`, so it verifies nothing unless assertions are enabled. That is the default for `dart run` in JIT mode, not for an AOT compiled binary.
+- A region mismatch with `allowCrossRegionFallback: false` scores 100000 points rather than counting as a hard failure. It loses to any in region candidate, but if it is the only candidate it can still win. Residency zones are the hard constraint, region is not.
+- Missing fields fall back to defaults instead of erroring: 1500 ms p95, 0.98 success rate, 60 per minute capacity, 0.15 and 0.60 USD per million input and output tokens, unlimited tenant budget. Validate inputs upstream.
+- Cost is estimated from `inputTokens` and `maxOutputTokens`, a worst case for output. No cache hits, batch discounts or committed use pricing. Carbon is a flat multiplication weighted low enough that it only breaks near ties.

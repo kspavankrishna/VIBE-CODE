@@ -1,114 +1,104 @@
 # Hybrid Inference Router
 
-Deciding whether a Swift app runs a model on device, sends the request to a cloud endpoint, or starts one path and races the other is usually a pile of if-statements that rots the moment latency, battery, thermals or cost move. This is one file that makes that call from real signals and tells you why.
+Deciding whether an inference request runs on the local model or goes to the cloud is usually a pile of if-statements that rots the moment latency, battery, thermals, privacy rules or cost targets move. This is one Swift actor that makes the decision from live signals, explains why, and races both paths when the deadline is tight.
 
 **Language:** Swift | **Lines:** 955 | **Added:** 2026-04-23
 
 ## What this solves
 
-This solves the real April 2026 problem of deciding whether a Swift app or Swift service should run inference locally, send it to a remote model, or start on one path and hedge with the other when the deadline is tight. Hybrid AI stacks are normal now across Core ML, MLX, local llama.cpp runners, OpenAI compatible gateways, Anthropic and Azure. The routing logic in front of them is not. It is a branch on `isNetworkAvailable` and maybe a token count, written at a desk on full battery with a cool chassis and a good connection.
+Hybrid AI stacks are normal now. You have a Core ML or MLX model on device, or a llama.cpp runner on the box, and an OpenAI compatible gateway, Anthropic or Azure behind a network call. Every request needs an answer to the same question: which one. Most codebases answer with a hardcoded rule. Short prompt goes local, network up goes remote. Right on a laptop plugged in at a desk, wrong everywhere else.
 
-The failure is not subtle once you ship. A user in Low Power Mode with a warm phone goes to the on device model because the network check passed and nothing else was considered, generation takes four seconds instead of six hundred milliseconds, and the typing indicator sits there long enough that they leave. Or the inverse: the local model would have answered instantly, but the code prefers the cloud, so every autocomplete costs money and everyone on a train gets a spinner. Nobody files a bug for either.
+The failure shows up as tail latency nobody can explain. The local path looked fast in testing, then the device hits thermal pressure during a long session and p90 triples. Nothing in the routing code knows that, so it keeps feeding work to a path that is now the slow one. Remote is fast until the user is on a constrained connection, and then every request eats its full timeout. Users see a spinner. Support sees "the app is slow" with no reproduction.
 
-The second failure is tail latency. Your remote endpoint is fine at p50 and terrible at p90 for twenty minutes during someone else's incident. A router that only knows median latency keeps feeding it. Deadlines blow, timeouts stack, in flight counts climb because nothing drains, and the dashboards still show a healthy average. What you want there is to start on the path you believe in and launch the other a few hundred milliseconds later, cutting the tail without doubling every request.
-
-The third failure is quieter. Regulated content leaves the device because the code has no concept of privacy class, or a batch job spends thirty dollars because no per request budget existed. Here privacy class, remote spend and local energy are inputs that can make a route infeasible outright, not preferences buried in a comment.
+Cost and battery break the same way. A route that is cheap per call is not cheap when a background job sends ten thousand of them, and a local model that feels free is draining a phone at a rate nobody budgeted for. Then there is the case nobody wants to explain to legal: regulated content going over the wire because the rule only looked at token count.
 
 ## Why I built it
 
-Every hybrid setup I looked at either hardcoded the choice or handed it to a service mesh that has no idea what a thermal state or Low Power Mode is. Server side balancers understand queues and health checks. They do not understand that the local route slows down when the chassis is hot, that battery drain is a cost, or that a request carries its own deadline and dollar ceiling. On the client the usual answer is a boolean and a prayer.
+The pieces exist separately: latency trackers, circuit breakers, retry libraries, cost estimators. What is missing in Swift is the thing that combines them into one decision with a stated reason, and that adapts as the routes shift relative to each other during a session. A circuit breaker tells you a route is broken. It does not tell you local is 400ms slower right now but still the better pick, because the request carries user content and the device is plugged in.
 
-So this is the missing piece: one actor holding a bounded health window for both routes, folding every signal into a single comparable score in milliseconds, returning a decision with its reasons attached so you can log it and argue with it later. Nothing beyond Foundation and Dispatch, so it drops into a Swift package, an iOS support layer or a Vapor target as is.
+The other gap is hedging. Racing two paths is the standard fix for tail latency, but done naively it doubles your bill and your battery drain for nothing. It is only worth it when the routes are close and the primary is genuinely at risk, and evaluating that needs recent health data. So the hedge logic and the health tracking live in the same object.
 
 ## When to use it
 
-- You ship an app with an MLX or Core ML model plus a cloud fallback and need one place that decides which runs.
-- Your remote provider has a bad tail and you want hedged requests, but only when hedging is worth the duplicate spend.
-- Requests carry deadlines, and missing the deadline is worse than taking the slower but safer route.
-- Some requests are regulated or user content and must not leave the device, while others can go anywhere.
-- A batch job needs a hard per request dollar ceiling on remote spend, or a joule ceiling on local drain.
-- You already collect latency and error telemetry and want to feed it into routing instead of relearning it.
+- An iOS or macOS app with an on device model and a cloud fallback that should trigger on measured tail latency, not a fixed timeout
+- A Vapor or server side Swift service running a local runner next to a hosted API, needing per request cost ceilings
+- A background job that must stay under a spend budget, where exceeding it should reject rather than silently bill
+- Any flow where regulated or user content must never leave the device unless the remote policy explicitly permits it
+- An agent runtime issuing many small calls that needs deadline aware hedging on the ones that matter
 
 ## How it works
 
-`HybridInferenceRouter` is an actor holding two `RoutePolicy` values, one for `.local` and one for `.remote`, plus two private `RouteState` structs. `RouteState` is the memory: a bounded array of `RouteSample` capped at `Options.windowSize` (default 96) and trimmed from the front, plus EWMAs of latency, failure and timeout using the `current + alpha * (sample - current)` recurrence in the private `EWMA` enum. Percentiles come from linear interpolation over the sorted window, and `failureRisk` and `timeoutRisk` take `max` of the window rate and the EWMA, so neither a stale window nor a smoothed average hides a fresh problem.
+The public surface is the `HybridInferenceRouter` actor, built from exactly two `RoutePolicy` values plus an `Options` struct of tuning constants. Everything validates at init and throws `invalidConfiguration` rather than failing later at an odd angle. A policy holds the static facts about a route: token caps, base p50 and p90 latency, `maxInFlight`, per 1K token cost, energy per 1K tokens in joules, whether it may handle regulated data and whether it is `hedgeable`.
 
-`plan(for:)` holds the whole decision and touches no executor, so you can call it just to see what the router would do. It runs `estimate` per route in two passes. The first collects hard reasons: policy disabled, tokens over the policy cap, `inFlight` at `maxInFlight`, remote while the network is offline, `.regulated` content on a remote policy that forbids it, `.critical` thermal state on local unless affinity is `.requireLocal`, cost over `remoteBudgetUSD`, energy over `localEnergyBudgetJoules`. Any hard reason makes the route infeasible and its score `.infinity`.
+Each route keeps a private `RouteState`: a sliding window of samples capped at `options.windowSize` (default 96), plus exponentially weighted moving averages for latency, failure and timeout. Percentiles come from sorting the window and interpolating between neighbouring samples, so p50 and p90 are real order statistics rather than an average pretending to be a tail. Risk is deliberately pessimistic: `failureRisk` is `max(1 - successRate, ewmaFailure)` and `timeoutRisk` is `max(timeoutRate, ewmaTimeout)`. The EWMA raises the alarm before the window fills, and the window keeps it up after the EWMA has decayed.
 
-The second pass scores, and the trick is that everything is denominated in milliseconds so unlike things compare. It starts at predicted p90 plus `queuePenaltyPerInFlight` per in flight request, then adds `failureRisk * failurePenaltyMs`, `timeoutRisk * timeoutPenaltyMs`, `estimatedCostUSD * remoteCostPenaltyMsPerDollar` (5000 by default, so a cent of spend costs about fifty milliseconds) and `estimatedEnergyJoules * localEnergyPenaltyMsPerJoule`. Context adjustments follow: local pays part of `lowPowerLocalPenaltyMs` on battery and all of it in Low Power Mode, pays thermal penalties at `.serious` and `.critical`, and gets a privacy bonus for sensitive content; remote pays `constrainedNetworkRemotePenaltyMs` on a constrained link and a privacy penalty scaled by class, doubled for `.regulated`. Affinity applies a symmetric `preferenceBiasMs` nudge. If predicted p90 exceeds the deadline, the score takes `deadlineMissBasePenaltyMs` plus the overrun times `deadlineMissSlope`, so a route that cannot make the deadline loses decisively. Lower score wins.
+`plan(for:)` scores both routes through `estimate(route:policy:state:request:)` in two passes. First the hard gates, which set the score to infinity and attach a reason: policy disabled, token cap busted, `inFlight` at `maxInFlight`, network offline for a remote call, remote not cleared for regulated content, critical thermal state locally, or spend over `remoteBudgetUSD` or draw over `localEnergyBudgetJoules`. Then soft scoring. Score starts as predicted p90 in milliseconds, the percentile plus `inFlight * queuePenaltyPerInFlight`, then adds risk times `failurePenaltyMs` and `timeoutPenaltyMs`, cost times `remoteCostPenaltyMsPerDollar` and energy times `localEnergyPenaltyMsPerJoule`. Dollars, joules and risk all convert into one millisecond currency so they weigh directly against latency.
 
-Hedging is deliberately hard to trigger. `shouldHedge` needs hedging allowed, both routes feasible, both policies `hedgeable`, the score gap within `maxHedgeScoreGapMs` and the secondary's p50 no more than `maxSecondaryLatencyGap` behind the primary's. Only then does it ask whether hedging pays: recent risk is high (failure at or above 0.10, timeout at or above 0.05), or the primary's p90 has crossed `hedgeTailDeadlineFraction` of the deadline while the secondary's p50 still fits inside it. `hedgeDelay` takes 35 percent of the primary's p50, clamps it between `minHedgeDelay` and `maxHedgeDelay`, then caps it at the latest launch leaving room for the secondary's p90. That is a tied request with a deferred second launch, and the delay is what stops it duplicating every call.
+Situational adjustments follow. Local pays for battery, Low Power Mode and thermal pressure, and earns a `localPrivacyBonusMs` subtraction that grows for sensitive content. Remote pays `constrainedNetworkRemotePenaltyMs` on a weak link and a privacy penalty scaling to double for regulated data. `preferLocal` and `preferRemote` shift both scores by `preferenceBiasMs`, while `requireLocal` and `requireRemote` skip scoring entirely. A p90 past the deadline costs `deadlineMissBasePenaltyMs` plus the overrun times `deadlineMissSlope`. Lower score wins, and the losing estimate stays in the `RoutingDecision` so you can log both.
 
-`execute` runs it.
-
-`runAttempt` increments `inFlight`, timestamps with `DispatchTime.now().uptimeNanoseconds` so a wall clock change cannot corrupt a sample, and races the executor against a `Task.sleep` inside a `withThrowingTaskGroup` when a deadline exists. A hedge adds a second group: primary starts immediately, secondary sleeps the hedge delay then runs with the remaining deadline, the first success calls `group.cancelAll()` and wins, and losers come back as `AttemptEnvelope.abandoned` instead of polluting health stats. Real failures collect into `HybridInferenceRouterError.allAttemptsFailed`. Every finished attempt calls `finish`, which decrements `inFlight` and records the sample, so the next `plan` already knows what happened.
+Hedging is gated hard: both routes feasible and hedgeable, a score gap inside `maxHedgeScoreGapMs`, a secondary no more than `maxSecondaryLatencyGap` slower at p50, and then either elevated recent risk or a primary p90 already past `hedgeTailDeadlineFraction` of the deadline while the secondary still fits. `execute(_:local:remote:)` is generic over any `Sendable` value and runs the hedge in a `withThrowingTaskGroup`: primary starts immediately, secondary sleeps `hedgeDelay` then runs with the remaining deadline, and the first success calls `cancelAll()`. Timing uses `DispatchTime.now().uptimeNanoseconds`, a monotonic clock, so a wall clock jump cannot corrupt the health window. Cancelled attempts release their in flight slot without recording a sample, so no route is punished for losing a race.
 
 ## Usage
 
 ```swift
 let router = try HybridInferenceRouter(
     local: RoutePolicy(
-        name: "MLX 3B on device",
-        maxPromptTokens: 4_096,
-        baseP50Latency: .milliseconds(420),
-        baseP90Latency: .milliseconds(1_100),
+        name: "MLX 8B on device",
+        maxPromptTokens: 8_000,
+        baseP50Latency: .milliseconds(900),
+        baseP90Latency: .milliseconds(2_200),
         maxInFlight: 1,
-        energyPer1KTokensJoules: 12.0
+        energyPer1KTokensJoules: 4.5
     ),
     remote: RoutePolicy(
-        name: "Cloud gateway",
-        baseP50Latency: .milliseconds(650),
-        baseP90Latency: .milliseconds(2_400),
+        name: "Hosted gateway",
+        baseP50Latency: .milliseconds(600),
+        baseP90Latency: .milliseconds(1_800),
         maxInFlight: 8,
         supportsRegulatedData: false,
         inputCostPer1KUSD: 0.003,
         outputCostPer1KUSD: 0.015
-    ),
-    options: .init(windowSize: 128, maxHedgeScoreGapMs: 700)
+    )
 )
 
 let request = HybridInferenceRequest(
-    promptTokens: 1_200,
-    expectedOutputTokens: 256,
+    promptTokens: 1_450,
+    expectedOutputTokens: 320,
     affinity: .automatic,
     network: .constrained,
-    power: .lowPower,
+    power: .battery,
     privacy: .userContent,
     thermal: .fair,
     deadline: .seconds(3),
-    allowHedging: true,
     remoteBudgetUSD: 0.02
 )
 
-// Inspect the decision without running anything.
+// Decide without running anything, and log the reasoning.
 let decision = try await router.plan(for: request)
-print(decision.kind, decision.primary as Any, decision.hedgeDelay as Any)
-decision.reasons.forEach { print("-", $0) }
+print(decision.kind, decision.primary as Any, decision.reasons)
 
-// Or run it: the router picks, times, hedges and learns.
+// Or decide and run, with hedging handled for you.
 let result = try await router.execute(
     request,
-    local: { try await onDeviceModel.generate(prompt) },
-    remote: { try await cloudClient.generate(prompt) }
+    local: { try await onDeviceModel.complete(prompt) },
+    remote: { try await gateway.complete(prompt) }
 )
 print(result.winner, result.latency, result.value)
 
-// Feed telemetry you already have, without going through execute.
-await router.record(route: .remote, latency: .milliseconds(2_150), outcome: .timeout)
+// Feed telemetry you already collect elsewhere.
+await router.record(route: .remote, latency: .milliseconds(740), outcome: .success)
 
-// Health for dashboards.
-let snap = await router.snapshot()
-print(snap.remote.successRate, snap.remote.p90Latency as Any)
+// Inspect route health.
+let health = await router.snapshot()
+print(health.local.p90Latency as Any, health.remote.successRate)
 ```
 
 ## Notes
 
-- Exactly two routes. No N way pool, no tiering inside a route, no sticky sessions.
-- It does not measure the device. `network`, `power`, `thermal` and `privacy` are per request inputs you supply from `NWPathMonitor`, `ProcessInfo.processInfo.thermalState` or your own classifier.
-- State is in memory and dies with the process. Cold starts fall back to each policy's `baseP50Latency` and `baseP90Latency`, so set those honestly, and use `record` to warm the window from stored telemetry.
-- Hedging duplicates work. Both routes may bill you, and cancelling the loser only helps if your executor honours task cancellation. Anything non idempotent should set `allowHedging: false` or `hedgeable: false`.
-- `maxInFlight` is a hard gate, not a queue. At the ceiling a route is infeasible, and if both are capped `plan` returns `.reject` and `execute` throws `HybridInferenceRouterError.rejected`.
-- `deadline` is a per attempt timeout, the hedged secondary getting it minus the hedge delay. It is not a wall clock budget across retries, and the router never retries on its own.
-- Cost and energy are estimated from `expectedOutputTokens`, so an output overrun can breach a budget `plan` called safe. Feed real usage back through `record`.
-- One async closure per route returning one `Value`. No streaming, no token callbacks. Wrap a stream in a closure that returns at first token if you route on time to first token.
-- Needs Swift concurrency and `Duration`, plus Foundation and Dispatch. Nothing third party. Inputs are checked by `RoutePolicy.validate`, `Options.validate` and `HybridInferenceRequest.validate`.
+- The router senses nothing itself. `network`, `power`, `thermal` and `privacy` arrive per request, so you wire up `NWPathMonitor`, `ProcessInfo.thermalState` and your own classification. Dependency free, but a stale input produces a confident wrong decision.
+- It never calls a model. Both paths are `@Sendable` async closures you supply, and asking for a route you did not supply throws `noExecutor`.
+- Cancelling the losing hedge only works if your executor is cooperative about cancellation. A blocking call that ignores `Task.checkCancellation` keeps running and keeps billing.
+- Cost and energy are estimates from `expectedOutputTokens`, not measured usage, so a wrong output estimate skews the budget gates by the same factor.
+- `maxInFlight` is a feasibility gate, not a queue. A saturated route is marked infeasible and traffic moves over or the request is rejected. No waiting line.
+- All state is in memory and dies with the process. After a restart both routes fall back to their declared base latencies.
+- Exactly two routes. This is not a multi provider load balancer and will not fan out across three cloud vendors. Needs Swift concurrency with `Duration` and actors, so macOS 13, iOS 16 or a matching Linux toolchain. Imports are only `Foundation` and `Dispatch`.
