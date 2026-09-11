@@ -6,6 +6,19 @@ Every entry in this repository. One folder per idea. Each folder holds the sourc
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
+## House style
+
+Every README in this repository follows these rules. Match them.
+
+- No em dashes. Use a comma, a full stop or a colon instead.
+- No Oxford commas. Write "a, b and c" not "a, b, and c".
+- Minimal hyphens. Prefer "production ready" over "production-ready".
+- Plain direct language, varied sentence rhythm, sounding like a working engineer explaining his own code.
+- No emoji, no throat clearing. The first sentence states the problem.
+- Banned: delve, leverage, robust, seamless, cutting-edge, landscape, realm, elevate, unlock, tapestry, game-changer, "in today's fast-paced".
+- Never describe an API, function or flag that does not exist in the code.
+- Never put a string in an example that could match a real credential pattern. GitHub push protection will reject the commit.
+
 ## Language coverage
 
 Canonical order. A language at zero is next in line.
