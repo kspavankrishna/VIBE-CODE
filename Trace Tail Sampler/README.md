@@ -6,32 +6,31 @@ Head sampling at 5 percent throws away the exact traces you need at 3am: the tim
 
 ## What this solves
 
-Telemetry volume grows faster than the budget for it. AI gateways, edge functions, streaming APIs and microservice meshes emit far more spans than any team wants to pay to store, so somebody turns on a 1 percent or 5 percent sampler at the collector and the bill drops. Two weeks later a customer reports intermittent 504s on one route and the trace is gone. Not slow to find. Gone. The sampler discarded it because a uniform random sampler has no idea that a 9 second span matters more than a 40ms one.
+Telemetry volume grows faster than the budget for it. AI gateways, edge functions, streaming APIs and microservice meshes emit far more spans than anyone wants to pay to store, so somebody turns on a 5 percent sampler at the collector and the bill drops. Two weeks later a customer reports intermittent 504s on one route and the trace is gone. Not slow to find. Gone. A uniform random sampler has no idea that a 9 second span matters more than a 40ms one.
 
-That is the failure mode this file attacks. Random head sampling is uniform over traffic, but the value of a span is wildly non uniform. The 5 percent you keep is 5 percent of your healthy traffic and roughly 5 percent of your incidents, which means during an incident that produced eighty failing requests you have four of them, and none of the four are the pathological one. The engineer on call notices. They notice by spending forty minutes reconstructing a request path from application logs because the trace that would have answered it in thirty seconds was never written.
+That is the failure mode this file attacks. Head sampling is uniform over traffic, but the value of a span is wildly non uniform. The 5 percent you keep is 5 percent of healthy traffic and roughly 5 percent of your incidents, so an incident that produced eighty failing requests leaves you four, and none of the four is the pathological one. The engineer on call then spends forty minutes reconstructing a request path from application logs, because the trace that would have answered it in thirty seconds was never written.
 
-The second failure mode is instability. A sampler that uses a random number generator gives a different answer every time it runs. Replay the same span file through it twice and you get two different sets of kept traces, so you cannot reason about what your sampling config will actually do before shipping it, and you cannot compare two configs on the same data. Any tuning becomes guesswork against a moving target.
+The second failure mode is instability. A sampler that uses a random number generator gives a different answer every time it runs. Replay the same span file through it twice and you get two different sets of kept traces, so you cannot compare two configs on the same data. Tuning becomes guesswork against a moving target.
 
 This tool fixes both. Keep or drop is a pure function of the span content, so the same input always produces the same output, on any machine, in any order. And the keep probability is not flat: it rises with duration and jumps on any non success status, so slow and failing spans are far more likely to survive than boring ones.
 
 ## Why I built it
 
-Collector side tail sampling exists in OpenTelemetry and in vendor agents, but it lives inside a running pipeline. You cannot easily point it at a CSV export of yesterday's spans and ask what would this policy have kept. Tuning a sampling policy usually means changing a config, redeploying the collector, waiting a day and reading a bill. That loop is too slow, and it is destructive: the traces you dropped while testing a bad policy are not coming back.
+Collector side tail sampling exists in OpenTelemetry and in vendor agents, but it lives inside a running pipeline. You cannot easily point it at a CSV export of yesterday's spans and ask what would this policy have kept. Tuning a sampling policy usually means changing a config, redeploying the collector, waiting a day and reading a bill. That loop is slow and destructive: the traces you dropped while testing a bad policy are not coming back.
 
-I wanted something that runs offline against an exported span file, takes three numbers on the command line and prints a per span decision with a reason attached. No agent, no daemon, no config file, no dependency outside base. You can pipe a day of spans through it, count what survives, change the latency threshold and run it again on exactly the same data.
+I wanted something that runs offline against an exported span file, takes three numbers on the command line and prints a per span decision with a reason attached. No agent, no daemon, no config file, no dependency outside base. Pipe a day of spans through it, count what survives, change the latency threshold and run it again on exactly the same data.
 
 ## When to use it
 
 - Sizing a sampling policy before you push it to a production collector, using a CSV export of real span data
 - Explaining to finance or to a platform team why the keep rate is what it is, per span, with a stated reason
-- Comparing two threshold settings on identical input where a random sampler would give you noise instead of a comparison
+- Comparing two threshold settings on identical input, where a random sampler gives you noise instead of a comparison
 - Pre filtering a bulk span export down to the interesting subset before loading it into a query tool
-- Building a cheap keep or drop stage in a shell pipeline where installing a vendor agent is not on the table
 - Regression testing a sampling config in CI, where the determinism means the expected output file does not churn
 
 ## How it works
 
-Input is CSV on stdin with five fields: `trace_id,service,route,duration_ms,status`. `process` splits stdin with `lines`, drops blank lines and drops any line starting with `trace_id,` so a header row is tolerated, then runs `parseSpan` over the rest. `parseSpan` splits on commas with a hand rolled `splitComma` fold, trims each field, lowercases the status and builds a `Span`. A line with the wrong field count returns a `Left` naming the line number.
+Input is CSV on stdin with five fields: `trace_id,service,route,duration_ms,status`. `process` splits stdin with `lines`, drops blank lines and any line starting with `trace_id,` so a header row is tolerated, then runs `parseSpan` over the rest. `parseSpan` splits on commas with a hand rolled `splitComma` fold, trims each field, lowercases the status and builds a `Span`. A row with the wrong field count returns a `Left` naming the line number.
 
 The scoring lives in two small functions. `pressure` computes `min 1.0 (duration / latencyMs)` and adds `errorBoost` when the status is neither `ok` nor `success`. So a span at exactly the latency threshold contributes 1.0 on its own, and anything past it is clamped. `sampleDecision` then forms the keep probability as `min 1.0 (targetRate + pressure opts s)`. With the defaults, a fast healthy span sits at 0.05, a failing fast span at 0.45, and anything at or beyond 2500ms is at 1.0 and always kept.
 
@@ -69,5 +68,5 @@ Or run it straight with `runghc TraceTailSampler.hs < spans.csv`.
 - A flag given without its value, for example `--latency-ms` at the end of the arguments, is reported as an unknown option.
 - The JSON output carries keep, score, trace_id, service, route and reason. Duration and status appear only in the tab separated output.
 - Exit codes: 0 on success, 64 for a bad flag or a malformed CSV row. Parsing stops at the first bad row.
-- Imports are base only: Data.Bits, Data.Char, Data.List, Data.Word, Numeric and the System modules. No cabal file, no package set.
+- Imports are base only, so `ghc` alone builds it. No cabal file, no package set.
 - It reads all of stdin before emitting anything, so memory scales with input size. This is a batch tool, not a streaming collector stage.
