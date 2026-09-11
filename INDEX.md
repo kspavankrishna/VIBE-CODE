@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 150  |  **Source files:** 152  |  **Languages used:** 24 of 50  |  **Lines of code:** 106,241  |  **Span:** 2026-04-03 to 2026-09-11
+**Entries:** 151  |  **Source files:** 154  |  **Languages used:** 25 of 50  |  **Lines of code:** 106,692  |  **Span:** 2026-04-03 to 2026-09-11
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -36,7 +36,7 @@ Canonical order. A language at zero is next in line.
 | 22 | R | .R | 4 |
 | 23 | Julia | .jl | 6 |
 | 24 | Nix | .nix | 4 |
-| 25 | Erlang | .erl | 0 |
+| 25 | Erlang | .erl | 1 |
 | 26 | Clojure | .clj | 0 |
 | 27 | F# | .fs | 0 |
 | 28 | Nim | .nim | 0 |
@@ -67,7 +67,7 @@ Canonical order. A language at zero is next in line.
 
 | Topic | Entries |
 |---|---:|
-| MCP and Agent Tooling | 29 |
+| MCP and Agent Tooling | 30 |
 | LLM and Inference | 24 |
 | Cost and Quota | 20 |
 | Streaming and Parsing | 19 |
@@ -93,6 +93,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Agent Consent Receipt Ledger](Agent%20Consent%20Receipt%20Ledger/) | Ruby | MCP and Agent Tooling | 2026-08-20 | Audits AI agent tool call logs to prove every risky call had a scoped, unexpired consent receipt |
 | [Agent Context Shard Planner](Agent%20Context%20Shard%20Planner/) | Haskell | MCP and Agent Tooling | 2026-05-07 | Packs a code manifest into prompt-sized shards, keeping dependency cycles intact and boundaries deterministic |
 | [Agent Egress Policy Gate](Agent%20Egress%20Policy%20Gate/) | Python | Security and Supply Chain | 2026-08-04 | Audits AI agent, MCP and CI egress traces against a policy for leaked secrets, rogue domains and budgets |
+| [Agent Restart Storm Breaker](Agent%20Restart%20Storm%20Breaker/) | Erlang | MCP and Agent Tooling | 2026-09-11 | Erlang admission control that quarantines poison agent tasks and trips a fleet-wide restart storm breaker |
 | [Agent Rules Backdoor Scanner](Agent%20Rules%20Backdoor%20Scanner/) | Rust | Security and Supply Chain | 2026-06-01 | Dependency free Rust CI scanner that finds prompt injection and hidden backdoors in AI agent rules files |
 | [Agent Run Continuity Fence](Agent%20Run%20Continuity%20Fence/) | Java | MCP and Agent Tooling | 2026-08-14 | Java CLI that turns agent transcripts and traces into a verified continuity packet and fails CI on unsafe resumes |
 | [Agent Run Lease Table](Agent%20Run%20Lease%20Table/) | Rust | Infra and DevOps | 2026-05-15 | Single file Rust lease table with TTL leases, heartbeat renewal and fencing tokens, backed by one file |
