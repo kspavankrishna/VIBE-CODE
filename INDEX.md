@@ -2,38 +2,66 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 150  |  **Source files:** 152  |  **Languages:** 24  |  **Lines of code:** 106,241  |  **Span:** 2026-04-03 to 2026-09-11
+**Entries:** 150  |  **Source files:** 152  |  **Languages used:** 24 of 50  |  **Lines of code:** 106,241  |  **Span:** 2026-04-03 to 2026-09-11
 
-This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below. Do not delete this file.
+This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
 ## Language coverage
 
-| # | Language | Entries |
-|---:|---|---:|
-| 1 | Python | 12 |
-| 2 | TypeScript | 12 |
-| 3 | Rust | 8 |
-| 4 | Go | 6 |
-| 5 | Bash | 8 |
-| 6 | JavaScript | 4 |
-| 7 | Kotlin | 4 |
-| 8 | Java | 5 |
-| 9 | C# | 6 |
-| 10 | Swift | 5 |
-| 11 | C++ | 5 |
-| 12 | Dart | 6 |
-| 13 | Ruby | 5 |
-| 14 | PHP | 6 |
-| 15 | Zig | 6 |
-| 16 | Lua | 6 |
-| 17 | Elixir | 9 |
-| 18 | Scala | 4 |
-| 19 | Haskell | 7 |
-| 20 | OCaml | 7 |
-| 21 | C | 7 |
-| 22 | R | 4 |
-| 23 | Julia | 6 |
-| 24 | Nix | 4 |
+Canonical order. A language at zero is next in line.
+
+| # | Language | Ext | Entries |
+|---:|---|---|---:|
+| 1 | Python | .py | 12 |
+| 2 | TypeScript | .ts | 12 |
+| 3 | Rust | .rs | 8 |
+| 4 | Go | .go | 6 |
+| 5 | Bash | .sh | 8 |
+| 6 | JavaScript | .js | 4 |
+| 7 | Kotlin | .kt | 4 |
+| 8 | Java | .java | 5 |
+| 9 | C# | .cs | 6 |
+| 10 | Swift | .swift | 5 |
+| 11 | C++ | .cpp | 5 |
+| 12 | Dart | .dart | 6 |
+| 13 | Ruby | .rb | 5 |
+| 14 | PHP | .php | 6 |
+| 15 | Zig | .zig | 6 |
+| 16 | Lua | .lua | 6 |
+| 17 | Elixir | .ex | 9 |
+| 18 | Scala | .scala | 4 |
+| 19 | Haskell | .hs | 7 |
+| 20 | OCaml | .ml | 7 |
+| 21 | C | .c | 7 |
+| 22 | R | .R | 4 |
+| 23 | Julia | .jl | 6 |
+| 24 | Nix | .nix | 4 |
+| 25 | Erlang | .erl | 0 |
+| 26 | Clojure | .clj | 0 |
+| 27 | F# | .fs | 0 |
+| 28 | Nim | .nim | 0 |
+| 29 | Crystal | .cr | 0 |
+| 30 | Gleam | .gleam | 0 |
+| 31 | Mojo | .mojo | 0 |
+| 32 | Odin | .odin | 0 |
+| 33 | V | .v | 0 |
+| 34 | D | .d | 0 |
+| 35 | Perl | .pl | 0 |
+| 36 | Raku | .raku | 0 |
+| 37 | Groovy | .groovy | 0 |
+| 38 | Objective-C | .m | 0 |
+| 39 | PowerShell | .ps1 | 0 |
+| 40 | SQL | .sql | 0 |
+| 41 | Solidity | .sol | 0 |
+| 42 | Fortran | .f90 | 0 |
+| 43 | Ada | .adb | 0 |
+| 44 | Racket | .rkt | 0 |
+| 45 | Elm | .elm | 0 |
+| 46 | PureScript | .purs | 0 |
+| 47 | ReScript | .res | 0 |
+| 48 | Tcl | .tcl | 0 |
+| 49 | Haxe | .hx | 0 |
+| 50 | CUDA | .cu | 0 |
 
 ## Topics
 

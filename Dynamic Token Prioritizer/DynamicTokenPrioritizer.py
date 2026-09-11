@@ -82,9 +82,9 @@ class DynamicTokenPrioritizer:
         
         return sorted(kept_indices)
 
-/*
+"""
 ================================================================================
 EXPLANATION
 This solves the context window overflow problem. When LLM context gets full, you need to drop tokens intelligently—not just truncate tail. DynamicTokenPrioritizer ranks tokens by three factors: how rare they are (entropy), how recent (position), and their semantic importance. Structural tokens (quotes, brackets) always get boosted because you need them for parsing. Use it when building RAG systems, multi-turn chatbots, or long-form document processing where context budget is tight. The trick: rare tokens carry more information than common ones, recent context matters more than old, and syntax matters more than filler. Drop this into any LLM pipeline where you're batching documents and need smart token eviction policies instead of dumb truncation.
 ================================================================================
-*/
+"""

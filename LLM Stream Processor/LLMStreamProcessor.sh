@@ -103,9 +103,7 @@ main() {
 
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
 
-/*
-================================================================================
-EXPLANATION
-LLMStreamProcessor solves the headache of handling streaming LLM responses that arrive broken, partial, malformed, or rate-limited. Built because production LLM APIs timeout, drop packets, send incomplete JSON, and require intelligent retries. Use when consuming Claude, ChatGPT, or local model streams where you need bulletproof parsing and error recovery. The trick: tracks JSON brace depth to detect complete objects even amid partial reads, buffers gracefully, validates with jq, and implements exponential backoff for retries. Logs everything for debugging. Drop this into any bash pipeline that consumes streaming APIs—instantly gains resilience.
-================================================================================
-*/
+# ================================================================================
+# EXPLANATION
+# LLMStreamProcessor solves the headache of handling streaming LLM responses that arrive broken, partial, malformed, or rate-limited. Built because production LLM APIs timeout, drop packets, send incomplete JSON, and require intelligent retries. Use when consuming Claude, ChatGPT, or local model streams where you need bulletproof parsing and error recovery. The trick: tracks JSON brace depth to detect complete objects even amid partial reads, buffers gracefully, validates with jq, and implements exponential backoff for retries. Logs everything for debugging. Drop this into any bash pipeline that consumes streaming APIs—instantly gains resilience.
+# ================================================================================

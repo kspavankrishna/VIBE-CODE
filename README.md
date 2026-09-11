@@ -5,7 +5,7 @@ One day. One piece of code. Every single day.
 This is my personal coding lab. Self contained, production grade programs I write and push daily. Each one is a standalone idea: some practical, some experimental, all built to stay sharp and explore what is possible.  
 Languages rotate. Topics shift. The only constant is showing up.
 
-**150 entries  |  24 languages  |  106,241 lines  |  2026-04-03 to 2026-09-11**
+**150 entries  |  24 of 50 languages covered  |  106,241 lines  |  2026-04-03 to 2026-09-11**
 
 ---
 
@@ -62,9 +62,11 @@ Open any folder and the README renders straight away. No hunting through comment
 
 ## Languages
 
-Python (12) | TypeScript (12) | Rust (8) | Go (6) | Bash (8) | JavaScript (4) | Kotlin (4) | Java (5) | C# (6) | Swift (5) | C++ (5) | Dart (6) | Ruby (5) | PHP (6) | Zig (6) | Lua (6) | Elixir (9) | Scala (4) | Haskell (7) | OCaml (7) | C (7) | R (4) | Julia (6) | Nix (4)
+Each new entry goes to whichever language currently has the fewest entries, so coverage keeps evening out instead of piling up in the same few.
 
-Each new entry goes to whichever language currently has the fewest, so coverage keeps evening out over time.
+**Covered so far (24):** Python 12, TypeScript 12, Rust 8, Go 6, Bash 8, JavaScript 4, Kotlin 4, Java 5, C# 6, Swift 5, C++ 5, Dart 6, Ruby 5, PHP 6, Zig 6, Lua 6, Elixir 9, Scala 4, Haskell 7, OCaml 7, C 7, R 4, Julia 6, Nix 4
+
+**Still at zero (26):** Erlang, Clojure, F#, Nim, Crystal, Gleam, Mojo, Odin, V, D, Perl, Raku, Groovy, Objective-C, PowerShell, SQL, Solidity, Fortran, Ada, Racket, Elm, PureScript, ReScript, Tcl, Haxe, CUDA
 
 ---
 
