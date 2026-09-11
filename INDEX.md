@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 149  |  **Languages:** 24  |  **Lines of code:** 105,786  |  **Span:** 2026-04-03 to 2026-09-10
+**Entries:** 150  |  **Source files:** 152  |  **Languages:** 24  |  **Lines of code:** 106,241  |  **Span:** 2026-04-03 to 2026-09-11
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below. Do not delete this file.
 
@@ -26,7 +26,7 @@ This file is the register the daily routine reads. It tallies the Language colum
 | 14 | PHP | 6 |
 | 15 | Zig | 6 |
 | 16 | Lua | 6 |
-| 17 | Elixir | 8 |
+| 17 | Elixir | 9 |
 | 18 | Scala | 4 |
 | 19 | Haskell | 7 |
 | 20 | OCaml | 7 |
@@ -41,7 +41,7 @@ This file is the register the daily routine reads. It tallies the Language colum
 |---|---:|
 | MCP and Agent Tooling | 29 |
 | LLM and Inference | 24 |
-| Cost and Quota | 19 |
+| Cost and Quota | 20 |
 | Streaming and Parsing | 19 |
 | Infra and DevOps | 18 |
 | Security and Supply Chain | 14 |
@@ -184,6 +184,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Tenant GPU Lease Planner](Tenant%20GPU%20Lease%20Planner/) | Go | Infra and DevOps | 2026-06-02 | Deciding how many GPUs each inference tenant needs is usually a spreadsheet guess |
 | [Tenant Inference Queue Planner](Tenant%20Inference%20Queue%20Planner/) | Dart | Cost and Quota | 2026-06-14 | An LLM gateway that dispatches first and explains later will blow a tenant's token quota, miss a deadline and |
 | [Tenant Stream Budget Ledger](Tenant%20Stream%20Budget%20Ledger/) | Zig | Cost and Quota | 2026-08-22 | Your AI gateway logs already know that one tenant blew past its daily spend, replayed an idempotency key |
+| [Tenant Token Fair Scheduler](Tenant%20Token%20Fair%20Scheduler/) | Elixir | Cost and Quota | 2026-09-11 | Deficit Round Robin scheduler in Elixir that fairly splits a shared LLM token budget across tenants by cost |
 | [Test Impact Shard Planner](Test%20Impact%20Shard%20Planner/) | Go | Infra and DevOps | 2026-08-09 | A monorepo has more tests than any pull request deserves, but "run only the tests near the diff" quietly |
 | [Thermal Aware Inference Throttler](Thermal%20Aware%20Inference%20Throttler/) | Swift | LLM and Inference | 2026-09-04 | Swift actor that throttles on-device AI inference concurrency using AIMD driven by thermal state and Low Power Mode |
 | [Token Budget Manager](Token%20Budget%20Manager/) | Rust | LLM and Inference | 2026-04-07 | Lock-free Rust token budget accountant with RAII leases that auto-release unconsumed LLM context on drop |
@@ -204,4 +205,3 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Wasm Memory Lease Zig](Wasm%20Memory%20Lease%20Zig/) | Zig | Infra and DevOps | 2026-05-24 | Deterministic Wasm memory lease planner in Zig that grants tenant sandbox memory by priority-per-TTL from CSV |
 | [Webhook Replay Fence](Webhook%20Replay%20Fence/) | PHP | Security and Supply Chain | 2026-05-24 | Single file PHP webhook replay fence: fingerprints deliveries, prunes by TTL and locks a file ledger |
 | [Workflow Failure Fingerprint](Workflow%20Failure%20Fingerprint/) | TypeScript | Infra and DevOps | 2026-05-30 | Clusters raw CI logs into stable redacted failure fingerprints with a severity, category and rerun decision |
-
