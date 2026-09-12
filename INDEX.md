@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 152  |  **Source files:** 155  |  **Languages used:** 26 of 50  |  **Lines of code:** 107,077  |  **Span:** 2026-04-03 to 2026-09-11
+**Entries:** 153  |  **Source files:** 156  |  **Languages used:** 27 of 50  |  **Lines of code:** 108,148  |  **Span:** 2026-04-03 to 2026-09-12
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -51,7 +51,7 @@ Canonical order. A language at zero is next in line.
 | 24 | Nix | .nix | 4 |
 | 25 | Erlang | .erl | 1 |
 | 26 | Clojure | .clj | 1 |
-| 27 | F# | .fs | 0 |
+| 27 | F# | .fs | 1 |
 | 28 | Nim | .nim | 0 |
 | 29 | Crystal | .cr | 0 |
 | 30 | Gleam | .gleam | 0 |
@@ -87,7 +87,7 @@ Canonical order. A language at zero is next in line.
 | Infra and DevOps | 18 |
 | Security and Supply Chain | 14 |
 | Evals and Experiments | 13 |
-| Data and Vector | 7 |
+| Data and Vector | 8 |
 | Edge and Carbon | 6 |
 
 ## All entries
@@ -245,6 +245,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Vector Cache LRU](Vector%20Cache%20LRU/) | Rust | LLM and Inference | 2026-04-08 | Thread safe bounded LRU cache for f32 embedding vectors in Rust, with byte level payload accounting |
 | [Vector Index Lease Guard](Vector%20Index%20Lease%20Guard/) | Haskell | Data and Vector | 2026-07-21 | Haskell CI gate that fails the build on stale, expired, cross-tenant or revoked RAG vector index leases |
 | [Vector Search Optimizer](Vector%20Search%20Optimizer/) | Rust | Data and Vector | 2026-04-05 | Brute force Rust cosine vector search that tags each top k result with whether it fits a token budget |
+| [Vector Shard Merge Planner](Vector%20Shard%20Merge%20Planner/) | F# | Data and Vector | 2026-09-12 | Deterministic F# CLI that plans a vector shard merge with LWW resolution, dimension gating and LSH dedup |
 | [Wasm Memory Lease Zig](Wasm%20Memory%20Lease%20Zig/) | Zig | Infra and DevOps | 2026-05-24 | Deterministic Wasm memory lease planner in Zig that grants tenant sandbox memory by priority-per-TTL from CSV |
 | [Webhook Replay Fence](Webhook%20Replay%20Fence/) | PHP | Security and Supply Chain | 2026-05-24 | Single file PHP webhook replay fence: fingerprints deliveries, prunes by TTL and locks a file ledger |
 | [Workflow Failure Fingerprint](Workflow%20Failure%20Fingerprint/) | TypeScript | Infra and DevOps | 2026-05-30 | Clusters raw CI logs into stable redacted failure fingerprints with a severity, category and rerun decision |
