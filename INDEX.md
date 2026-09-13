@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 153  |  **Source files:** 156  |  **Languages used:** 27 of 50  |  **Lines of code:** 108,148  |  **Span:** 2026-04-03 to 2026-09-12
+**Entries:** 154  |  **Source files:** 157  |  **Languages used:** 28 of 50  |  **Lines of code:** 108,803  |  **Span:** 2026-04-03 to 2026-09-13
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -52,7 +52,7 @@ Canonical order. A language at zero is next in line.
 | 25 | Erlang | .erl | 1 |
 | 26 | Clojure | .clj | 1 |
 | 27 | F# | .fs | 1 |
-| 28 | Nim | .nim | 0 |
+| 28 | Nim | .nim | 1 |
 | 29 | Crystal | .cr | 0 |
 | 30 | Gleam | .gleam | 0 |
 | 31 | Mojo | .mojo | 0 |
@@ -87,7 +87,7 @@ Canonical order. A language at zero is next in line.
 | Infra and DevOps | 18 |
 | Security and Supply Chain | 14 |
 | Evals and Experiments | 13 |
-| Data and Vector | 8 |
+| Data and Vector | 9 |
 | Edge and Carbon | 6 |
 
 ## All entries
@@ -244,6 +244,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Untrusted Code Resource Governor](Untrusted%20Code%20Resource%20Governor/) | Java | Security and Supply Chain | 2026-09-03 | Runs untrusted or LLM-generated Java in-process under wall clock, CPU and allocation budgets with a blocklist classloader |
 | [Vector Cache LRU](Vector%20Cache%20LRU/) | Rust | LLM and Inference | 2026-04-08 | Thread safe bounded LRU cache for f32 embedding vectors in Rust, with byte level payload accounting |
 | [Vector Index Lease Guard](Vector%20Index%20Lease%20Guard/) | Haskell | Data and Vector | 2026-07-21 | Haskell CI gate that fails the build on stale, expired, cross-tenant or revoked RAG vector index leases |
+| [Vector Product Quantizer](Vector%20Product%20Quantizer/) | Nim | Data and Vector | 2026-09-13 | Nim CLI that trains product quantization codebooks and searches compressed byte codes with ADC |
 | [Vector Search Optimizer](Vector%20Search%20Optimizer/) | Rust | Data and Vector | 2026-04-05 | Brute force Rust cosine vector search that tags each top k result with whether it fits a token budget |
 | [Vector Shard Merge Planner](Vector%20Shard%20Merge%20Planner/) | F# | Data and Vector | 2026-09-12 | Deterministic F# CLI that plans a vector shard merge with LWW resolution, dimension gating and LSH dedup |
 | [Wasm Memory Lease Zig](Wasm%20Memory%20Lease%20Zig/) | Zig | Infra and DevOps | 2026-05-24 | Deterministic Wasm memory lease planner in Zig that grants tenant sandbox memory by priority-per-TTL from CSV |
