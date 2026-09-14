@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 154  |  **Source files:** 157  |  **Languages used:** 28 of 50  |  **Lines of code:** 108,803  |  **Span:** 2026-04-03 to 2026-09-13
+**Entries:** 155  |  **Source files:** 158  |  **Languages used:** 29 of 50  |  **Lines of code:** 109,375  |  **Span:** 2026-04-03 to 2026-09-14
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -53,7 +53,7 @@ Canonical order. A language at zero is next in line.
 | 26 | Clojure | .clj | 1 |
 | 27 | F# | .fs | 1 |
 | 28 | Nim | .nim | 1 |
-| 29 | Crystal | .cr | 0 |
+| 29 | Crystal | .cr | 1 |
 | 30 | Gleam | .gleam | 0 |
 | 31 | Mojo | .mojo | 0 |
 | 32 | Odin | .odin | 0 |
@@ -80,7 +80,7 @@ Canonical order. A language at zero is next in line.
 
 | Topic | Entries |
 |---|---:|
-| MCP and Agent Tooling | 31 |
+| MCP and Agent Tooling | 32 |
 | LLM and Inference | 24 |
 | Cost and Quota | 20 |
 | Streaming and Parsing | 19 |
@@ -220,6 +220,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Streaming Context Predictor](Streaming%20Context%20Predictor/) | TypeScript | Streaming and Parsing | 2026-04-07 | Predicts LLM context overflow mid stream from a rolling token average and emits warnings before truncation |
 | [Streaming Eval Bootstrap](Streaming%20Eval%20Bootstrap/) | Scala | Evals and Experiments | 2026-05-24 | Deterministic paired bootstrap CLI that turns streamed eval CSV rows into a CI gate with regression risk |
 | [Streaming Kernel Drift Detector](Streaming%20Kernel%20Drift%20Detector/) | Julia | Data and Vector | 2026-04-10 | Feature vectors and embeddings shift long before a dashboard shows it |
+| [Streaming Patch Hunk Applier](Streaming%20Patch%20Hunk%20Applier/) | Crystal | MCP and Agent Tooling | 2026-09-14 | Crystal CLI that streams unified diffs and applies hunks with fuzzy matching and hash staleness guards |
 | [Streaming Request Deduplicator](Streaming%20Request%20Deduplicator/) | TypeScript | Streaming and Parsing | 2026-04-08 | Coalesces identical in-flight streaming requests behind one signature so a single upstream call fans out to many handlers |
 | [Structured JSON Repair](Structured%20JSON%20Repair/) | Python | Streaming and Parsing | 2026-04-10 | Deterministic repair of almost-valid LLM JSON: fences, bare keys, Python literals, comments, trailing commas |
 | [Structured JSON Stream Decoder](Structured%20JSON%20Stream%20Decoder/) | Dart | Streaming and Parsing | 2026-04-14 | Dart incremental JSON decoder that extracts complete, verified JSON documents from streamed LLM text over SSE or WebSockets |
