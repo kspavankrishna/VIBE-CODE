@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 155  |  **Source files:** 158  |  **Languages used:** 29 of 50  |  **Lines of code:** 109,375  |  **Span:** 2026-04-03 to 2026-09-14
+**Entries:** 156  |  **Source files:** 159  |  **Languages used:** 30 of 50  |  **Lines of code:** 110,005  |  **Span:** 2026-04-03 to 2026-09-15
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -54,7 +54,7 @@ Canonical order. A language at zero is next in line.
 | 27 | F# | .fs | 1 |
 | 28 | Nim | .nim | 1 |
 | 29 | Crystal | .cr | 1 |
-| 30 | Gleam | .gleam | 0 |
+| 30 | Gleam | .gleam | 1 |
 | 31 | Mojo | .mojo | 0 |
 | 32 | Odin | .odin | 0 |
 | 33 | V | .v | 0 |
@@ -83,7 +83,7 @@ Canonical order. A language at zero is next in line.
 | MCP and Agent Tooling | 32 |
 | LLM and Inference | 24 |
 | Cost and Quota | 20 |
-| Streaming and Parsing | 19 |
+| Streaming and Parsing | 20 |
 | Infra and DevOps | 18 |
 | Security and Supply Chain | 14 |
 | Evals and Experiments | 13 |
@@ -174,6 +174,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [JSONL Secret Firewall](JSONL%20Secret%20Firewall/) | C++ | Security and Supply Chain | 2026-04-14 | Your JSONL logs contain bearer tokens |
 | [Kube Context Guard](Kube%20Context%20Guard/) | Bash | Infra and DevOps | 2026-04-22 | You have credentials for six clusters and your shell remembers only one context |
 | [LLM Spend Velocity Governor](LLM%20Spend%20Velocity%20Governor/) | Ruby | Cost and Quota | 2026-09-07 | A single tenant's runaway agent loop can burn a month of LLM budget in ten minutes, and most Ruby backends |
+| [LLM Stream Fanout Hub](LLM%20Stream%20Fanout%20Hub/) | Gleam | Streaming and Parsing | 2026-09-15 | OTP actor hub that fans one LLM stream out to many subscribers, each with its own bounded, replayable queue |
 | [LLM Stream Normalizer](LLM%20Stream%20Normalizer/) | Swift | Streaming and Parsing | 2026-04-14 | Streaming LLM responses arrive in a different wire format from every provider, and tool call arguments show |
 | [LLM Stream Processor](LLM%20Stream%20Processor/) | Bash | Streaming and Parsing | 2026-04-07 | Streaming LLM responses arrive as half objects |
 | [MCP Call Coalescer](MCP%20Call%20Coalescer/) | Java | MCP and Agent Tooling | 2026-04-14 | Java request coalescer with TTL cache that collapses duplicate concurrent MCP tool calls into one upstream call per key |
