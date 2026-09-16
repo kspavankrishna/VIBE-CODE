@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 156  |  **Source files:** 159  |  **Languages used:** 30 of 50  |  **Lines of code:** 110,005  |  **Span:** 2026-04-03 to 2026-09-15
+**Entries:** 157  |  **Source files:** 160  |  **Languages used:** 31 of 50  |  **Lines of code:** 110,329  |  **Span:** 2026-04-03 to 2026-09-16
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -55,7 +55,7 @@ Canonical order. A language at zero is next in line.
 | 28 | Nim | .nim | 1 |
 | 29 | Crystal | .cr | 1 |
 | 30 | Gleam | .gleam | 1 |
-| 31 | Mojo | .mojo | 0 |
+| 31 | Mojo | .mojo | 1 |
 | 32 | Odin | .odin | 0 |
 | 33 | V | .v | 0 |
 | 34 | D | .d | 0 |
@@ -87,7 +87,7 @@ Canonical order. A language at zero is next in line.
 | Infra and DevOps | 18 |
 | Security and Supply Chain | 14 |
 | Evals and Experiments | 13 |
-| Data and Vector | 9 |
+| Data and Vector | 10 |
 | Edge and Carbon | 6 |
 
 ## All entries
@@ -140,6 +140,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Edge SSE Replay Ledger](Edge%20SSE%20Replay%20Ledger/) | Lua | Streaming and Parsing | 2026-06-16 | Single file Lua SSE ledger with bounded replay, Last-Event-ID recovery, secret redaction and tenant filters |
 | [Edge Telemetry Backpressure Ring](Edge%20Telemetry%20Backpressure%20Ring/) | Zig | Edge and Carbon | 2026-09-09 | A battery powered sensor node loses its uplink for an hour, readings keep arriving, and a plain FIFO either |
 | [Embedding Drift Attributor](Embedding%20Drift%20Attributor/) | Julia | Data and Vector | 2026-06-12 | Attributes embedding drift to the cohorts that moved, with permutation tests and bootstrap risk intervals |
+| [Embedding Similarity Search](Embedding%20Similarity%20Search/) | Mojo | Data and Vector | 2026-09-16 | Mojo cosine top k search kernel with a SIMD dot product, a bounded min heap and deterministic parallel scan |
 | [Eval Artifact Lineage Gate](Eval%20Artifact%20Lineage%20Gate/) | OCaml | Evals and Experiments | 2026-06-09 | Hash chained ledger and CI gate for LLM eval runs, proving dataset, prompt, model and cost lineage |
 | [Eval Holdout Firewall](Eval%20Holdout%20Firewall/) | OCaml | Evals and Experiments | 2026-07-07 | OCaml CLI that fingerprints eval holdouts with bottom-k MinHash and blocks contaminated candidate data in CI |
 | [Eval Leakage Sentinel](Eval%20Leakage%20Sentinel/) | Scala and R | Evals and Experiments | 2026-04-30 | Scans training and eval data for benchmark leakage using Jaccard shingles in R and MinHash LSH in Scala |
