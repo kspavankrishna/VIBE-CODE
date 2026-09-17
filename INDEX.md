@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 157  |  **Source files:** 160  |  **Languages used:** 31 of 50  |  **Lines of code:** 110,329  |  **Span:** 2026-04-03 to 2026-09-16
+**Entries:** 158  |  **Source files:** 161  |  **Languages used:** 32 of 50  |  **Lines of code:** 110,781  |  **Span:** 2026-04-03 to 2026-09-17
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -56,7 +56,7 @@ Canonical order. A language at zero is next in line.
 | 29 | Crystal | .cr | 1 |
 | 30 | Gleam | .gleam | 1 |
 | 31 | Mojo | .mojo | 1 |
-| 32 | Odin | .odin | 0 |
+| 32 | Odin | .odin | 1 |
 | 33 | V | .v | 0 |
 | 34 | D | .d | 0 |
 | 35 | Perl | .pl | 0 |
@@ -87,7 +87,7 @@ Canonical order. A language at zero is next in line.
 | Infra and DevOps | 18 |
 | Security and Supply Chain | 14 |
 | Evals and Experiments | 13 |
-| Data and Vector | 10 |
+| Data and Vector | 11 |
 | Edge and Carbon | 6 |
 
 ## All entries
@@ -129,6 +129,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Complexity Regression Sentinel](Complexity%20Regression%20Sentinel/) | Rust | Infra and DevOps | 2026-08-28 | Rust CLI that diffs per function loop nesting between git refs and fails CI on O(n^2) regressions |
 | [Composer Risk Ledger](Composer%20Risk%20Ledger/) | PHP | Security and Supply Chain | 2026-07-16 | Scores composer.lock supply chain risk offline and gates CI with JSON, Markdown or SARIF output |
 | [Concurrent Token Window](Concurrent%20Token%20Window/) | Go | LLM and Inference | 2026-04-07 | Go rate limiter combining a token budget, a concurrency semaphore and a circuit breaker for token metered LLM APIs |
+| [Content Defined Chunker](Content%20Defined%20Chunker/) | Odin | Data and Vector | 2026-09-17 | Odin gear hash FastCDC chunker with stable boundaries and a manifest diff against fixed size chunking |
 | [Context Window Optimizer](Context%20Window%20Optimizer/) | Python | LLM and Inference | 2026-04-09 | Scores LLM chat history by recency, role and query overlap, then evicts weakest turns to fit a token budget |
 | [Context Window Packer](Context%20Window%20Packer/) | Python | LLM and Inference | 2026-04-09 | Packs chat history into an LLM context window, pinning critical messages and reserving output tokens |
 | [Data Residency Route Planner](Data%20Residency%20Route%20Planner/) | Python | LLM and Inference | 2026-05-29 | Routes LLM inference to compliant endpoints, enforcing data residency and retention before cost scoring |
