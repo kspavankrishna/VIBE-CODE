@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 158  |  **Source files:** 161  |  **Languages used:** 32 of 50  |  **Lines of code:** 110,781  |  **Span:** 2026-04-03 to 2026-09-17
+**Entries:** 159  |  **Source files:** 162  |  **Languages used:** 33 of 50  |  **Lines of code:** 111,265  |  **Span:** 2026-04-03 to 2026-09-18
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -57,7 +57,7 @@ Canonical order. A language at zero is next in line.
 | 30 | Gleam | .gleam | 1 |
 | 31 | Mojo | .mojo | 1 |
 | 32 | Odin | .odin | 1 |
-| 33 | V | .v | 0 |
+| 33 | V | .v | 1 |
 | 34 | D | .d | 0 |
 | 35 | Perl | .pl | 0 |
 | 36 | Raku | .raku | 0 |
@@ -81,7 +81,7 @@ Canonical order. A language at zero is next in line.
 | Topic | Entries |
 |---|---:|
 | MCP and Agent Tooling | 32 |
-| LLM and Inference | 24 |
+| LLM and Inference | 25 |
 | Cost and Quota | 20 |
 | Streaming and Parsing | 20 |
 | Infra and DevOps | 18 |
@@ -217,6 +217,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Sequential Eval Quorum](Sequential%20Eval%20Quorum/) | Elixir | Evals and Experiments | 2026-06-17 | Sequential eval gate in Elixir that dedupes streamed canary evidence and returns promote or rollback |
 | [Smart Doc Chunker](Smart%20Doc%20Chunker/) | Bash | Data and Vector | 2026-04-05 | Bash chunker that splits .txt/.md/.log files into token bounded chunks and emits a manifest.json |
 | [Smart Token Budget Manager](Smart%20Token%20Budget%20Manager/) | Python | Cost and Quota | 2026-04-05 | In-process token and cost budget guard for LLM APIs, with per user sliding window limits and pre-call cost estimates |
+| [Speculative Decode Verifier](Speculative%20Decode%20Verifier/) | V | LLM and Inference | 2026-09-18 | Replays speculative decoding traces to verify accept/reject sampling, residual math and KV cache rollback |
 | [Stable Code Chunk Planner](Stable%20Code%20Chunk%20Planner/) | Java | LLM and Inference | 2026-04-22 | Deterministic Java CLI that chunks a repo at declaration boundaries and emits an NDJSON manifest with stable IDs |
 | [Stable HTML Change Detector](Stable%20HTML%20Change%20Detector/) | TypeScript | Streaming and Parsing | 2026-04-27 | Fingerprints semantic HTML blocks so page monitors alert on real content changes, not framework churn |
 | [Stream Replay Fence](Stream%20Replay%20Fence/) | Julia | Streaming and Parsing | 2026-07-27 | Audits a stream replay manifest for duplicate identity, offset gaps, watermark and retry violations |
