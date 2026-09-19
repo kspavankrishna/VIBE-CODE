@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 159  |  **Source files:** 162  |  **Languages used:** 33 of 50  |  **Lines of code:** 111,265  |  **Span:** 2026-04-03 to 2026-09-18
+**Entries:** 160  |  **Source files:** 163  |  **Languages used:** 34 of 50  |  **Lines of code:** 111,991  |  **Span:** 2026-04-03 to 2026-09-19
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -58,7 +58,7 @@ Canonical order. A language at zero is next in line.
 | 31 | Mojo | .mojo | 1 |
 | 32 | Odin | .odin | 1 |
 | 33 | V | .v | 1 |
-| 34 | D | .d | 0 |
+| 34 | D | .d | 1 |
 | 35 | Perl | .pl | 0 |
 | 36 | Raku | .raku | 0 |
 | 37 | Groovy | .groovy | 0 |
@@ -85,7 +85,7 @@ Canonical order. A language at zero is next in line.
 | Cost and Quota | 20 |
 | Streaming and Parsing | 20 |
 | Infra and DevOps | 18 |
-| Security and Supply Chain | 14 |
+| Security and Supply Chain | 15 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
 | Edge and Carbon | 6 |
@@ -114,6 +114,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Agent Run Provenance Gate](Agent%20Run%20Provenance%20Gate/) | Rust | MCP and Agent Tooling | 2026-08-08 | Audits JSON/JSONL AI agent traces for replayable provenance and fails CI when run ids, model pins, hashes, tool digests or approvals are missing |
 | [Agent Run SLO Governor](Agent%20Run%20SLO%20Governor/) | TypeScript | Evals and Experiments | 2026-05-28 | Gates AI agent canary rollouts on paired bootstrap intervals for p95 latency, cost, error and quality |
 | [Agent Stream Budget](Agent%20Stream%20Budget/) | Zig | MCP and Agent Tooling | 2026-07-16 | Zig CLI that reads JSONL LLM and agent traces, groups by session, and fails CI on token, cost, latency, stall or egress breaches |
+| [Agent Syscall Guard](Agent%20Syscall%20Guard/) | D | Security and Supply Chain | 2026-09-19 | Ptrace based syscall allowlist in D that polices a full agent process tree and turns denials into EPERM |
 | [Agent Token Spillway](Agent%20Token%20Spillway/) | Zig | Cost and Quota | 2026-06-15 | Single file Zig admission controller that accepts, defers or rejects LLM requests before tokens are spent |
 | [Agent Tool Call Circuit Breaker](Agent%20Tool%20Call%20Circuit%20Breaker/) | Kotlin | MCP and Agent Tooling | 2026-09-02 | Cost weighted circuit breaker for LLM agent tool calls, with per tenant bulkheading and jittered backoff |
 | [Agent Tool Retry Budget](Agent%20Tool%20Retry%20Budget/) | Elixir | MCP and Agent Tooling | 2026-05-24 | Elixir gate that scores agent tool call retries against attempt, elapsed and idempotency budgets |
