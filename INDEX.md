@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 160  |  **Source files:** 163  |  **Languages used:** 34 of 50  |  **Lines of code:** 111,991  |  **Span:** 2026-04-03 to 2026-09-19
+**Entries:** 161  |  **Source files:** 164  |  **Languages used:** 35 of 50  |  **Lines of code:** 112,775  |  **Span:** 2026-04-03 to 2026-09-20
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -59,7 +59,7 @@ Canonical order. A language at zero is next in line.
 | 32 | Odin | .odin | 1 |
 | 33 | V | .v | 1 |
 | 34 | D | .d | 1 |
-| 35 | Perl | .pl | 0 |
+| 35 | Perl | .pl | 1 |
 | 36 | Raku | .raku | 0 |
 | 37 | Groovy | .groovy | 0 |
 | 38 | Objective-C | .m | 0 |
@@ -80,7 +80,7 @@ Canonical order. A language at zero is next in line.
 
 | Topic | Entries |
 |---|---:|
-| MCP and Agent Tooling | 32 |
+| MCP and Agent Tooling | 33 |
 | LLM and Inference | 25 |
 | Cost and Quota | 20 |
 | Streaming and Parsing | 20 |
@@ -188,6 +188,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [MCP Manifest Compat Gate](MCP%20Manifest%20Compat%20Gate/) | OCaml | MCP and Agent Tooling | 2026-05-07 | OCaml CI gate that diffs two MCP tool manifests and flags breaking JSON Schema contract changes per tool |
 | [MCP Server Bundle](MCP%20Server%20Bundle/) | Nix | MCP and Agent Tooling | 2026-05-11 | Your MCP client config works on your laptop and nowhere else |
 | [MCP Server Doctor](MCP%20Server%20Doctor/) | Bash | MCP and Agent Tooling | 2026-05-18 | An MCP stdio server can pass its own tests, publish a clean README and still break the moment a real client |
+| [MCP Stdio Conformance Auditor](MCP%20Stdio%20Conformance%20Auditor/) | Perl | MCP and Agent Tooling | 2026-09-20 | Spawns an MCP server over stdio and runs 14 adversarial handshake, framing and lifecycle checks against it |
 | [MCP Stdio Watchdog](MCP%20Stdio%20Watchdog/) | Kotlin | MCP and Agent Tooling | 2026-04-22 | A stdio MCP server hangs mid `tools/call`, the client keeps waiting forever, and nobody can tell whether the |
 | [MCP Tool Contract Gate](MCP%20Tool%20Contract%20Gate/) | Haskell | MCP and Agent Tooling | 2026-05-07 | An MCP server ships a small edit to one tool's JSON Schema, a required field appears or a maximum drops, and |
 | [MCP Tool Policy Compiler](MCP%20Tool%20Policy%20Compiler/) | Lua | MCP and Agent Tooling | 2026-07-17 | Single file Lua policy engine that replays MCP and agent tool call JSONL against a plain text allow/deny rule file |
