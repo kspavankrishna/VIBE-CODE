@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 161  |  **Source files:** 164  |  **Languages used:** 35 of 50  |  **Lines of code:** 112,775  |  **Span:** 2026-04-03 to 2026-09-20
+**Entries:** 162  |  **Source files:** 165  |  **Languages used:** 36 of 50  |  **Lines of code:** 113,227  |  **Span:** 2026-04-03 to 2026-09-21
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -60,7 +60,7 @@ Canonical order. A language at zero is next in line.
 | 33 | V | .v | 1 |
 | 34 | D | .d | 1 |
 | 35 | Perl | .pl | 1 |
-| 36 | Raku | .raku | 0 |
+| 36 | Raku | .raku | 1 |
 | 37 | Groovy | .groovy | 0 |
 | 38 | Objective-C | .m | 0 |
 | 39 | PowerShell | .ps1 | 0 |
@@ -85,7 +85,7 @@ Canonical order. A language at zero is next in line.
 | Cost and Quota | 20 |
 | Streaming and Parsing | 20 |
 | Infra and DevOps | 18 |
-| Security and Supply Chain | 15 |
+| Security and Supply Chain | 16 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
 | Edge and Carbon | 6 |
@@ -96,6 +96,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 
 | Entry | Language | Topic | Added | What it does |
 |---|---|---|---|---|
+| [AI Crawler Policy Auditor](AI%20Crawler%20Policy%20Auditor/) | Raku | Security and Supply Chain | 2026-09-21 | Replays real robots.txt precedence to catch rules that block search engines or miss the AI bot entirely |
 | [AI Gateway Quota](AI%20Gateway%20Quota/) | Lua | Cost and Quota | 2026-04-16 | Lua gateway quota that reserves token and spend budget before an LLM call and settles real usage after |
 | [AI SSE JSON Assembler](AI%20SSE%20JSON%20Assembler/) | C++ | Streaming and Parsing | 2026-04-23 | Reassembles fragmented AI SSE streams into complete validated JSON values with hard memory and depth caps |
 | [AI SSE Resume Ledger](AI%20SSE%20Resume%20Ledger/) | Kotlin | Streaming and Parsing | 2026-05-20 | Bounded in memory SSE replay ledger for resumable LLM token streams with checkpoints and tool dedupe |
