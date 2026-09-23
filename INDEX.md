@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 163  |  **Source files:** 166  |  **Languages used:** 37 of 50  |  **Lines of code:** 113,939  |  **Span:** 2026-04-03 to 2026-09-22
+**Entries:** 164  |  **Source files:** 168  |  **Languages used:** 38 of 50  |  **Lines of code:** 115,314  |  **Span:** 2026-04-03 to 2026-09-23
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -62,7 +62,7 @@ Canonical order. A language at zero is next in line.
 | 35 | Perl | .pl | 1 |
 | 36 | Raku | .raku | 1 |
 | 37 | Groovy | .groovy | 1 |
-| 38 | Objective-C | .m | 0 |
+| 38 | Objective-C | .m | 1 |
 | 39 | PowerShell | .ps1 | 0 |
 | 40 | SQL | .sql | 0 |
 | 41 | Solidity | .sol | 0 |
@@ -82,7 +82,7 @@ Canonical order. A language at zero is next in line.
 |---|---:|
 | MCP and Agent Tooling | 33 |
 | LLM and Inference | 25 |
-| Cost and Quota | 20 |
+| Cost and Quota | 21 |
 | Streaming and Parsing | 20 |
 | Infra and DevOps | 18 |
 | Security and Supply Chain | 17 |
@@ -178,6 +178,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [JSONL Batch Preflight](JSONL%20Batch%20Preflight/) | Bash | LLM and Inference | 2026-04-22 | Bash preflight that validates, dedupes, secret-scans and shards JSONL batch files before provider upload |
 | [JSONL Secret Firewall](JSONL%20Secret%20Firewall/) | C++ | Security and Supply Chain | 2026-04-14 | Your JSONL logs contain bearer tokens |
 | [Kube Context Guard](Kube%20Context%20Guard/) | Bash | Infra and DevOps | 2026-04-22 | You have credentials for six clusters and your shell remembers only one context |
+| [LLM Network Cost Sentinel](LLM%20Network%20Cost%20Sentinel/) | Objective-C | Cost and Quota | 2026-09-23 | Swizzles NSURLSession so every LLM API call from an iOS or macOS app is metered, priced and can be blocked |
 | [LLM Spend Velocity Governor](LLM%20Spend%20Velocity%20Governor/) | Ruby | Cost and Quota | 2026-09-07 | A single tenant's runaway agent loop can burn a month of LLM budget in ten minutes, and most Ruby backends |
 | [LLM Stream Fanout Hub](LLM%20Stream%20Fanout%20Hub/) | Gleam | Streaming and Parsing | 2026-09-15 | OTP actor hub that fans one LLM stream out to many subscribers, each with its own bounded, replayable queue |
 | [LLM Stream Normalizer](LLM%20Stream%20Normalizer/) | Swift | Streaming and Parsing | 2026-04-14 | Streaming LLM responses arrive in a different wire format from every provider, and tool call arguments show |
