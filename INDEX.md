@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 165  |  **Source files:** 169  |  **Languages used:** 39 of 50  |  **Lines of code:** 116,260  |  **Span:** 2026-04-03 to 2026-09-24
+**Entries:** 166  |  **Source files:** 170  |  **Languages used:** 40 of 50  |  **Lines of code:** 116,582  |  **Span:** 2026-04-03 to 2026-09-25
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -64,7 +64,7 @@ Canonical order. A language at zero is next in line.
 | 37 | Groovy | .groovy | 1 |
 | 38 | Objective-C | .m | 1 |
 | 39 | PowerShell | .ps1 | 1 |
-| 40 | SQL | .sql | 0 |
+| 40 | SQL | .sql | 1 |
 | 41 | Solidity | .sol | 0 |
 | 42 | Fortran | .f90 | 0 |
 | 43 | Ada | .adb | 0 |
@@ -85,7 +85,7 @@ Canonical order. A language at zero is next in line.
 | Cost and Quota | 21 |
 | Streaming and Parsing | 20 |
 | Infra and DevOps | 18 |
-| Security and Supply Chain | 18 |
+| Security and Supply Chain | 19 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
 | Edge and Carbon | 6 |
@@ -205,6 +205,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Paged KV Cache Allocator](Paged%20KV%20Cache%20Allocator/) | C++ | LLM and Inference | 2026-09-05 | Block-based KV cache allocator in C++ with prefix hash sharing, copy-on-write forks and LRU eviction |
 | [Paired Eval Gate](Paired%20Eval%20Gate/) | Julia | Evals and Experiments | 2026-04-17 | Stratified cluster paired bootstrap in Julia for LLM eval release gates, with win rates, CIs and margins |
 | [Policy Drift Incident Router](Policy%20Drift%20Incident%20Router/) | Bash | Infra and DevOps | 2026-08-10 | Bash CI gate that routes risky policy, infra, AI-agent and pipeline file changes to owners, controls and runbooks |
+| [Postgres Role Escalation Path Finder](Postgres%20Role%20Escalation%20Path%20Finder/) | SQL | Security and Supply Chain | 2026-09-25 | Walks the Postgres role membership graph to find every login role that can reach a superuser equivalent |
 | [Prompt Cache Cutover](Prompt%20Cache%20Cutover/) | OCaml | Cost and Quota | 2026-05-24 | OCaml CLI that reads route-level token CSV and returns per-route prompt cache break-even and enable verdicts |
 | [Prompt Cache Lease Governor](Prompt%20Cache%20Lease%20Governor/) | Kotlin | Cost and Quota | 2026-08-13 | Kotlin CLI that scores prompt cache blocks on cost, freshness, residency and sensitivity, then pins, refreshes, evicts, bypasses or quarantines each one |
 | [Prompt Cache Planner](Prompt%20Cache%20Planner/) | Python | LLM and Inference | 2026-04-18 | Splits LLM requests into a stable cacheable prefix and live suffix, then explains why prompt caching missed |
