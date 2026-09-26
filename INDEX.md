@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 166  |  **Source files:** 170  |  **Languages used:** 40 of 50  |  **Lines of code:** 116,582  |  **Span:** 2026-04-03 to 2026-09-25
+**Entries:** 167  |  **Source files:** 171  |  **Languages used:** 41 of 50  |  **Lines of code:** 116,954  |  **Span:** 2026-04-03 to 2026-09-26
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -65,7 +65,7 @@ Canonical order. A language at zero is next in line.
 | 38 | Objective-C | .m | 1 |
 | 39 | PowerShell | .ps1 | 1 |
 | 40 | SQL | .sql | 1 |
-| 41 | Solidity | .sol | 0 |
+| 41 | Solidity | .sol | 1 |
 | 42 | Fortran | .f90 | 0 |
 | 43 | Ada | .adb | 0 |
 | 44 | Racket | .rkt | 0 |
@@ -82,7 +82,7 @@ Canonical order. A language at zero is next in line.
 |---|---:|
 | MCP and Agent Tooling | 33 |
 | LLM and Inference | 25 |
-| Cost and Quota | 21 |
+| Cost and Quota | 22 |
 | Streaming and Parsing | 20 |
 | Infra and DevOps | 18 |
 | Security and Supply Chain | 19 |
@@ -115,6 +115,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Agent Run Provenance Gate](Agent%20Run%20Provenance%20Gate/) | Rust | MCP and Agent Tooling | 2026-08-08 | Audits JSON/JSONL AI agent traces for replayable provenance and fails CI when run ids, model pins, hashes, tool digests or approvals are missing |
 | [Agent Run SLO Governor](Agent%20Run%20SLO%20Governor/) | TypeScript | Evals and Experiments | 2026-05-28 | Gates AI agent canary rollouts on paired bootstrap intervals for p95 latency, cost, error and quality |
 | [Agent Sandbox Fence](Agent%20Sandbox%20Fence/) | PowerShell | Security and Supply Chain | 2026-09-24 | Runs an AI coding agent in a Windows Job Object with hard memory limits and an allowlist only egress proxy |
+| [Agent Spend Governor](Agent%20Spend%20Governor/) | Solidity | Cost and Quota | 2026-09-26 | Solidity contract that caps an AI agent wallet to a rolling budget, a per call limit and an allowlist |
 | [Agent Stream Budget](Agent%20Stream%20Budget/) | Zig | MCP and Agent Tooling | 2026-07-16 | Zig CLI that reads JSONL LLM and agent traces, groups by session, and fails CI on token, cost, latency, stall or egress breaches |
 | [Agent Syscall Guard](Agent%20Syscall%20Guard/) | D | Security and Supply Chain | 2026-09-19 | Ptrace based syscall allowlist in D that polices a full agent process tree and turns denials into EPERM |
 | [Agent Token Spillway](Agent%20Token%20Spillway/) | Zig | Cost and Quota | 2026-06-15 | Single file Zig admission controller that accepts, defers or rejects LLM requests before tokens are spent |
