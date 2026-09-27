@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 167  |  **Source files:** 171  |  **Languages used:** 41 of 50  |  **Lines of code:** 116,954  |  **Span:** 2026-04-03 to 2026-09-26
+**Entries:** 168  |  **Source files:** 173  |  **Languages used:** 42 of 50  |  **Lines of code:** 117,416  |  **Span:** 2026-04-03 to 2026-09-27
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -66,7 +66,7 @@ Canonical order. A language at zero is next in line.
 | 39 | PowerShell | .ps1 | 1 |
 | 40 | SQL | .sql | 1 |
 | 41 | Solidity | .sol | 1 |
-| 42 | Fortran | .f90 | 0 |
+| 42 | Fortran | .f90 | 1 |
 | 43 | Ada | .adb | 0 |
 | 44 | Racket | .rkt | 0 |
 | 45 | Elm | .elm | 0 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 25 |
 | Cost and Quota | 22 |
 | Streaming and Parsing | 20 |
-| Infra and DevOps | 18 |
+| Infra and DevOps | 19 |
 | Security and Supply Chain | 19 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -137,6 +137,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Context Window Optimizer](Context%20Window%20Optimizer/) | Python | LLM and Inference | 2026-04-09 | Scores LLM chat history by recency, role and query overlap, then evicts weakest turns to fit a token budget |
 | [Context Window Packer](Context%20Window%20Packer/) | Python | LLM and Inference | 2026-04-09 | Packs chat history into an LLM context window, pinning critical messages and reserving output tokens |
 | [Data Residency Route Planner](Data%20Residency%20Route%20Planner/) | Python | LLM and Inference | 2026-05-29 | Routes LLM inference to compliant endpoints, enforcing data residency and retention before cost scoring |
+| [Deterministic Gradient Reduction](Deterministic%20Gradient%20Reduction/) | Fortran | Infra and DevOps | 2026-09-27 | OpenMP tree reduction that sums gradients bit-identically across thread counts with double-double precision |
 | [Dynamic Token Prioritizer](Dynamic%20Token%20Prioritizer/) | Python | LLM and Inference | 2026-04-06 | Ranks LLM tokens by rarity, position and semantic score so context overflow drops filler instead of the tail |
 | [Edge Cache Entropy Audit](Edge%20Cache%20Entropy%20Audit/) | JavaScript | Edge and Carbon | 2026-08-11 | Audits CDN and edge logs for cache key entropy, private data in shared caches and low hit rate routes |
 | [Edge Inference Admission](Edge%20Inference%20Admission/) | C | Cost and Quota | 2026-06-10 | C admission controller that throttles LLM requests on rolling per tenant cost, token and carbon budgets |
