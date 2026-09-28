@@ -1,0 +1,24 @@
+project McpToolBudgetArbiter is
+
+   for Source_Dirs use (".");
+   for Object_Dir use "obj";
+   for Main use ("McpToolBudgetArbiterDemo.adb");
+
+   --  GNAT's default naming scheme forces source file names to lower
+   --  case. This project keeps the repository's PascalCase file names by
+   --  mapping each compilation unit to its file explicitly instead.
+   package Naming is
+      for Spec ("Mcp_Tool_Budget_Arbiter") use "McpToolBudgetArbiter.ads";
+      for Body ("Mcp_Tool_Budget_Arbiter") use "McpToolBudgetArbiter.adb";
+      for Body ("McpToolBudgetArbiterDemo") use "McpToolBudgetArbiterDemo.adb";
+   end Naming;
+
+   package Compiler is
+      for Default_Switches ("ada") use ("-gnata", "-gnatwa", "-gnat2012");
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("ada") use ("-E");
+   end Binder;
+
+end McpToolBudgetArbiter;

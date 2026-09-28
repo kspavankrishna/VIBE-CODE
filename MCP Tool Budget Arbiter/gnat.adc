@@ -1,0 +1,1 @@
+pragma Locking_Policy (Ceiling_Locking);

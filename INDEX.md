@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 168  |  **Source files:** 173  |  **Languages used:** 42 of 50  |  **Lines of code:** 117,416  |  **Span:** 2026-04-03 to 2026-09-27
+**Entries:** 169  |  **Source files:** 176  |  **Languages used:** 43 of 50  |  **Lines of code:** 118,029  |  **Span:** 2026-04-03 to 2026-09-28
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -67,7 +67,7 @@ Canonical order. A language at zero is next in line.
 | 40 | SQL | .sql | 1 |
 | 41 | Solidity | .sol | 1 |
 | 42 | Fortran | .f90 | 1 |
-| 43 | Ada | .adb | 0 |
+| 43 | Ada | .adb | 1 |
 | 44 | Racket | .rkt | 0 |
 | 45 | Elm | .elm | 0 |
 | 46 | PureScript | .purs | 0 |
@@ -80,7 +80,7 @@ Canonical order. A language at zero is next in line.
 
 | Topic | Entries |
 |---|---:|
-| MCP and Agent Tooling | 33 |
+| MCP and Agent Tooling | 34 |
 | LLM and Inference | 25 |
 | Cost and Quota | 22 |
 | Streaming and Parsing | 20 |
@@ -196,6 +196,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [MCP Server Doctor](MCP%20Server%20Doctor/) | Bash | MCP and Agent Tooling | 2026-05-18 | An MCP stdio server can pass its own tests, publish a clean README and still break the moment a real client |
 | [MCP Stdio Conformance Auditor](MCP%20Stdio%20Conformance%20Auditor/) | Perl | MCP and Agent Tooling | 2026-09-20 | Spawns an MCP server over stdio and runs 14 adversarial handshake, framing and lifecycle checks against it |
 | [MCP Stdio Watchdog](MCP%20Stdio%20Watchdog/) | Kotlin | MCP and Agent Tooling | 2026-04-22 | A stdio MCP server hangs mid `tools/call`, the client keeps waiting forever, and nobody can tell whether the |
+| [MCP Tool Budget Arbiter](MCP%20Tool%20Budget%20Arbiter/) | Ada | MCP and Agent Tooling | 2026-09-28 | Ada protected object arbitrates a shared MCP tool budget with reserve, commit and a hash chained ledger |
 | [MCP Tool Contract Gate](MCP%20Tool%20Contract%20Gate/) | Haskell | MCP and Agent Tooling | 2026-05-07 | An MCP server ships a small edit to one tool's JSON Schema, a required field appears or a maximum drops, and |
 | [MCP Tool Policy Compiler](MCP%20Tool%20Policy%20Compiler/) | Lua | MCP and Agent Tooling | 2026-07-17 | Single file Lua policy engine that replays MCP and agent tool call JSONL against a plain text allow/deny rule file |
 | [MCP Tool Router](MCP%20Tool%20Router/) | TypeScript | MCP and Agent Tooling | 2026-04-06 | Every MCP server past three tools turns into a giant if/else dispatch block with no input validation, so a |
