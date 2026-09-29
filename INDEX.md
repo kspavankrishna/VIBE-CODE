@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 169  |  **Source files:** 176  |  **Languages used:** 43 of 50  |  **Lines of code:** 118,029  |  **Span:** 2026-04-03 to 2026-09-28
+**Entries:** 170  |  **Source files:** 177  |  **Languages used:** 44 of 50  |  **Lines of code:** 118,695  |  **Span:** 2026-04-03 to 2026-09-29
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -68,7 +68,7 @@ Canonical order. A language at zero is next in line.
 | 41 | Solidity | .sol | 1 |
 | 42 | Fortran | .f90 | 1 |
 | 43 | Ada | .adb | 1 |
-| 44 | Racket | .rkt | 0 |
+| 44 | Racket | .rkt | 1 |
 | 45 | Elm | .elm | 0 |
 | 46 | PureScript | .purs | 0 |
 | 47 | ReScript | .res | 0 |
@@ -80,7 +80,7 @@ Canonical order. A language at zero is next in line.
 
 | Topic | Entries |
 |---|---:|
-| MCP and Agent Tooling | 34 |
+| MCP and Agent Tooling | 35 |
 | LLM and Inference | 25 |
 | Cost and Quota | 22 |
 | Streaming and Parsing | 20 |
@@ -121,6 +121,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Agent Token Spillway](Agent%20Token%20Spillway/) | Zig | Cost and Quota | 2026-06-15 | Single file Zig admission controller that accepts, defers or rejects LLM requests before tokens are spent |
 | [Agent Tool Call Circuit Breaker](Agent%20Tool%20Call%20Circuit%20Breaker/) | Kotlin | MCP and Agent Tooling | 2026-09-02 | Cost weighted circuit breaker for LLM agent tool calls, with per tenant bulkheading and jittered backoff |
 | [Agent Tool Retry Budget](Agent%20Tool%20Retry%20Budget/) | Elixir | MCP and Agent Tooling | 2026-05-24 | Elixir gate that scores agent tool call retries against attempt, elapsed and idempotency budgets |
+| [Agent Trace Protocol Checker](Agent%20Trace%20Protocol%20Checker/) | Racket | MCP and Agent Tooling | 2026-09-29 | Racket linter that finds leaked calls, orphan results and sequence gaps in JSONL agent traces |
 | [Agent Worktree Pool Manager](Agent%20Worktree%20Pool%20Manager/) | Bash | MCP and Agent Tooling | 2026-08-30 | Crash-safe flock-guarded git worktree pool that hands isolated slots to parallel AI coding agents |
 | [Batch Request Sharder](Batch%20Request%20Sharder/) | Haskell | LLM and Inference | 2026-05-07 | Deterministic Haskell sharder that packs LLM batch queues under token, byte, deadline and per-tenant limits |
 | [Build Kit Cache Forensics](Build%20Kit%20Cache%20Forensics/) | JavaScript | Infra and DevOps | 2026-05-19 | Finds the first uncached BuildKit vertex behind a slow Docker build and the Dockerfile line that caused it |
