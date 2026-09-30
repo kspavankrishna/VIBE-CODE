@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 170  |  **Source files:** 177  |  **Languages used:** 44 of 50  |  **Lines of code:** 118,695  |  **Span:** 2026-04-03 to 2026-09-29
+**Entries:** 171  |  **Source files:** 178  |  **Languages used:** 45 of 50  |  **Lines of code:** 119,798  |  **Span:** 2026-04-03 to 2026-09-30
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -69,7 +69,7 @@ Canonical order. A language at zero is next in line.
 | 42 | Fortran | .f90 | 1 |
 | 43 | Ada | .adb | 1 |
 | 44 | Racket | .rkt | 1 |
-| 45 | Elm | .elm | 0 |
+| 45 | Elm | .elm | 1 |
 | 46 | PureScript | .purs | 0 |
 | 47 | ReScript | .res | 0 |
 | 48 | Tcl | .tcl | 0 |
@@ -83,7 +83,7 @@ Canonical order. A language at zero is next in line.
 | MCP and Agent Tooling | 35 |
 | LLM and Inference | 25 |
 | Cost and Quota | 22 |
-| Streaming and Parsing | 20 |
+| Streaming and Parsing | 21 |
 | Infra and DevOps | 19 |
 | Security and Supply Chain | 19 |
 | Evals and Experiments | 13 |
@@ -182,6 +182,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [JSONL Batch Preflight](JSONL%20Batch%20Preflight/) | Bash | LLM and Inference | 2026-04-22 | Bash preflight that validates, dedupes, secret-scans and shards JSONL batch files before provider upload |
 | [JSONL Secret Firewall](JSONL%20Secret%20Firewall/) | C++ | Security and Supply Chain | 2026-04-14 | Your JSONL logs contain bearer tokens |
 | [Kube Context Guard](Kube%20Context%20Guard/) | Bash | Infra and DevOps | 2026-04-22 | You have credentials for six clusters and your shell remembers only one context |
+| [LLM Chat Turn Machine](LLM%20Chat%20Turn%20Machine/) | Elm | Streaming and Parsing | 2026-09-30 | Pure Elm state machine for streaming chat turns: resume, dedupe, reorder, stall and tool call safety |
 | [LLM Network Cost Sentinel](LLM%20Network%20Cost%20Sentinel/) | Objective-C | Cost and Quota | 2026-09-23 | Swizzles NSURLSession so every LLM API call from an iOS or macOS app is metered, priced and can be blocked |
 | [LLM Spend Velocity Governor](LLM%20Spend%20Velocity%20Governor/) | Ruby | Cost and Quota | 2026-09-07 | A single tenant's runaway agent loop can burn a month of LLM budget in ten minutes, and most Ruby backends |
 | [LLM Stream Fanout Hub](LLM%20Stream%20Fanout%20Hub/) | Gleam | Streaming and Parsing | 2026-09-15 | OTP actor hub that fans one LLM stream out to many subscribers, each with its own bounded, replayable queue |
