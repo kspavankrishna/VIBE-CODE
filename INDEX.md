@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 172  |  **Source files:** 186  |  **Languages used:** 46 of 50  |  **Lines of code:** 121,527  |  **Span:** 2026-04-03 to 2026-10-01
+**Entries:** 173  |  **Source files:** 187  |  **Languages used:** 47 of 50  |  **Lines of code:** 122,112  |  **Span:** 2026-04-03 to 2026-10-02
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -71,7 +71,7 @@ Canonical order. A language at zero is next in line.
 | 44 | Racket | .rkt | 1 |
 | 45 | Elm | .elm | 1 |
 | 46 | PureScript | .purs | 1 |
-| 47 | ReScript | .res | 0 |
+| 47 | ReScript | .res | 1 |
 | 48 | Tcl | .tcl | 0 |
 | 49 | Haxe | .hx | 0 |
 | 50 | CUDA | .cu | 0 |
@@ -82,7 +82,7 @@ Canonical order. A language at zero is next in line.
 |---|---:|
 | MCP and Agent Tooling | 35 |
 | LLM and Inference | 25 |
-| Cost and Quota | 22 |
+| Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
 | Infra and DevOps | 20 |
 | Security and Supply Chain | 19 |
@@ -220,6 +220,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Provider Health Circuit](Provider%20Health%20Circuit/) | Scala | LLM and Inference | 2026-04-16 | Scala circuit breaker and health scored router that fails over between LLM providers |
 | [Queue SLO Allocator](Queue%20SLO%20Allocator/) | C | Infra and DevOps | 2026-07-07 | Allocates a fixed worker pool across competing queues by SLO risk, from CSV telemetry on stdin |
 | [RAG Prompt Firewall](RAG%20Prompt%20Firewall/) | Elixir | Security and Supply Chain | 2026-07-18 | Dependency-free Elixir CI gate that scans agent traces for prompt injection and retrieval poisoning, emits SARIF |
+| [Rate Limit Header Normalizer](Rate%20Limit%20Header%20Normalizer/) | ReScript | Cost and Quota | 2026-10-02 | Normalizes Anthropic, OpenAI and IETF rate limit headers into one snapshot and plans wait, proceed or give up |
 | [Realtime Stream Handler](Realtime%20Stream%20Handler/) | TypeScript | Streaming and Parsing | 2026-04-03 | Buffers Anthropic SDK text deltas into fixed size chunks with async backpressure and parallel stream fan out |
 | [Repo Auto Shell](Repo%20Auto%20Shell/) | Nix | Infra and DevOps | 2026-04-17 | Single Nix file that detects a repo's stacks and pins every toolchain cache inside the working tree |
 | [Repository Signal Ranker](Repository%20Signal%20Ranker/) | Ruby | Infra and DevOps | 2026-05-24 | Ranks changed files from git diff --numstat by churn, path risk and CODEOWNERS fan out so reviewers start right |

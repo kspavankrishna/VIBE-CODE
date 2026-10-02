@@ -1,0 +1,7 @@
+{
+  "name": "rate-limit-header-normalizer",
+  "sources": [{"dir": ".", "subdirs": false}],
+  "package-specs": {"module": "commonjs", "in-source": true},
+  "suffix": ".bs.js",
+  "bsc-flags": ["-w", "+a-4-9-40-42-44-45-70"]
+}
