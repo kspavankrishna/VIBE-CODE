@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 173  |  **Source files:** 187  |  **Languages used:** 47 of 50  |  **Lines of code:** 122,112  |  **Span:** 2026-04-03 to 2026-10-02
+**Entries:** 174  |  **Source files:** 189  |  **Languages used:** 48 of 50  |  **Lines of code:** 122,788  |  **Span:** 2026-04-03 to 2026-10-03
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -72,7 +72,7 @@ Canonical order. A language at zero is next in line.
 | 45 | Elm | .elm | 1 |
 | 46 | PureScript | .purs | 1 |
 | 47 | ReScript | .res | 1 |
-| 48 | Tcl | .tcl | 0 |
+| 48 | Tcl | .tcl | 1 |
 | 49 | Haxe | .hx | 0 |
 | 50 | CUDA | .cu | 0 |
 
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 25 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 20 |
+| Infra and DevOps | 21 |
 | Security and Supply Chain | 19 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -226,6 +226,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Repository Signal Ranker](Repository%20Signal%20Ranker/) | Ruby | Infra and DevOps | 2026-05-24 | Ranks changed files from git diff --numstat by churn, path risk and CODEOWNERS fan out so reviewers start right |
 | [Runner Artifact Attestor](Runner%20Artifact%20Attestor/) | Bash | Security and Supply Chain | 2026-06-04 | Bash CI gate that writes and verifies a sha256 artifact manifest, blocks symlinks, stray files, leaked secrets and mismatched provenance before upload |
 | [SBOM Vulnerability Drift Gate](SBOM%20Vulnerability%20Drift%20Gate/) | Go | Security and Supply Chain | 2026-04-22 | Diffs two Trivy or Grype JSON scans and fails CI only on newly introduced vulnerabilities and severity escalations |
+| [SLO Burn Rate Rule Generator](SLO%20Burn%20Rate%20Rule%20Generator/) | Tcl | Infra and DevOps | 2026-10-03 | Generates Prometheus burn rate alerts from an SLO spec and rejects tiers whose threshold can never be reached |
 | [SSE Stream Decoder](SSE%20Stream%20Decoder/) | C | Streaming and Parsing | 2026-04-17 | Chunk-safe C decoder for Server-Sent Events with CRLF handling, bounded buffers and Last-Event-ID tracking |
 | [Semantic Pixel Renderer](Semantic%20Pixel%20Renderer/) | JavaScript | LLM and Inference | 2026-04-05 | Deterministic text to canvas pixel art in the browser via semantic hashing, no API key and no network |
 | [Sequential Eval Quorum](Sequential%20Eval%20Quorum/) | Elixir | Evals and Experiments | 2026-06-17 | Sequential eval gate in Elixir that dedupes streamed canary evidence and returns promote or rollback |
