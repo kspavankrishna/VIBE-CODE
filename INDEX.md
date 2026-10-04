@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 174  |  **Source files:** 189  |  **Languages used:** 48 of 50  |  **Lines of code:** 122,788  |  **Span:** 2026-04-03 to 2026-10-03
+**Entries:** 175  |  **Source files:** 194  |  **Languages used:** 49 of 50  |  **Lines of code:** 124,019  |  **Span:** 2026-04-03 to 2026-10-04
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -73,14 +73,14 @@ Canonical order. A language at zero is next in line.
 | 46 | PureScript | .purs | 1 |
 | 47 | ReScript | .res | 1 |
 | 48 | Tcl | .tcl | 1 |
-| 49 | Haxe | .hx | 0 |
+| 49 | Haxe | .hx | 1 |
 | 50 | CUDA | .cu | 0 |
 
 ## Topics
 
 | Topic | Entries |
 |---|---:|
-| MCP and Agent Tooling | 35 |
+| MCP and Agent Tooling | 36 |
 | LLM and Inference | 25 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
@@ -203,6 +203,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [MCP Tool Contract Gate](MCP%20Tool%20Contract%20Gate/) | Haskell | MCP and Agent Tooling | 2026-05-07 | An MCP server ships a small edit to one tool's JSON Schema, a required field appears or a maximum drops, and |
 | [MCP Tool Policy Compiler](MCP%20Tool%20Policy%20Compiler/) | Lua | MCP and Agent Tooling | 2026-07-17 | Single file Lua policy engine that replays MCP and agent tool call JSONL against a plain text allow/deny rule file |
 | [MCP Tool Router](MCP%20Tool%20Router/) | TypeScript | MCP and Agent Tooling | 2026-04-06 | Every MCP server past three tools turns into a giant if/else dispatch block with no input validation, so a |
+| [MCP Tool Schema Compiler](MCP%20Tool%20Schema%20Compiler/) | Haxe | MCP and Agent Tooling | 2026-10-04 | Haxe macro that compiles typedefs into MCP tool JSON Schemas, with a validator and a tool registry |
 | [MCP Tool Schema Sanitizer](MCP%20Tool%20Schema%20Sanitizer/) | PHP | MCP and Agent Tooling | 2026-04-15 | Rewrites MCP tool JSON Schemas into a portable, closed, deterministic form with a sha256 fingerprint |
 | [MCP Trace Sanitizer](MCP%20Trace%20Sanitizer/) | C | Security and Supply Chain | 2026-07-24 | MCP tool traces, LLM gateway JSONL, browser automation transcripts and CI logs quietly carry real API keys, |
 | [Model Drift Triage](Model%20Drift%20Triage/) | Haskell | Evals and Experiments | 2026-07-07 | Haskell module that compares baseline vs candidate LLM telemetry windows per slice and returns a typed rollout verdict |
