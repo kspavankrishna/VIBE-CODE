@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 175  |  **Source files:** 194  |  **Languages used:** 49 of 50  |  **Lines of code:** 124,019  |  **Span:** 2026-04-03 to 2026-10-04
+**Entries:** 176  |  **Source files:** 195  |  **Languages used:** 50 of 50  |  **Lines of code:** 124,621  |  **Span:** 2026-04-03 to 2026-10-05
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -74,14 +74,14 @@ Canonical order. A language at zero is next in line.
 | 47 | ReScript | .res | 1 |
 | 48 | Tcl | .tcl | 1 |
 | 49 | Haxe | .hx | 1 |
-| 50 | CUDA | .cu | 0 |
+| 50 | CUDA | .cu | 1 |
 
 ## Topics
 
 | Topic | Entries |
 |---|---:|
 | MCP and Agent Tooling | 36 |
-| LLM and Inference | 25 |
+| LLM and Inference | 26 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
 | Infra and DevOps | 21 |
@@ -157,6 +157,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Experiment Evidence Ledger](Experiment%20Evidence%20Ledger/) | Julia | Evals and Experiments | 2026-05-25 | Hashes a run directory into one SHA-256 evidence root so CI can prove experiment artifacts never drifted |
 | [Experiment Split Provenance](Experiment%20Split%20Provenance/) | R | Evals and Experiments | 2026-07-26 | Base R audit that catches id, group and temporal leakage across ML dataset splits and reports it as CSV plus SARIF |
 | [Flake Lock Supply Chain Gate](Flake%20Lock%20Supply%20Chain%20Gate/) | Nix | Security and Supply Chain | 2026-08-04 | Pure Nix expression that audits flake.lock for supply chain risk and gates CI with SARIF output |
+| [Fused Logits Sampler](Fused%20Logits%20Sampler/) | CUDA | LLM and Inference | 2026-10-05 | Single kernel batch invariant sampler: grammar mask, top-k, top-p, min-p and Philox draws with status codes |
 | [GPU Lease Broker](GPU%20Lease%20Broker/) | C | Infra and DevOps | 2026-04-17 | TTL based GPU leases using atomic mkdir locks, with auto renewal, stale reaping and CUDA_VISIBLE_DEVICES |
 | [GPU Spot Checkpoint Planner](GPU%20Spot%20Checkpoint%20Planner/) | C++ | Infra and DevOps | 2026-08-18 | Plans GPU spot placement and checkpoint intervals from eviction risk, SLO, budget and carbon |
 | [Gateway Failover Budget Governor](Gateway%20Failover%20Budget%20Governor/) | Dart | LLM and Inference | 2026-08-19 | Dart CLI that scores LLM gateway endpoints on cost, latency, residency and tenant budget, then emits an auditable JSON failover plan per request |
