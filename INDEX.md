@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 176  |  **Source files:** 195  |  **Languages used:** 50 of 50  |  **Lines of code:** 124,621  |  **Span:** 2026-04-03 to 2026-10-05
+**Entries:** 177  |  **Source files:** 196  |  **Languages used:** 50 of 50  |  **Lines of code:** 125,313  |  **Span:** 2026-04-03 to 2026-10-06
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -49,7 +49,7 @@ Canonical order. A language at zero is next in line.
 | 22 | R | .R | 4 |
 | 23 | Julia | .jl | 6 |
 | 24 | Nix | .nix | 4 |
-| 25 | Erlang | .erl | 1 |
+| 25 | Erlang | .erl | 2 |
 | 26 | Clojure | .clj | 1 |
 | 27 | F# | .fs | 1 |
 | 28 | Nim | .nim | 1 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 26 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 21 |
+| Infra and DevOps | 22 |
 | Security and Supply Chain | 19 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -214,6 +214,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Paired Eval Gate](Paired%20Eval%20Gate/) | Julia | Evals and Experiments | 2026-04-17 | Stratified cluster paired bootstrap in Julia for LLM eval release gates, with win rates, CIs and margins |
 | [Policy Drift Incident Router](Policy%20Drift%20Incident%20Router/) | Bash | Infra and DevOps | 2026-08-10 | Bash CI gate that routes risky policy, infra, AI-agent and pipeline file changes to owners, controls and runbooks |
 | [Postgres Role Escalation Path Finder](Postgres%20Role%20Escalation%20Path%20Finder/) | SQL | Security and Supply Chain | 2026-09-25 | Walks the Postgres role membership graph to find every login role that can reach a superuser equivalent |
+| [Prefix Affinity Ring](Prefix%20Affinity%20Ring/) | Erlang | Infra and DevOps | 2026-10-06 | Erlang router that pins prompt prefixes to GPU replicas with bounded load spill, health probes and leases |
 | [Prompt Cache Cutover](Prompt%20Cache%20Cutover/) | OCaml | Cost and Quota | 2026-05-24 | OCaml CLI that reads route-level token CSV and returns per-route prompt cache break-even and enable verdicts |
 | [Prompt Cache Lease Governor](Prompt%20Cache%20Lease%20Governor/) | Kotlin | Cost and Quota | 2026-08-13 | Kotlin CLI that scores prompt cache blocks on cost, freshness, residency and sensitivity, then pins, refreshes, evicts, bypasses or quarantines each one |
 | [Prompt Cache Planner](Prompt%20Cache%20Planner/) | Python | LLM and Inference | 2026-04-18 | Splits LLM requests into a stable cacheable prefix and live suffix, then explains why prompt caching missed |
