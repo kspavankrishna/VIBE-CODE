@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 177  |  **Source files:** 196  |  **Languages used:** 50 of 50  |  **Lines of code:** 125,313  |  **Span:** 2026-04-03 to 2026-10-06
+**Entries:** 178  |  **Source files:** 198  |  **Languages used:** 50 of 50  |  **Lines of code:** 126,298  |  **Span:** 2026-04-03 to 2026-10-07
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -50,7 +50,7 @@ Canonical order. A language at zero is next in line.
 | 23 | Julia | .jl | 6 |
 | 24 | Nix | .nix | 4 |
 | 25 | Erlang | .erl | 2 |
-| 26 | Clojure | .clj | 1 |
+| 26 | Clojure | .clj | 2 |
 | 27 | F# | .fs | 1 |
 | 28 | Nim | .nim | 1 |
 | 29 | Crystal | .cr | 1 |
@@ -88,7 +88,7 @@ Canonical order. A language at zero is next in line.
 | Security and Supply Chain | 19 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
-| Edge and Carbon | 6 |
+| Edge and Carbon | 7 |
 
 ## All entries
 
@@ -163,6 +163,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Gateway Failover Budget Governor](Gateway%20Failover%20Budget%20Governor/) | Dart | LLM and Inference | 2026-08-19 | Dart CLI that scores LLM gateway endpoints on cost, latency, residency and tenant budget, then emits an auditable JSON failover plan per request |
 | [Gradient Concurrency Limiter](Gradient%20Concurrency%20Limiter/) | Lua | LLM and Inference | 2026-09-10 | Adaptive gradient-based concurrency limiter in Lua for OpenResty LLM inference gateways, no dependencies |
 | [Gradle Verification Drift Gate](Gradle%20Verification%20Drift%20Gate/) | Groovy | Security and Supply Chain | 2026-09-22 | Diffs Gradle verification-metadata.xml files and fails CI on weakened trust, changed hashes or coverage gaps |
+| [Hourly Energy Matching Ledger](Hourly%20Energy%20Matching%20Ledger/) | Clojure | Edge and Carbon | 2026-10-07 | Exact max flow hourly 24/7 clean energy matching of certificates to load, with the annual claim gap priced |
 | [HTML Prompt Injection Firewall](HTML%20Prompt%20Injection%20Firewall/) | PHP | Security and Supply Chain | 2026-04-27 | Single file PHP firewall that extracts LLM safe text from untrusted HTML and scores it for prompt injection |
 | [Hybrid Inference Router](Hybrid%20Inference%20Router/) | Swift | LLM and Inference | 2026-04-23 | Swift actor that routes each inference request local or remote from live latency, cost, battery and privacy signals, with deadline aware hedging |
 | [Incremental JSON Boundary Tracker](Incremental%20JSON%20Boundary%20Tracker/) | Python | Streaming and Parsing | 2026-04-10 | Character level state machine that detects when the first complete JSON value has arrived in an LLM token stream |

@@ -1,0 +1,6 @@
+{:interval-minutes 60
+ :window-before 0
+ :window-after 0
+ :deliverability {"DE" #{"NL"}
+                  "NL" #{"DE"}}
+ :residual-fallback :grid}
