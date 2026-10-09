@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 179  |  **Source files:** 200  |  **Languages used:** 50 of 50  |  **Lines of code:** 127,173  |  **Span:** 2026-04-03 to 2026-10-08
+**Entries:** 180  |  **Source files:** 201  |  **Languages used:** 50 of 50  |  **Lines of code:** 127,684  |  **Span:** 2026-04-03 to 2026-10-09
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -52,7 +52,7 @@ Canonical order. A language at zero is next in line.
 | 25 | Erlang | .erl | 2 |
 | 26 | Clojure | .clj | 2 |
 | 27 | F# | .fs | 2 |
-| 28 | Nim | .nim | 1 |
+| 28 | Nim | .nim | 2 |
 | 29 | Crystal | .cr | 1 |
 | 30 | Gleam | .gleam | 1 |
 | 31 | Mojo | .mojo | 1 |
@@ -85,7 +85,7 @@ Canonical order. A language at zero is next in line.
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
 | Infra and DevOps | 23 |
-| Security and Supply Chain | 19 |
+| Security and Supply Chain | 20 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
 | Edge and Carbon | 7 |
@@ -191,6 +191,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [LLM Stream Fanout Hub](LLM%20Stream%20Fanout%20Hub/) | Gleam | Streaming and Parsing | 2026-09-15 | OTP actor hub that fans one LLM stream out to many subscribers, each with its own bounded, replayable queue |
 | [LLM Stream Normalizer](LLM%20Stream%20Normalizer/) | Swift | Streaming and Parsing | 2026-04-14 | Streaming LLM responses arrive in a different wire format from every provider, and tool call arguments show |
 | [LLM Stream Processor](LLM%20Stream%20Processor/) | Bash | Streaming and Parsing | 2026-04-07 | Streaming LLM responses arrive as half objects |
+| [Lockfile Tamper Gate](Lockfile%20Tamper%20Gate/) | Nim | Security and Supply Chain | 2026-10-09 | Offline npm lockfile checker that catches swapped tarballs, rogue hosts, bad hashes and diff tampering |
 | [Log Template Miner](Log%20Template%20Miner/) | F# | Infra and DevOps | 2026-10-08 | Drain style F# log miner with bounded memory, JSON and stack trace handling and a CI drift gate |
 | [MCP Call Coalescer](MCP%20Call%20Coalescer/) | Java | MCP and Agent Tooling | 2026-04-14 | Java request coalescer with TTL cache that collapses duplicate concurrent MCP tool calls into one upstream call per key |
 | [MCP Concurrency Governor](MCP%20Concurrency%20Governor/) | Elixir | MCP and Agent Tooling | 2026-04-29 | OTP GenServer that caps per-tool concurrency with session round-robin queues, TTL deadlines and lease-based cleanup |
