@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 180  |  **Source files:** 201  |  **Languages used:** 50 of 50  |  **Lines of code:** 127,684  |  **Span:** 2026-04-03 to 2026-10-09
+**Entries:** 181  |  **Source files:** 202  |  **Languages used:** 50 of 50  |  **Lines of code:** 128,713  |  **Span:** 2026-04-03 to 2026-10-10
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -53,7 +53,7 @@ Canonical order. A language at zero is next in line.
 | 26 | Clojure | .clj | 2 |
 | 27 | F# | .fs | 2 |
 | 28 | Nim | .nim | 2 |
-| 29 | Crystal | .cr | 1 |
+| 29 | Crystal | .cr | 2 |
 | 30 | Gleam | .gleam | 1 |
 | 31 | Mojo | .mojo | 1 |
 | 32 | Odin | .odin | 1 |
@@ -85,7 +85,7 @@ Canonical order. A language at zero is next in line.
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
 | Infra and DevOps | 23 |
-| Security and Supply Chain | 20 |
+| Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
 | Edge and Carbon | 7 |
@@ -101,6 +101,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [AI SSE JSON Assembler](AI%20SSE%20JSON%20Assembler/) | C++ | Streaming and Parsing | 2026-04-23 | Reassembles fragmented AI SSE streams into complete validated JSON values with hard memory and depth caps |
 | [AI SSE Resume Ledger](AI%20SSE%20Resume%20Ledger/) | Kotlin | Streaming and Parsing | 2026-05-20 | Bounded in memory SSE replay ledger for resumable LLM token streams with checkpoints and tool dedupe |
 | [AI Stream SSE Reader](AI%20Stream%20SSE%20Reader/) | C# | Streaming and Parsing | 2026-04-14 | Single file C# Server Sent Events reader that joins multi-line data fields, skips heartbeats and caps event size |
+| [Actions Workflow Hardening Auditor](Actions%20Workflow%20Hardening%20Auditor/) | Crystal | Security and Supply Chain | 2026-10-10 | Crystal CLI that audits GitHub Actions for script injection, pwn requests, loose pins and token scope with SARIF |
 | [Adaptive Micro Batcher](Adaptive%20Micro%20Batcher/) | Dart | Infra and DevOps | 2026-04-24 | Dart micro batcher that flushes on size, weight or latency and splits failed batches to isolate poison items |
 | [Agent Aware Connection Pool](Agent%20Aware%20Connection%20Pool/) | Go | MCP and Agent Tooling | 2026-08-29 | Go database/sql admission layer using weighted fair queuing per agent plus an AIMD controller that resizes the pool |
 | [Agent Budget Quorum](Agent%20Budget%20Quorum/) | Elixir | MCP and Agent Tooling | 2026-07-03 | Deterministic admission control for agent tool calls with fingerprint quorum, leases and a spend ledger |
