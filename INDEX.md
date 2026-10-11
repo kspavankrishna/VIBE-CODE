@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 181  |  **Source files:** 202  |  **Languages used:** 50 of 50  |  **Lines of code:** 128,713  |  **Span:** 2026-04-03 to 2026-10-10
+**Entries:** 182  |  **Source files:** 204  |  **Languages used:** 50 of 50  |  **Lines of code:** 129,337  |  **Span:** 2026-04-03 to 2026-10-11
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -54,7 +54,7 @@ Canonical order. A language at zero is next in line.
 | 27 | F# | .fs | 2 |
 | 28 | Nim | .nim | 2 |
 | 29 | Crystal | .cr | 2 |
-| 30 | Gleam | .gleam | 1 |
+| 30 | Gleam | .gleam | 2 |
 | 31 | Mojo | .mojo | 1 |
 | 32 | Odin | .odin | 1 |
 | 33 | V | .v | 1 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 26 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 23 |
+| Infra and DevOps | 24 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -167,6 +167,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Hourly Energy Matching Ledger](Hourly%20Energy%20Matching%20Ledger/) | Clojure | Edge and Carbon | 2026-10-07 | Exact max flow hourly 24/7 clean energy matching of certificates to load, with the annual claim gap priced |
 | [HTML Prompt Injection Firewall](HTML%20Prompt%20Injection%20Firewall/) | PHP | Security and Supply Chain | 2026-04-27 | Single file PHP firewall that extracts LLM safe text from untrusted HTML and scores it for prompt injection |
 | [Hybrid Inference Router](Hybrid%20Inference%20Router/) | Swift | LLM and Inference | 2026-04-23 | Swift actor that routes each inference request local or remote from live latency, cost, battery and privacy signals, with deadline aware hedging |
+| [Hybrid Logical Clock](Hybrid%20Logical%20Clock/) | Gleam | Infra and DevOps | 2026-10-11 | Drift bounded hybrid logical clock with restart recovery, sortable wire format and a convergent LWW map |
 | [Incremental JSON Boundary Tracker](Incremental%20JSON%20Boundary%20Tracker/) | Python | Streaming and Parsing | 2026-04-10 | Character level state machine that detects when the first complete JSON value has arrived in an LLM token stream |
 | [Inference Admission Ledger](Inference%20Admission%20Ledger/) | Elixir | Cost and Quota | 2026-04-29 | Elixir GenServer that leases concurrency, token and spend budget to LLM calls before they start |
 | [Inference Backpressure Scheduler](Inference%20Backpressure%20Scheduler/) | C++ | LLM and Inference | 2026-04-14 | C++17 per-stream backpressure scheduler for LLM token streaming with deficit round robin dispatch and bounded queues |
