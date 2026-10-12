@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 182  |  **Source files:** 204  |  **Languages used:** 50 of 50  |  **Lines of code:** 129,337  |  **Span:** 2026-04-03 to 2026-10-11
+**Entries:** 183  |  **Source files:** 205  |  **Languages used:** 50 of 50  |  **Lines of code:** 129,920  |  **Span:** 2026-04-03 to 2026-10-12
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -55,7 +55,7 @@ Canonical order. A language at zero is next in line.
 | 28 | Nim | .nim | 2 |
 | 29 | Crystal | .cr | 2 |
 | 30 | Gleam | .gleam | 2 |
-| 31 | Mojo | .mojo | 1 |
+| 31 | Mojo | .mojo | 2 |
 | 32 | Odin | .odin | 1 |
 | 33 | V | .v | 1 |
 | 34 | D | .d | 1 |
@@ -212,6 +212,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [MCP Tool Schema Compiler](MCP%20Tool%20Schema%20Compiler/) | Haxe | MCP and Agent Tooling | 2026-10-04 | Haxe macro that compiles typedefs into MCP tool JSON Schemas, with a validator and a tool registry |
 | [MCP Tool Schema Sanitizer](MCP%20Tool%20Schema%20Sanitizer/) | PHP | MCP and Agent Tooling | 2026-04-15 | Rewrites MCP tool JSON Schemas into a portable, closed, deterministic form with a sha256 fingerprint |
 | [MCP Trace Sanitizer](MCP%20Trace%20Sanitizer/) | C | Security and Supply Chain | 2026-07-24 | MCP tool traces, LLM gateway JSONL, browser automation transcripts and CI logs quietly carry real API keys, |
+| [MinHash LSH Deduplicator](MinHash%20LSH%20Deduplicator/) | Mojo | Data and Vector | 2026-10-12 | Streaming near duplicate detector with MinHash, tuned LSH bands, exact Jaccard check and oldest wins clusters |
 | [Model Drift Triage](Model%20Drift%20Triage/) | Haskell | Evals and Experiments | 2026-07-07 | Haskell module that compares baseline vs candidate LLM telemetry windows per slice and returns a typed rollout verdict |
 | [Model Gateway Spend Firewall](Model%20Gateway%20Spend%20Firewall/) | PHP | Cost and Quota | 2026-08-21 | Single file PHP CLI that audits AI gateway events against price books, tenant budgets, quotas and prompt secrets |
 | [OTel Inference Cost Ledger](OTel%20Inference%20Cost%20Ledger/) | C# | Cost and Quota | 2026-05-24 | Joins OpenTelemetry spans with LLM gateway usage to attribute token cost and p95 latency per service and tenant |
