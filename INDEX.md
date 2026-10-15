@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 185  |  **Source files:** 207  |  **Languages used:** 50 of 50  |  **Lines of code:** 131,560  |  **Span:** 2026-04-03 to 2026-10-14
+**Entries:** 186  |  **Source files:** 208  |  **Languages used:** 50 of 50  |  **Lines of code:** 132,775  |  **Span:** 2026-04-03 to 2026-10-15
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -58,7 +58,7 @@ Canonical order. A language at zero is next in line.
 | 31 | Mojo | .mojo | 2 |
 | 32 | Odin | .odin | 2 |
 | 33 | V | .v | 2 |
-| 34 | D | .d | 1 |
+| 34 | D | .d | 2 |
 | 35 | Perl | .pl | 1 |
 | 36 | Raku | .raku | 1 |
 | 37 | Groovy | .groovy | 1 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 26 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 26 |
+| Infra and DevOps | 27 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -217,6 +217,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [MinHash LSH Deduplicator](MinHash%20LSH%20Deduplicator/) | Mojo | Data and Vector | 2026-10-12 | Streaming near duplicate detector with MinHash, tuned LSH bands, exact Jaccard check and oldest wins clusters |
 | [Model Drift Triage](Model%20Drift%20Triage/) | Haskell | Evals and Experiments | 2026-07-07 | Haskell module that compares baseline vs candidate LLM telemetry windows per slice and returns a typed rollout verdict |
 | [Model Gateway Spend Firewall](Model%20Gateway%20Spend%20Firewall/) | PHP | Cost and Quota | 2026-08-21 | Single file PHP CLI that audits AI gateway events against price books, tenant budgets, quotas and prompt secrets |
+| [OTel Agent Critical Path](OTel%20Agent%20Critical%20Path/) | D | Infra and DevOps | 2026-10-15 | D CLI that finds the real critical path in OTel agent traces, ranks LLM and tool time and prices the gain |
 | [OTel Inference Cost Ledger](OTel%20Inference%20Cost%20Ledger/) | C# | Cost and Quota | 2026-05-24 | Joins OpenTelemetry spans with LLM gateway usage to attribute token cost and p95 latency per service and tenant |
 | [Paged KV Cache Allocator](Paged%20KV%20Cache%20Allocator/) | C++ | LLM and Inference | 2026-09-05 | Block-based KV cache allocator in C++ with prefix hash sharing, copy-on-write forks and LRU eviction |
 | [Paired Eval Gate](Paired%20Eval%20Gate/) | Julia | Evals and Experiments | 2026-04-17 | Stratified cluster paired bootstrap in Julia for LLM eval release gates, with win rates, CIs and margins |
