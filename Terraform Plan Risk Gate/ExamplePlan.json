@@ -1,0 +1,70 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.9.5",
+  "applyable": true,
+  "complete": true,
+  "errored": false,
+  "resource_changes": [
+    {
+      "address": "aws_db_instance.orders",
+      "mode": "managed", "type": "aws_db_instance", "name": "orders",
+      "action_reason": "replace_because_cannot_update",
+      "change": {
+        "actions": ["delete", "create"],
+        "before": {"skip_final_snapshot": true, "deletion_protection": false, "storage_encrypted": true, "publicly_accessible": false},
+        "after": {"storage_encrypted": false, "publicly_accessible": true, "skip_final_snapshot": true, "deletion_protection": false},
+        "after_unknown": {"id": true},
+        "after_sensitive": {},
+        "replace_paths": [["storage_encrypted"]]
+      }
+    },
+    {
+      "address": "aws_iam_role_policy.deploy",
+      "mode": "managed", "type": "aws_iam_role_policy", "name": "deploy",
+      "change": {
+        "actions": ["update"],
+        "before": {"policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"s3:GetObject\",\"Resource\":\"arn:aws:s3:::releases/*\"}]}"},
+        "after": {"policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"s3:GetObject\",\"iam:PassRole\",\"ec2:*\"],\"Resource\":\"*\"}]}"},
+        "after_unknown": {}, "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_security_group_rule.ssh",
+      "mode": "managed", "type": "aws_security_group_rule", "name": "ssh",
+      "change": {
+        "actions": ["create"], "before": null,
+        "after": {"type": "ingress", "protocol": "tcp", "from_port": 20, "to_port": 25, "cidr_blocks": ["0.0.0.0/0"]},
+        "after_unknown": {"id": true}, "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_db_instance.reporting_v2",
+      "mode": "managed", "type": "aws_db_instance", "name": "reporting_v2",
+      "change": {
+        "actions": ["create"], "before": null,
+        "after": {"engine": "postgres", "instance_class": "db.m6g.large", "allocated_storage": 200, "username": "app", "password": "not-a-real-value", "multi_az": true},
+        "after_unknown": {"id": true}, "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_db_instance.reporting",
+      "mode": "managed", "type": "aws_db_instance", "name": "reporting",
+      "change": {
+        "actions": ["delete"],
+        "before": {"engine": "postgres", "instance_class": "db.m6g.large", "allocated_storage": 200, "username": "app", "multi_az": true, "skip_final_snapshot": false},
+        "after": null, "after_unknown": {}, "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_s3_bucket.logs",
+      "mode": "managed", "type": "aws_s3_bucket", "name": "logs",
+      "change": {"actions": ["no-op"], "before": {"bucket": "logs"}, "after": {"bucket": "logs"}, "after_unknown": {}, "after_sensitive": {}}
+    }
+  ],
+  "resource_drift": [
+    {
+      "address": "aws_dynamodb_table.sessions", "mode": "managed", "type": "aws_dynamodb_table", "name": "sessions",
+      "change": {"actions": ["delete"], "before": {"name": "sessions"}, "after": null}
+    }
+  ]
+}

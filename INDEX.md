@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 186  |  **Source files:** 208  |  **Languages used:** 50 of 50  |  **Lines of code:** 132,775  |  **Span:** 2026-04-03 to 2026-10-15
+**Entries:** 187  |  **Source files:** 209  |  **Languages used:** 50 of 50  |  **Lines of code:** 133,578  |  **Span:** 2026-04-03 to 2026-10-16
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -59,7 +59,7 @@ Canonical order. A language at zero is next in line.
 | 32 | Odin | .odin | 2 |
 | 33 | V | .v | 2 |
 | 34 | D | .d | 2 |
-| 35 | Perl | .pl | 1 |
+| 35 | Perl | .pl | 2 |
 | 36 | Raku | .raku | 1 |
 | 37 | Groovy | .groovy | 1 |
 | 38 | Objective-C | .m | 1 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 26 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 27 |
+| Infra and DevOps | 28 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -260,6 +260,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Tenant Inference Queue Planner](Tenant%20Inference%20Queue%20Planner/) | Dart | Cost and Quota | 2026-06-14 | An LLM gateway that dispatches first and explains later will blow a tenant's token quota, miss a deadline and |
 | [Tenant Stream Budget Ledger](Tenant%20Stream%20Budget%20Ledger/) | Zig | Cost and Quota | 2026-08-22 | Your AI gateway logs already know that one tenant blew past its daily spend, replayed an idempotency key |
 | [Tenant Token Fair Scheduler](Tenant%20Token%20Fair%20Scheduler/) | Elixir | Cost and Quota | 2026-09-11 | Deficit Round Robin scheduler in Elixir that fairly splits a shared LLM token budget across tenants by cost |
+| [Terraform Plan Risk Gate](Terraform%20Plan%20Risk%20Gate/) | Perl | Infra and DevOps | 2026-10-16 | Reads terraform show JSON and fails CI on stateful destroys, IAM widening, open ingress and lowered protections |
 | [Test Impact Shard Planner](Test%20Impact%20Shard%20Planner/) | Go | Infra and DevOps | 2026-08-09 | A monorepo has more tests than any pull request deserves, but "run only the tests near the diff" quietly |
 | [Thermal Aware Inference Throttler](Thermal%20Aware%20Inference%20Throttler/) | Swift | LLM and Inference | 2026-09-04 | Swift actor that throttles on-device AI inference concurrency using AIMD driven by thermal state and Low Power Mode |
 | [Token Budget Manager](Token%20Budget%20Manager/) | Rust | LLM and Inference | 2026-04-07 | Lock-free Rust token budget accountant with RAII leases that auto-release unconsumed LLM context on drop |

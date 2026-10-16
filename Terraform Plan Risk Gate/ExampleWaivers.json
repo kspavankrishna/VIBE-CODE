@@ -1,0 +1,6 @@
+{
+  "waivers": [
+    {"rule": "TFR005", "address": "aws_db_instance.orders", "expires": "2026-12-31", "reason": "Migration window approved in change ticket 4471"},
+    {"rule": "TFR004", "address": "aws_security_group_rule.*", "expires": "2026-01-15", "reason": "Old vendor access, should have been removed"}
+  ]
+}
