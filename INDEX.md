@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 187  |  **Source files:** 209  |  **Languages used:** 50 of 50  |  **Lines of code:** 133,578  |  **Span:** 2026-04-03 to 2026-10-16
+**Entries:** 188  |  **Source files:** 210  |  **Languages used:** 50 of 50  |  **Lines of code:** 134,087  |  **Span:** 2026-04-03 to 2026-10-17
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -60,7 +60,7 @@ Canonical order. A language at zero is next in line.
 | 33 | V | .v | 2 |
 | 34 | D | .d | 2 |
 | 35 | Perl | .pl | 2 |
-| 36 | Raku | .raku | 1 |
+| 36 | Raku | .raku | 2 |
 | 37 | Groovy | .groovy | 1 |
 | 38 | Objective-C | .m | 1 |
 | 39 | PowerShell | .ps1 | 1 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 26 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 28 |
+| Infra and DevOps | 29 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -139,6 +139,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Content Defined Chunker](Content%20Defined%20Chunker/) | Odin | Data and Vector | 2026-09-17 | Odin gear hash FastCDC chunker with stable boundaries and a manifest diff against fixed size chunking |
 | [Context Window Optimizer](Context%20Window%20Optimizer/) | Python | LLM and Inference | 2026-04-09 | Scores LLM chat history by recency, role and query overlap, then evicts weakest turns to fit a token budget |
 | [Context Window Packer](Context%20Window%20Packer/) | Python | LLM and Inference | 2026-04-09 | Packs chat history into an LLM context window, pinning critical messages and reserving output tokens |
+| [Cron Herd Auditor](Cron%20Herd%20Auditor/) | Raku | Infra and DevOps | 2026-10-17 | Finds cron minutes where jobs pile up, schedules that lie and DST hazards, then plans a stagger |
 | [Data Residency Route Planner](Data%20Residency%20Route%20Planner/) | Python | LLM and Inference | 2026-05-29 | Routes LLM inference to compliant endpoints, enforcing data residency and retention before cost scoring |
 | [Deterministic Gradient Reduction](Deterministic%20Gradient%20Reduction/) | Fortran | Infra and DevOps | 2026-09-27 | OpenMP tree reduction that sums gradients bit-identically across thread counts with double-double precision |
 | [Dockerfile Cache Auditor](Dockerfile%20Cache%20Auditor/) | PureScript | Infra and DevOps | 2026-10-01 | Audits Dockerfiles for cache busting mistakes and predicts which layers rebuild after a change |
