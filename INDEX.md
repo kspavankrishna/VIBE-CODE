@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 188  |  **Source files:** 210  |  **Languages used:** 50 of 50  |  **Lines of code:** 134,087  |  **Span:** 2026-04-03 to 2026-10-17
+**Entries:** 189  |  **Source files:** 211  |  **Languages used:** 50 of 50  |  **Lines of code:** 135,013  |  **Span:** 2026-04-03 to 2026-10-18
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -61,7 +61,7 @@ Canonical order. A language at zero is next in line.
 | 34 | D | .d | 2 |
 | 35 | Perl | .pl | 2 |
 | 36 | Raku | .raku | 2 |
-| 37 | Groovy | .groovy | 1 |
+| 37 | Groovy | .groovy | 2 |
 | 38 | Objective-C | .m | 1 |
 | 39 | PowerShell | .ps1 | 1 |
 | 40 | SQL | .sql | 1 |
@@ -188,6 +188,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [JSON Schema Compatibility Guard](JSON%20Schema%20Compatibility%20Guard/) | Ruby | Streaming and Parsing | 2026-04-15 | A schema edit that looks harmless in a diff can reject traffic that used to work |
 | [JSONL Batch Preflight](JSONL%20Batch%20Preflight/) | Bash | LLM and Inference | 2026-04-22 | Bash preflight that validates, dedupes, secret-scans and shards JSONL batch files before provider upload |
 | [JSONL Secret Firewall](JSONL%20Secret%20Firewall/) | C++ | Security and Supply Chain | 2026-04-14 | Your JSONL logs contain bearer tokens |
+| [JUnit Flake Ledger](JUnit%20Flake%20Ledger/) | Groovy | Evals and Experiments | 2026-10-18 | Tells flaky tests from broken ones across CI runs, keeps a quarantine ledger and gates on real failures |
 | [Kube Context Guard](Kube%20Context%20Guard/) | Bash | Infra and DevOps | 2026-04-22 | You have credentials for six clusters and your shell remembers only one context |
 | [LLM Chat Turn Machine](LLM%20Chat%20Turn%20Machine/) | Elm | Streaming and Parsing | 2026-09-30 | Pure Elm state machine for streaming chat turns: resume, dedupe, reorder, stall and tool call safety |
 | [LLM Network Cost Sentinel](LLM%20Network%20Cost%20Sentinel/) | Objective-C | Cost and Quota | 2026-09-23 | Swizzles NSURLSession so every LLM API call from an iOS or macOS app is metered, priced and can be blocked |
