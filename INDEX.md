@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 190  |  **Source files:** 213  |  **Languages used:** 50 of 50  |  **Lines of code:** 135,786  |  **Span:** 2026-04-03 to 2026-10-19
+**Entries:** 191  |  **Source files:** 214  |  **Languages used:** 50 of 50  |  **Lines of code:** 136,503  |  **Span:** 2026-04-03 to 2026-10-20
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -63,7 +63,7 @@ Canonical order. A language at zero is next in line.
 | 36 | Raku | .raku | 2 |
 | 37 | Groovy | .groovy | 2 |
 | 38 | Objective-C | .m | 2 |
-| 39 | PowerShell | .ps1 | 1 |
+| 39 | PowerShell | .ps1 | 2 |
 | 40 | SQL | .sql | 1 |
 | 41 | Solidity | .sol | 1 |
 | 42 | Fortran | .f90 | 1 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 27 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 29 |
+| Infra and DevOps | 30 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -222,6 +222,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [OTel Agent Critical Path](OTel%20Agent%20Critical%20Path/) | D | Infra and DevOps | 2026-10-15 | D CLI that finds the real critical path in OTel agent traces, ranks LLM and tool time and prices the gain |
 | [OTel Inference Cost Ledger](OTel%20Inference%20Cost%20Ledger/) | C# | Cost and Quota | 2026-05-24 | Joins OpenTelemetry spans with LLM gateway usage to attribute token cost and p95 latency per service and tenant |
 | [On Device Model Fetcher](On%20Device%20Model%20Fetcher/) | Objective-C | LLM and Inference | 2026-10-19 | Resumable SHA-256 pinned model weight downloader for iOS and macOS with range safety and disk preflight |
+| [PATH Shadow Drift Auditor](PATH%20Shadow%20Drift%20Auditor/) | PowerShell | Infra and DevOps | 2026-10-20 | Finds shadowed tools, Store alias stubs, writable PATH dirs and drift from a hash checked baseline |
 | [Paged KV Cache Allocator](Paged%20KV%20Cache%20Allocator/) | C++ | LLM and Inference | 2026-09-05 | Block-based KV cache allocator in C++ with prefix hash sharing, copy-on-write forks and LRU eviction |
 | [Paired Eval Gate](Paired%20Eval%20Gate/) | Julia | Evals and Experiments | 2026-04-17 | Stratified cluster paired bootstrap in Julia for LLM eval release gates, with win rates, CIs and margins |
 | [Policy Drift Incident Router](Policy%20Drift%20Incident%20Router/) | Bash | Infra and DevOps | 2026-08-10 | Bash CI gate that routes risky policy, infra, AI-agent and pipeline file changes to owners, controls and runbooks |
