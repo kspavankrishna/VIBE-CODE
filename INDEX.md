@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 191  |  **Source files:** 214  |  **Languages used:** 50 of 50  |  **Lines of code:** 136,503  |  **Span:** 2026-04-03 to 2026-10-20
+**Entries:** 192  |  **Source files:** 215  |  **Languages used:** 50 of 50  |  **Lines of code:** 136,740  |  **Span:** 2026-04-03 to 2026-10-22
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -64,7 +64,7 @@ Canonical order. A language at zero is next in line.
 | 37 | Groovy | .groovy | 2 |
 | 38 | Objective-C | .m | 2 |
 | 39 | PowerShell | .ps1 | 2 |
-| 40 | SQL | .sql | 1 |
+| 40 | SQL | .sql | 2 |
 | 41 | Solidity | .sol | 1 |
 | 42 | Fortran | .f90 | 1 |
 | 43 | Ada | .adb | 1 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 27 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 30 |
+| Infra and DevOps | 31 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -226,6 +226,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Paged KV Cache Allocator](Paged%20KV%20Cache%20Allocator/) | C++ | LLM and Inference | 2026-09-05 | Block-based KV cache allocator in C++ with prefix hash sharing, copy-on-write forks and LRU eviction |
 | [Paired Eval Gate](Paired%20Eval%20Gate/) | Julia | Evals and Experiments | 2026-04-17 | Stratified cluster paired bootstrap in Julia for LLM eval release gates, with win rates, CIs and margins |
 | [Policy Drift Incident Router](Policy%20Drift%20Incident%20Router/) | Bash | Infra and DevOps | 2026-08-10 | Bash CI gate that routes risky policy, infra, AI-agent and pipeline file changes to owners, controls and runbooks |
+| [Postgres Lock Queue Root Blocker](Postgres%20Lock%20Queue%20Root%20Blocker/) | SQL | Infra and DevOps | 2026-10-22 | Finds the root blocker and the queued DDL behind a Postgres lock pileup and prints safe cancel SQL |
 | [Postgres Role Escalation Path Finder](Postgres%20Role%20Escalation%20Path%20Finder/) | SQL | Security and Supply Chain | 2026-09-25 | Walks the Postgres role membership graph to find every login role that can reach a superuser equivalent |
 | [Prefix Affinity Ring](Prefix%20Affinity%20Ring/) | Erlang | Infra and DevOps | 2026-10-06 | Erlang router that pins prompt prefixes to GPU replicas with bounded load spill, health probes and leases |
 | [Prompt Cache Cutover](Prompt%20Cache%20Cutover/) | OCaml | Cost and Quota | 2026-05-24 | OCaml CLI that reads route-level token CSV and returns per-route prompt cache break-even and enable verdicts |
