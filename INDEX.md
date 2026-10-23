@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 192  |  **Source files:** 215  |  **Languages used:** 50 of 50  |  **Lines of code:** 136,740  |  **Span:** 2026-04-03 to 2026-10-22
+**Entries:** 193  |  **Source files:** 216  |  **Languages used:** 50 of 50  |  **Lines of code:** 137,185  |  **Span:** 2026-04-03 to 2026-10-23
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -65,7 +65,7 @@ Canonical order. A language at zero is next in line.
 | 38 | Objective-C | .m | 2 |
 | 39 | PowerShell | .ps1 | 2 |
 | 40 | SQL | .sql | 2 |
-| 41 | Solidity | .sol | 1 |
+| 41 | Solidity | .sol | 2 |
 | 42 | Fortran | .f90 | 1 |
 | 43 | Ada | .adb | 1 |
 | 44 | Racket | .rkt | 1 |
@@ -88,7 +88,7 @@ Canonical order. A language at zero is next in line.
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
-| Edge and Carbon | 7 |
+| Edge and Carbon | 8 |
 
 ## All entries
 
@@ -130,6 +130,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Carbon Aware Eval Planner](Carbon%20Aware%20Eval%20Planner/) | Dart | Edge and Carbon | 2026-05-24 | Dart CLI that schedules deadline bound AI eval and batch jobs into the cleanest and cheapest grid slots |
 | [Carbon Aware Job Scheduler](Carbon%20Aware%20Job%20Scheduler/) | C# | Edge and Carbon | 2026-09-03 | Defers batch and GPU jobs to the lowest-carbon window before their deadline using a grid intensity forecast |
 | [Carbon Credit Double Count Guard](Carbon%20Credit%20Double%20Count%20Guard/) | PHP | Edge and Carbon | 2026-09-08 | PHP 8 CLI and library that catches overlapping carbon credit serial ranges before a double sold trade closes |
+| [Carbon Credit Retirement Registry](Carbon%20Credit%20Retirement%20Registry/) | Solidity | Edge and Carbon | 2026-10-23 | Solidity registry that retires carbon credits into receipts naming exact serials, with EIP-712 gasless retire |
 | [Cardinality Circuit Ledger](Cardinality%20Circuit%20Ledger/) | Zig | Infra and DevOps | 2026-06-28 | Zig cardinality circuit breaker that caps distinct metric label values per window and buckets the overflow |
 | [Causal Release Guard](Causal%20Release%20Guard/) | Julia | Evals and Experiments | 2026-07-07 | Stratified bootstrap canary analysis in Julia that returns a ship, hold or block release decision |
 | [Complexity Regression Sentinel](Complexity%20Regression%20Sentinel/) | Rust | Infra and DevOps | 2026-08-28 | Rust CLI that diffs per function loop nesting between git refs and fails CI on O(n^2) regressions |
