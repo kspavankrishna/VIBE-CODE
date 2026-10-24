@@ -1,0 +1,11 @@
+# Example nature based portfolio. stock_tonnes is the credits currently outstanding and insured by the pool.
+project_id,region,stock_tonnes,annual_hazard,sev_alpha,sev_beta
+KAR-AR-001,Karnataka,420000,0.008,1.2,9
+KAR-AR-002,Karnataka,310000,0.008,1.2,9
+TN-MANG-001,Tamil Nadu,150000,0.004,0.8,12
+AP-AGRO-001,Andhra Pradesh,260000,0.012,1.5,6
+AP-AGRO-002,Andhra Pradesh,180000,0.012,1.5,6
+CA-FOR-014,California,900000,0.015,0.9,4
+BR-REDD-007,Para,1200000,0.010,0.7,5
+BR-REDD-009,Para,640000,0.010,0.7,5
+AU-FIRE-003,Northern Territory,380000,0.020,1.0,3
