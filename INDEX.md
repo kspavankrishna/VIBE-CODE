@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 195  |  **Source files:** 218  |  **Languages used:** 50 of 50  |  **Lines of code:** 138,787  |  **Span:** 2026-04-03 to 2026-10-25
+**Entries:** 196  |  **Source files:** 219  |  **Languages used:** 50 of 50  |  **Lines of code:** 140,139  |  **Span:** 2026-04-03 to 2026-10-26
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -68,7 +68,7 @@ Canonical order. A language at zero is next in line.
 | 41 | Solidity | .sol | 2 |
 | 42 | Fortran | .f90 | 2 |
 | 43 | Ada | .adb | 2 |
-| 44 | Racket | .rkt | 1 |
+| 44 | Racket | .rkt | 2 |
 | 45 | Elm | .elm | 1 |
 | 46 | PureScript | .purs | 1 |
 | 47 | ReScript | .res | 1 |
@@ -242,6 +242,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [RAG Prompt Firewall](RAG%20Prompt%20Firewall/) | Elixir | Security and Supply Chain | 2026-07-18 | Dependency-free Elixir CI gate that scans agent traces for prompt injection and retrieval poisoning, emits SARIF |
 | [Rate Limit Header Normalizer](Rate%20Limit%20Header%20Normalizer/) | ReScript | Cost and Quota | 2026-10-02 | Normalizes Anthropic, OpenAI and IETF rate limit headers into one snapshot and plans wait, proceed or give up |
 | [Realtime Stream Handler](Realtime%20Stream%20Handler/) | TypeScript | Streaming and Parsing | 2026-04-03 | Buffers Anthropic SDK text deltas into fixed size chunks with async backpressure and parallel stream fan out |
+| [Regex Backtrack Prover](Regex%20Backtrack%20Prover/) | Racket | Security and Supply Chain | 2026-10-26 | Racket ReDoS prover that finds regex ambiguity and replays the attack string in a step counting matcher |
 | [Repo Auto Shell](Repo%20Auto%20Shell/) | Nix | Infra and DevOps | 2026-04-17 | Single Nix file that detects a repo's stacks and pins every toolchain cache inside the working tree |
 | [Repository Signal Ranker](Repository%20Signal%20Ranker/) | Ruby | Infra and DevOps | 2026-05-24 | Ranks changed files from git diff --numstat by churn, path risk and CODEOWNERS fan out so reviewers start right |
 | [Runner Artifact Attestor](Runner%20Artifact%20Attestor/) | Bash | Security and Supply Chain | 2026-06-04 | Bash CI gate that writes and verifies a sha256 artifact manifest, blocks symlinks, stray files, leaked secrets and mismatched provenance before upload |
