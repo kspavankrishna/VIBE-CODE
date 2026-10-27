@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 196  |  **Source files:** 219  |  **Languages used:** 50 of 50  |  **Lines of code:** 140,139  |  **Span:** 2026-04-03 to 2026-10-26
+**Entries:** 197  |  **Source files:** 221  |  **Languages used:** 50 of 50  |  **Lines of code:** 142,403  |  **Span:** 2026-04-03 to 2026-10-27
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -69,7 +69,7 @@ Canonical order. A language at zero is next in line.
 | 42 | Fortran | .f90 | 2 |
 | 43 | Ada | .adb | 2 |
 | 44 | Racket | .rkt | 2 |
-| 45 | Elm | .elm | 1 |
+| 45 | Elm | .elm | 2 |
 | 46 | PureScript | .purs | 1 |
 | 47 | ReScript | .res | 1 |
 | 48 | Tcl | .tcl | 1 |
@@ -80,7 +80,7 @@ Canonical order. A language at zero is next in line.
 
 | Topic | Entries |
 |---|---:|
-| MCP and Agent Tooling | 36 |
+| MCP and Agent Tooling | 37 |
 | LLM and Inference | 27 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
@@ -103,6 +103,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [AI Stream SSE Reader](AI%20Stream%20SSE%20Reader/) | C# | Streaming and Parsing | 2026-04-14 | Single file C# Server Sent Events reader that joins multi-line data fields, skips heartbeats and caps event size |
 | [Actions Workflow Hardening Auditor](Actions%20Workflow%20Hardening%20Auditor/) | Crystal | Security and Supply Chain | 2026-10-10 | Crystal CLI that audits GitHub Actions for script injection, pwn requests, loose pins and token scope with SARIF |
 | [Adaptive Micro Batcher](Adaptive%20Micro%20Batcher/) | Dart | Infra and DevOps | 2026-04-24 | Dart micro batcher that flushes on size, weight or latency and splits failed batches to isolate poison items |
+| [Agent Approval Queue](Agent%20Approval%20Queue/) | Elm | MCP and Agent Tooling | 2026-10-27 | Pure Elm human approval queue for agent tool calls: dual control, argument binding, expiry and fatigue brake |
 | [Agent Aware Connection Pool](Agent%20Aware%20Connection%20Pool/) | Go | MCP and Agent Tooling | 2026-08-29 | Go database/sql admission layer using weighted fair queuing per agent plus an AIMD controller that resizes the pool |
 | [Agent Budget Quorum](Agent%20Budget%20Quorum/) | Elixir | MCP and Agent Tooling | 2026-07-03 | Deterministic admission control for agent tool calls with fingerprint quorum, leases and a spend ledger |
 | [Agent Consent Receipt Ledger](Agent%20Consent%20Receipt%20Ledger/) | Ruby | MCP and Agent Tooling | 2026-08-20 | Audits AI agent tool call logs to prove every risky call had a scoped, unexpired consent receipt |
