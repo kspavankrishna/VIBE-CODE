@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 197  |  **Source files:** 221  |  **Languages used:** 50 of 50  |  **Lines of code:** 142,403  |  **Span:** 2026-04-03 to 2026-10-27
+**Entries:** 198  |  **Source files:** 228  |  **Languages used:** 50 of 50  |  **Lines of code:** 143,353  |  **Span:** 2026-04-03 to 2026-10-28
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -70,7 +70,7 @@ Canonical order. A language at zero is next in line.
 | 43 | Ada | .adb | 2 |
 | 44 | Racket | .rkt | 2 |
 | 45 | Elm | .elm | 2 |
-| 46 | PureScript | .purs | 1 |
+| 46 | PureScript | .purs | 2 |
 | 47 | ReScript | .res | 1 |
 | 48 | Tcl | .tcl | 1 |
 | 49 | Haxe | .hx | 1 |
@@ -136,6 +136,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Carbon Credit Retirement Registry](Carbon%20Credit%20Retirement%20Registry/) | Solidity | Edge and Carbon | 2026-10-23 | Solidity registry that retires carbon credits into receipts naming exact serials, with EIP-712 gasless retire |
 | [Cardinality Circuit Ledger](Cardinality%20Circuit%20Ledger/) | Zig | Infra and DevOps | 2026-06-28 | Zig cardinality circuit breaker that caps distinct metric label values per window and buckets the overflow |
 | [Causal Release Guard](Causal%20Release%20Guard/) | Julia | Evals and Experiments | 2026-07-07 | Stratified bootstrap canary analysis in Julia that returns a ship, hold or block release decision |
+| [Codeowners Shadow Auditor](Codeowners%20Shadow%20Auditor/) | PureScript | Security and Supply Chain | 2026-10-28 | Proves which CODEOWNERS rules never fire, which drop owners and which files end up unowned |
 | [Complexity Regression Sentinel](Complexity%20Regression%20Sentinel/) | Rust | Infra and DevOps | 2026-08-28 | Rust CLI that diffs per function loop nesting between git refs and fails CI on O(n^2) regressions |
 | [Composer Risk Ledger](Composer%20Risk%20Ledger/) | PHP | Security and Supply Chain | 2026-07-16 | Scores composer.lock supply chain risk offline and gates CI with JSON, Markdown or SARIF output |
 | [Concurrent Token Window](Concurrent%20Token%20Window/) | Go | LLM and Inference | 2026-04-07 | Go rate limiter combining a token budget, a concurrency semaphore and a circuit breaker for token metered LLM APIs |

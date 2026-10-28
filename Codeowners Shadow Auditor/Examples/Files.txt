@@ -1,0 +1,13 @@
+README.md
+docs/guide/intro.md
+src/main.ts
+src/auth/login.ts
+src/payments/charge.ts
+src/payments/legacy/old.ts
+build/out.js
+vendor/lib/a.js
+web/index.ts
+ops/deploy.sh
+scripts/release.sh
+.github/workflows/ci.yml
+third_party/x/y.c

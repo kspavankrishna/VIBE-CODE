@@ -1,0 +1,18 @@
+# Typical file after three years of reorganisations
+*                       @acme/platform
+/docs/                  @acme/docs
+/src/                   @acme/core @acme/security
+/src/auth/              @acme/identity
+/src/payments/*         @acme/payments
+/src/payments/legacy/   @acme/payments-legacy
+*.md                    @acme/docs
+/build/                 @acme/infra
+!/vendor/               @acme/platform
+/web/[a-z]*.ts          @acme/web
+/ops/deploy.sh          @acme/infra
+/ops/deploy.sh          @acme/sre
+/scripts/               someone@@example
+/legacy-api/            @acme/api
+/src/**                 @acme/platform
+/.github/               @acme/infra @acme/infra
+/third_party/           
