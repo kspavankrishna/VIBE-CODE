@@ -1,0 +1,7 @@
+{
+  "name": "actions-matrix-expander",
+  "sources": [{"dir": ".", "subdirs": false}],
+  "package-specs": {"module": "commonjs", "in-source": true},
+  "suffix": ".bs.js",
+  "warnings": {"number": "+a-4-9-40-42-44-45-70"}
+}

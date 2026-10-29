@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 198  |  **Source files:** 228  |  **Languages used:** 50 of 50  |  **Lines of code:** 143,353  |  **Span:** 2026-04-03 to 2026-10-28
+**Entries:** 199  |  **Source files:** 229  |  **Languages used:** 50 of 50  |  **Lines of code:** 144,362  |  **Span:** 2026-04-03 to 2026-10-29
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -71,7 +71,7 @@ Canonical order. A language at zero is next in line.
 | 44 | Racket | .rkt | 2 |
 | 45 | Elm | .elm | 2 |
 | 46 | PureScript | .purs | 2 |
-| 47 | ReScript | .res | 1 |
+| 47 | ReScript | .res | 2 |
 | 48 | Tcl | .tcl | 1 |
 | 49 | Haxe | .hx | 1 |
 | 50 | CUDA | .cu | 1 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 27 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 31 |
+| Infra and DevOps | 32 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -101,6 +101,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [AI SSE JSON Assembler](AI%20SSE%20JSON%20Assembler/) | C++ | Streaming and Parsing | 2026-04-23 | Reassembles fragmented AI SSE streams into complete validated JSON values with hard memory and depth caps |
 | [AI SSE Resume Ledger](AI%20SSE%20Resume%20Ledger/) | Kotlin | Streaming and Parsing | 2026-05-20 | Bounded in memory SSE replay ledger for resumable LLM token streams with checkpoints and tool dedupe |
 | [AI Stream SSE Reader](AI%20Stream%20SSE%20Reader/) | C# | Streaming and Parsing | 2026-04-14 | Single file C# Server Sent Events reader that joins multi-line data fields, skips heartbeats and caps event size |
+| [Actions Matrix Expander](Actions%20Matrix%20Expander/) | ReScript | Infra and DevOps | 2026-10-29 | Expands Actions matrices with exact include and exclude rules, flags dead entries and diffs check names |
 | [Actions Workflow Hardening Auditor](Actions%20Workflow%20Hardening%20Auditor/) | Crystal | Security and Supply Chain | 2026-10-10 | Crystal CLI that audits GitHub Actions for script injection, pwn requests, loose pins and token scope with SARIF |
 | [Adaptive Micro Batcher](Adaptive%20Micro%20Batcher/) | Dart | Infra and DevOps | 2026-04-24 | Dart micro batcher that flushes on size, weight or latency and splits failed batches to isolate poison items |
 | [Agent Approval Queue](Agent%20Approval%20Queue/) | Elm | MCP and Agent Tooling | 2026-10-27 | Pure Elm human approval queue for agent tool calls: dual control, argument binding, expiry and fatigue brake |
