@@ -1,0 +1,10 @@
+[Unit]
+Description=Bare internal API with no sandboxing
+
+[Service]
+ExecStart=/usr/local/bin/bare-api --listen 0.0.0.0:8080
+Restart=on-failure
+Environment=DB_PASSWORD=changeme LOG_LEVEL=info
+
+[Install]
+WantedBy=multi-user.target

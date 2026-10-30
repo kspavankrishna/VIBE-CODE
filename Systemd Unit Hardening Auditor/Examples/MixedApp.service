@@ -1,0 +1,19 @@
+[Unit]
+Description=Node service half hardened, drop-in tries to widen it
+
+[Service]
+User=app
+ExecStartPre=+/usr/bin/chown -R app /var/lib/mixed
+ExecStart=/usr/bin/node /srv/mixed/server.js
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=read-only
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=~CAP_SYS_ADMIN CAP_SYS_MODULE CAP_SYS_RAWIO CAP_SYS_PTRACE CAP_NET_ADMIN
+ReadWritePaths=/var/lib/mixed \
+    /etc/ssh
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+# hardening-ignore: IPAddressDeny the app calls partner APIs on rotating addresses
+# hardening-ignore: PrivateUsers
+PermissionsStartOnly=true

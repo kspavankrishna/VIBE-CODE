@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 199  |  **Source files:** 229  |  **Languages used:** 50 of 50  |  **Lines of code:** 144,362  |  **Span:** 2026-04-03 to 2026-10-29
+**Entries:** 200  |  **Source files:** 231  |  **Languages used:** 50 of 50  |  **Lines of code:** 145,670  |  **Span:** 2026-04-03 to 2026-10-30
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -72,7 +72,7 @@ Canonical order. A language at zero is next in line.
 | 45 | Elm | .elm | 2 |
 | 46 | PureScript | .purs | 2 |
 | 47 | ReScript | .res | 2 |
-| 48 | Tcl | .tcl | 1 |
+| 48 | Tcl | .tcl | 2 |
 | 49 | Haxe | .hx | 1 |
 | 50 | CUDA | .cu | 1 |
 
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 27 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 32 |
+| Infra and DevOps | 33 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 11 |
@@ -268,6 +268,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Structured JSON Repair](Structured%20JSON%20Repair/) | Python | Streaming and Parsing | 2026-04-10 | Deterministic repair of almost-valid LLM JSON: fences, bare keys, Python literals, comments, trailing commas |
 | [Structured JSON Stream Decoder](Structured%20JSON%20Stream%20Decoder/) | Dart | Streaming and Parsing | 2026-04-14 | Dart incremental JSON decoder that extracts complete, verified JSON documents from streamed LLM text over SSE or WebSockets |
 | [Structured Output Drift Gate](Structured%20Output%20Drift%20Gate/) | Java | Streaming and Parsing | 2026-05-20 | The same prompt, run twice against the same model, returns JSON that is subtly different: a key vanishes, a |
+| [Systemd Unit Hardening Auditor](Systemd%20Unit%20Hardening%20Auditor/) | Tcl | Infra and DevOps | 2026-10-30 | Scores systemd units from disk with drop ins merged, flags dead sandbox settings and gates CI on a baseline |
 | [Tenant GPU Lease Planner](Tenant%20GPU%20Lease%20Planner/) | Go | Infra and DevOps | 2026-06-02 | Deciding how many GPUs each inference tenant needs is usually a spreadsheet guess |
 | [Tenant Inference Queue Planner](Tenant%20Inference%20Queue%20Planner/) | Dart | Cost and Quota | 2026-06-14 | An LLM gateway that dispatches first and explains later will blow a tenant's token quota, miss a deadline and |
 | [Tenant Stream Budget Ledger](Tenant%20Stream%20Budget%20Ledger/) | Zig | Cost and Quota | 2026-08-22 | Your AI gateway logs already know that one tenant blew past its daily spend, replayed an idempotency key |
