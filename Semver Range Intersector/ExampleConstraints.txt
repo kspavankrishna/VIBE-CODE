@@ -1,0 +1,18 @@
+# Peer and direct constraints collected from a root manifest and three MCP servers.
+# Format: constraint <package> | <range> | <where it came from>
+
+constraint zod | ^3.22.0 | root package.json
+constraint zod | >=3.23.0 <4 | mcp-server-files peerDependencies
+constraint zod | ~3.24.1 | mcp-server-search peerDependencies
+available zod | 3.22.4 3.23.8 3.24.0 3.24.2 3.25.0 4.0.0
+
+constraint typescript | ^5.4.0 | root package.json
+constraint typescript | >=4.9 <5.5 || ^5.6.0 | mcp-server-files peerDependencies
+constraint typescript | ~5.5.0 | build-tool peerDependencies
+
+constraint sdk | ^1.2.0-beta.1 | agent-runtime dependencies
+constraint sdk | <1.2.0 | mcp-server-search peerDependencies
+
+constraint ws | ^8.0.0 | root package.json
+constraint ws | >=8.17.1 | mcp-server-files dependencies
+available ws | 8.16.0 8.17.0
