@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 202  |  **Source files:** 233  |  **Languages used:** 50 of 50  |  **Lines of code:** 147,380  |  **Span:** 2026-04-03 to 2026-11-01
+**Entries:** 203  |  **Source files:** 235  |  **Languages used:** 50 of 50  |  **Lines of code:** 148,213  |  **Span:** 2026-04-03 to 2026-11-02
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -49,7 +49,7 @@ Canonical order. A language at zero is next in line.
 | 22 | R | .R | 4 |
 | 23 | Julia | .jl | 6 |
 | 24 | Nix | .nix | 4 |
-| 25 | Erlang | .erl | 2 |
+| 25 | Erlang | .erl | 3 |
 | 26 | Clojure | .clj | 2 |
 | 27 | F# | .fs | 2 |
 | 28 | Nim | .nim | 2 |
@@ -87,7 +87,7 @@ Canonical order. A language at zero is next in line.
 | Infra and DevOps | 34 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
-| Data and Vector | 11 |
+| Data and Vector | 12 |
 | Edge and Carbon | 10 |
 
 ## All entries
@@ -293,6 +293,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Vector Cache LRU](Vector%20Cache%20LRU/) | Rust | LLM and Inference | 2026-04-08 | Thread safe bounded LRU cache for f32 embedding vectors in Rust, with byte level payload accounting |
 | [Vector Index Lease Guard](Vector%20Index%20Lease%20Guard/) | Haskell | Data and Vector | 2026-07-21 | Haskell CI gate that fails the build on stale, expired, cross-tenant or revoked RAG vector index leases |
 | [Vector Product Quantizer](Vector%20Product%20Quantizer/) | Nim | Data and Vector | 2026-09-13 | Nim CLI that trains product quantization codebooks and searches compressed byte codes with ADC |
+| [Vector Replica Placement](Vector%20Replica%20Placement/) | Erlang | Data and Vector | 2026-11-02 | Plans vector shard replica repair, drains and zone spread as copy before drop steps under move budgets |
 | [Vector Search Optimizer](Vector%20Search%20Optimizer/) | Rust | Data and Vector | 2026-04-05 | Brute force Rust cosine vector search that tags each top k result with whether it fits a token budget |
 | [Vector Shard Merge Planner](Vector%20Shard%20Merge%20Planner/) | F# | Data and Vector | 2026-09-12 | Deterministic F# CLI that plans a vector shard merge with LWW resolution, dimension gating and LSH dedup |
 | [Wasm Memory Lease Zig](Wasm%20Memory%20Lease%20Zig/) | Zig | Infra and DevOps | 2026-05-24 | Deterministic Wasm memory lease planner in Zig that grants tenant sandbox memory by priority-per-TTL from CSV |

@@ -1,0 +1,11 @@
+#{options => #{max_moves => 10, max_fill => 0.85},
+  nodes => [#{id => n1, zone => a, capacity => 1000},
+            #{id => n2, zone => a, capacity => 1000},
+            #{id => n3, zone => b, capacity => 1000},
+            #{id => n4, zone => b, capacity => 1000, draining => true},
+            #{id => n5, zone => c, capacity => 1000}],
+  shards => [#{id => s1, size => 300, replicas => 2, placed => [n1, n2]},
+             #{id => s2, size => 250, replicas => 2, placed => [n1, n4]},
+             #{id => s3, size => 200, replicas => 3, placed => [n1, n3, n9]},
+             #{id => s4, size => 100, replicas => 1, placed => []},
+             #{id => s5, size => 150, replicas => 1, placed => [n1, n2]}]}.
