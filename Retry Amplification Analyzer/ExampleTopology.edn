@@ -1,0 +1,21 @@
+{:entry :gateway
+ :entry-rps 300
+ :services
+ {:gateway   {:capacity-rps 2000
+              :calls [{:to :checkout :timeout-ms 1500 :retries 2 :backoff-ms 50 :backoff-cap-ms 400
+                       :jitter true :idempotent true :budget-ratio 0.1}
+                      {:to :search :timeout-ms 300 :retries 1 :backoff-ms 20
+                       :jitter true :idempotent true :budget-ratio 0.1}]}
+  :checkout  {:capacity-rps 800
+              :calls [{:to :payments :timeout-ms 600 :retries 3 :backoff-ms 100 :idempotent false}
+                      {:to :inventory :timeout-ms 400 :retries 2 :backoff-ms 40
+                       :jitter true :idempotent true :budget-ratio 0.2}]}
+  :payments  {:capacity-rps 700
+              :calls [{:to :ledger :timeout-ms 500 :retries 2 :backoff-ms 50
+                       :jitter true :idempotent true}]}
+  :inventory {:capacity-rps 900
+              :calls [{:to :ledger :timeout-ms 300 :retries 1 :backoff-ms 30
+                       :jitter true :idempotent true :budget-ratio 0.1}]}
+  :search    {:capacity-rps 500}
+  :ledger    {:capacity-rps 1500 :local-ms 20}
+  :legacy-report {:capacity-rps 50}}}
