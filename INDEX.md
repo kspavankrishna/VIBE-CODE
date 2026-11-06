@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 205  |  **Source files:** 239  |  **Languages used:** 50 of 50  |  **Lines of code:** 149,348  |  **Span:** 2026-04-03 to 2026-11-05
+**Entries:** 206  |  **Source files:** 240  |  **Languages used:** 50 of 50  |  **Lines of code:** 150,011  |  **Span:** 2026-04-03 to 2026-11-06
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -52,7 +52,7 @@ Canonical order. A language at zero is next in line.
 | 25 | Erlang | .erl | 3 |
 | 26 | Clojure | .clj | 3 |
 | 27 | F# | .fs | 3 |
-| 28 | Nim | .nim | 2 |
+| 28 | Nim | .nim | 3 |
 | 29 | Crystal | .cr | 2 |
 | 30 | Gleam | .gleam | 2 |
 | 31 | Mojo | .mojo | 2 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 36 |
+| Infra and DevOps | 37 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
@@ -150,6 +150,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Data Residency Route Planner](Data%20Residency%20Route%20Planner/) | Python | LLM and Inference | 2026-05-29 | Routes LLM inference to compliant endpoints, enforcing data residency and retention before cost scoring |
 | [Deterministic Gradient Reduction](Deterministic%20Gradient%20Reduction/) | Fortran | Infra and DevOps | 2026-09-27 | OpenMP tree reduction that sums gradients bit-identically across thread counts with double-double precision |
 | [Dockerfile Cache Auditor](Dockerfile%20Cache%20Auditor/) | PureScript | Infra and DevOps | 2026-10-01 | Audits Dockerfiles for cache busting mistakes and predicts which layers rebuild after a change |
+| [Dotenv Drift Auditor](Dotenv%20Drift%20Auditor/) | Nim | Infra and DevOps | 2026-11-06 | Lints dotenv files, diffs them against the example and cross checks keys with code, never printing values |
 | [Dynamic Token Prioritizer](Dynamic%20Token%20Prioritizer/) | Python | LLM and Inference | 2026-04-06 | Ranks LLM tokens by rarity, position and semantic score so context overflow drops filler instead of the tail |
 | [Edge Cache Entropy Audit](Edge%20Cache%20Entropy%20Audit/) | JavaScript | Edge and Carbon | 2026-08-11 | Audits CDN and edge logs for cache key entropy, private data in shared caches and low hit rate routes |
 | [Edge Inference Admission](Edge%20Inference%20Admission/) | C | Cost and Quota | 2026-06-10 | C admission controller that throttles LLM requests on rolling per tenant cost, token and carbon budgets |
