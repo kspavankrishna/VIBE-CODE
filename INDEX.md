@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 206  |  **Source files:** 240  |  **Languages used:** 50 of 50  |  **Lines of code:** 150,011  |  **Span:** 2026-04-03 to 2026-11-06
+**Entries:** 207  |  **Source files:** 241  |  **Languages used:** 50 of 50  |  **Lines of code:** 150,527  |  **Span:** 2026-04-03 to 2026-11-07
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -53,7 +53,7 @@ Canonical order. A language at zero is next in line.
 | 26 | Clojure | .clj | 3 |
 | 27 | F# | .fs | 3 |
 | 28 | Nim | .nim | 3 |
-| 29 | Crystal | .cr | 2 |
+| 29 | Crystal | .cr | 3 |
 | 30 | Gleam | .gleam | 2 |
 | 31 | Mojo | .mojo | 2 |
 | 32 | Odin | .odin | 2 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 37 |
+| Infra and DevOps | 38 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
@@ -234,6 +234,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [PATH Shadow Drift Auditor](PATH%20Shadow%20Drift%20Auditor/) | PowerShell | Infra and DevOps | 2026-10-20 | Finds shadowed tools, Store alias stubs, writable PATH dirs and drift from a hash checked baseline |
 | [Paged KV Cache Allocator](Paged%20KV%20Cache%20Allocator/) | C++ | LLM and Inference | 2026-09-05 | Block-based KV cache allocator in C++ with prefix hash sharing, copy-on-write forks and LRU eviction |
 | [Paired Eval Gate](Paired%20Eval%20Gate/) | Julia | Evals and Experiments | 2026-04-17 | Stratified cluster paired bootstrap in Julia for LLM eval release gates, with win rates, CIs and margins |
+| [Pod Resource Right Sizer](Pod%20Resource%20Right%20Sizer/) | Crystal | Infra and DevOps | 2026-11-07 | Crystal CLI that sizes Kubernetes requests from usage JSONL and refuses unsafe cuts after OOM kills or crash loops |
 | [Policy Drift Incident Router](Policy%20Drift%20Incident%20Router/) | Bash | Infra and DevOps | 2026-08-10 | Bash CI gate that routes risky policy, infra, AI-agent and pipeline file changes to owners, controls and runbooks |
 | [Postgres Lock Queue Root Blocker](Postgres%20Lock%20Queue%20Root%20Blocker/) | SQL | Infra and DevOps | 2026-10-22 | Finds the root blocker and the queued DDL behind a Postgres lock pileup and prints safe cancel SQL |
 | [Postgres Role Escalation Path Finder](Postgres%20Role%20Escalation%20Path%20Finder/) | SQL | Security and Supply Chain | 2026-09-25 | Walks the Postgres role membership graph to find every login role that can reach a superuser equivalent |
