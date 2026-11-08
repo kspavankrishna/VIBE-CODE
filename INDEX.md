@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 207  |  **Source files:** 241  |  **Languages used:** 50 of 50  |  **Lines of code:** 150,527  |  **Span:** 2026-04-03 to 2026-11-07
+**Entries:** 208  |  **Source files:** 243  |  **Languages used:** 50 of 50  |  **Lines of code:** 151,659  |  **Span:** 2026-04-03 to 2026-11-08
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -54,7 +54,7 @@ Canonical order. A language at zero is next in line.
 | 27 | F# | .fs | 3 |
 | 28 | Nim | .nim | 3 |
 | 29 | Crystal | .cr | 3 |
-| 30 | Gleam | .gleam | 2 |
+| 30 | Gleam | .gleam | 3 |
 | 31 | Mojo | .mojo | 2 |
 | 32 | Odin | .odin | 2 |
 | 33 | V | .v | 2 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 21 |
-| Infra and DevOps | 38 |
+| Infra and DevOps | 39 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
@@ -207,6 +207,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Latency Quantile Sketch](Latency%20Quantile%20Sketch/) | Odin | Infra and DevOps | 2026-10-13 | Odin DDSketch CLI: mergeable p99 summaries with a proven relative error bound and strict input checks |
 | [Lockfile Tamper Gate](Lockfile%20Tamper%20Gate/) | Nim | Security and Supply Chain | 2026-10-09 | Offline npm lockfile checker that catches swapped tarballs, rogue hosts, bad hashes and diff tampering |
 | [Log Template Miner](Log%20Template%20Miner/) | F# | Infra and DevOps | 2026-10-08 | Drain style F# log miner with bounded memory, JSON and stack trace handling and a CI drift gate |
+| [LSM Compaction Planner](LSM%20Compaction%20Planner/) | Gleam | Infra and DevOps | 2026-11-08 | Pure LSM compaction picker: L0 closure, min overlap seeds, budgets, tombstone drops and a safe commit check |
 | [MCP Call Coalescer](MCP%20Call%20Coalescer/) | Java | MCP and Agent Tooling | 2026-04-14 | Java request coalescer with TTL cache that collapses duplicate concurrent MCP tool calls into one upstream call per key |
 | [MCP Concurrency Governor](MCP%20Concurrency%20Governor/) | Elixir | MCP and Agent Tooling | 2026-04-29 | OTP GenServer that caps per-tool concurrency with session round-robin queues, TTL deadlines and lease-based cleanup |
 | [MCP Egress Boundary](MCP%20Egress%20Boundary/) | Nix | MCP and Agent Tooling | 2026-05-27 | An MCP server needs one token, one repository checkout and one API destination |
