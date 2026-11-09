@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 208  |  **Source files:** 243  |  **Languages used:** 50 of 50  |  **Lines of code:** 151,659  |  **Span:** 2026-04-03 to 2026-11-08
+**Entries:** 209  |  **Source files:** 244  |  **Languages used:** 50 of 50  |  **Lines of code:** 152,111  |  **Span:** 2026-04-03 to 2026-11-09
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -55,7 +55,7 @@ Canonical order. A language at zero is next in line.
 | 28 | Nim | .nim | 3 |
 | 29 | Crystal | .cr | 3 |
 | 30 | Gleam | .gleam | 3 |
-| 31 | Mojo | .mojo | 2 |
+| 31 | Mojo | .mojo | 3 |
 | 32 | Odin | .odin | 2 |
 | 33 | V | .v | 2 |
 | 34 | D | .d | 2 |
@@ -83,7 +83,7 @@ Canonical order. A language at zero is next in line.
 | MCP and Agent Tooling | 37 |
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
-| Streaming and Parsing | 21 |
+| Streaming and Parsing | 22 |
 | Infra and DevOps | 39 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
@@ -266,6 +266,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Speculative Decode Verifier](Speculative%20Decode%20Verifier/) | V | LLM and Inference | 2026-09-18 | Replays speculative decoding traces to verify accept/reject sampling, residual math and KV cache rollback |
 | [Stable Code Chunk Planner](Stable%20Code%20Chunk%20Planner/) | Java | LLM and Inference | 2026-04-22 | Deterministic Java CLI that chunks a repo at declaration boundaries and emits an NDJSON manifest with stable IDs |
 | [Stable HTML Change Detector](Stable%20HTML%20Change%20Detector/) | TypeScript | Streaming and Parsing | 2026-04-27 | Fingerprints semantic HTML blocks so page monitors alert on real content changes, not framework churn |
+| [Stop Sequence Stream Guard](Stop%20Sequence%20Stream%20Guard/) | Mojo | Streaming and Parsing | 2026-11-09 | Aho Corasick stop matcher that holds back only possible stop prefixes and never splits UTF-8 in a stream |
 | [Stream Replay Fence](Stream%20Replay%20Fence/) | Julia | Streaming and Parsing | 2026-07-27 | Audits a stream replay manifest for duplicate identity, offset gaps, watermark and retry violations |
 | [Streaming Context Predictor](Streaming%20Context%20Predictor/) | TypeScript | Streaming and Parsing | 2026-04-07 | Predicts LLM context overflow mid stream from a rolling token average and emits warnings before truncation |
 | [Streaming Eval Bootstrap](Streaming%20Eval%20Bootstrap/) | Scala | Evals and Experiments | 2026-05-24 | Deterministic paired bootstrap CLI that turns streamed eval CSV rows into a CI gate with regression risk |
