@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 209  |  **Source files:** 244  |  **Languages used:** 50 of 50  |  **Lines of code:** 152,111  |  **Span:** 2026-04-03 to 2026-11-09
+**Entries:** 210  |  **Source files:** 246  |  **Languages used:** 50 of 50  |  **Lines of code:** 153,175  |  **Span:** 2026-04-03 to 2026-11-10
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -56,7 +56,7 @@ Canonical order. A language at zero is next in line.
 | 29 | Crystal | .cr | 3 |
 | 30 | Gleam | .gleam | 3 |
 | 31 | Mojo | .mojo | 3 |
-| 32 | Odin | .odin | 2 |
+| 32 | Odin | .odin | 3 |
 | 33 | V | .v | 2 |
 | 34 | D | .d | 2 |
 | 35 | Perl | .pl | 2 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
-| Infra and DevOps | 39 |
+| Infra and DevOps | 40 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
@@ -148,6 +148,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Context Window Packer](Context%20Window%20Packer/) | Python | LLM and Inference | 2026-04-09 | Packs chat history into an LLM context window, pinning critical messages and reserving output tokens |
 | [Cron Herd Auditor](Cron%20Herd%20Auditor/) | Raku | Infra and DevOps | 2026-10-17 | Finds cron minutes where jobs pile up, schedules that lie and DST hazards, then plans a stagger |
 | [Data Residency Route Planner](Data%20Residency%20Route%20Planner/) | Python | LLM and Inference | 2026-05-29 | Routes LLM inference to compliant endpoints, enforcing data residency and retention before cost scoring |
+| [Deadline Timing Wheel](Deadline%20Timing%20Wheel/) | Odin | Infra and DevOps | 2026-11-10 | O(1) hierarchical timing wheel for stream deadlines and idle timeouts with fuzzed model checking |
 | [Deterministic Gradient Reduction](Deterministic%20Gradient%20Reduction/) | Fortran | Infra and DevOps | 2026-09-27 | OpenMP tree reduction that sums gradients bit-identically across thread counts with double-double precision |
 | [Dockerfile Cache Auditor](Dockerfile%20Cache%20Auditor/) | PureScript | Infra and DevOps | 2026-10-01 | Audits Dockerfiles for cache busting mistakes and predicts which layers rebuild after a change |
 | [Dotenv Drift Auditor](Dotenv%20Drift%20Auditor/) | Nim | Infra and DevOps | 2026-11-06 | Lints dotenv files, diffs them against the example and cross checks keys with code, never printing values |
