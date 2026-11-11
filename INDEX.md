@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 210  |  **Source files:** 246  |  **Languages used:** 50 of 50  |  **Lines of code:** 153,175  |  **Span:** 2026-04-03 to 2026-11-10
+**Entries:** 211  |  **Source files:** 247  |  **Languages used:** 50 of 50  |  **Lines of code:** 156,011  |  **Span:** 2026-04-03 to 2026-11-11
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -57,7 +57,7 @@ Canonical order. A language at zero is next in line.
 | 30 | Gleam | .gleam | 3 |
 | 31 | Mojo | .mojo | 3 |
 | 32 | Odin | .odin | 3 |
-| 33 | V | .v | 2 |
+| 33 | V | .v | 3 |
 | 34 | D | .d | 2 |
 | 35 | Perl | .pl | 2 |
 | 36 | Raku | .raku | 2 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
-| Infra and DevOps | 40 |
+| Infra and DevOps | 41 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
@@ -239,6 +239,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Pod Resource Right Sizer](Pod%20Resource%20Right%20Sizer/) | Crystal | Infra and DevOps | 2026-11-07 | Crystal CLI that sizes Kubernetes requests from usage JSONL and refuses unsafe cuts after OOM kills or crash loops |
 | [Policy Drift Incident Router](Policy%20Drift%20Incident%20Router/) | Bash | Infra and DevOps | 2026-08-10 | Bash CI gate that routes risky policy, infra, AI-agent and pipeline file changes to owners, controls and runbooks |
 | [Postgres Lock Queue Root Blocker](Postgres%20Lock%20Queue%20Root%20Blocker/) | SQL | Infra and DevOps | 2026-10-22 | Finds the root blocker and the queued DDL behind a Postgres lock pileup and prints safe cancel SQL |
+| [Postgres Migration Lock Linter](Postgres%20Migration%20Lock%20Linter/) | V | Infra and DevOps | 2026-11-11 | Simulates Postgres locks across each migration transaction and fails CI on rewrites, scans and lock pileups |
 | [Postgres Role Escalation Path Finder](Postgres%20Role%20Escalation%20Path%20Finder/) | SQL | Security and Supply Chain | 2026-09-25 | Walks the Postgres role membership graph to find every login role that can reach a superuser equivalent |
 | [Prefix Affinity Ring](Prefix%20Affinity%20Ring/) | Erlang | Infra and DevOps | 2026-10-06 | Erlang router that pins prompt prefixes to GPU replicas with bounded load spill, health probes and leases |
 | [Prompt Cache Cutover](Prompt%20Cache%20Cutover/) | OCaml | Cost and Quota | 2026-05-24 | OCaml CLI that reads route-level token CSV and returns per-route prompt cache break-even and enable verdicts |
