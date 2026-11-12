@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 211  |  **Source files:** 247  |  **Languages used:** 50 of 50  |  **Lines of code:** 156,011  |  **Span:** 2026-04-03 to 2026-11-11
+**Entries:** 212  |  **Source files:** 248  |  **Languages used:** 50 of 50  |  **Lines of code:** 157,907  |  **Span:** 2026-04-03 to 2026-11-12
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -58,7 +58,7 @@ Canonical order. A language at zero is next in line.
 | 31 | Mojo | .mojo | 3 |
 | 32 | Odin | .odin | 3 |
 | 33 | V | .v | 3 |
-| 34 | D | .d | 2 |
+| 34 | D | .d | 3 |
 | 35 | Perl | .pl | 2 |
 | 36 | Raku | .raku | 2 |
 | 37 | Groovy | .groovy | 2 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
-| Infra and DevOps | 41 |
+| Infra and DevOps | 42 |
 | Security and Supply Chain | 21 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
@@ -169,6 +169,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Experiment Evidence Ledger](Experiment%20Evidence%20Ledger/) | Julia | Evals and Experiments | 2026-05-25 | Hashes a run directory into one SHA-256 evidence root so CI can prove experiment artifacts never drifted |
 | [Experiment Split Provenance](Experiment%20Split%20Provenance/) | R | Evals and Experiments | 2026-07-26 | Base R audit that catches id, group and temporal leakage across ML dataset splits and reports it as CSV plus SARIF |
 | [Flake Lock Supply Chain Gate](Flake%20Lock%20Supply%20Chain%20Gate/) | Nix | Security and Supply Chain | 2026-08-04 | Pure Nix expression that audits flake.lock for supply chain risk and gates CI with SARIF output |
+| [Flame Graph Regression Attributor](Flame%20Graph%20Regression%20Attributor/) | D | Infra and DevOps | 2026-11-12 | Diffs folded stack profiles into exact call path culprits with FDR tested deltas and a CI gate |
 | [Fused Logits Sampler](Fused%20Logits%20Sampler/) | CUDA | LLM and Inference | 2026-10-05 | Single kernel batch invariant sampler: grammar mask, top-k, top-p, min-p and Philox draws with status codes |
 | [GPU Lease Broker](GPU%20Lease%20Broker/) | C | Infra and DevOps | 2026-04-17 | TTL based GPU leases using atomic mkdir locks, with auto renewal, stale reaping and CUDA_VISIBLE_DEVICES |
 | [GPU Spot Checkpoint Planner](GPU%20Spot%20Checkpoint%20Planner/) | C++ | Infra and DevOps | 2026-08-18 | Plans GPU spot placement and checkpoint intervals from eviction risk, SLO, budget and carbon |
