@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 213  |  **Source files:** 249  |  **Languages used:** 50 of 50  |  **Lines of code:** 159,936  |  **Span:** 2026-04-03 to 2026-11-13
+**Entries:** 214  |  **Source files:** 250  |  **Languages used:** 50 of 50  |  **Lines of code:** 161,408  |  **Span:** 2026-04-03 to 2026-11-14
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -60,7 +60,7 @@ Canonical order. A language at zero is next in line.
 | 33 | V | .v | 3 |
 | 34 | D | .d | 3 |
 | 35 | Perl | .pl | 3 |
-| 36 | Raku | .raku | 2 |
+| 36 | Raku | .raku | 3 |
 | 37 | Groovy | .groovy | 2 |
 | 38 | Objective-C | .m | 2 |
 | 39 | PowerShell | .ps1 | 2 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
-| Infra and DevOps | 42 |
+| Infra and DevOps | 43 |
 | Security and Supply Chain | 22 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
@@ -244,6 +244,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Postgres Migration Lock Linter](Postgres%20Migration%20Lock%20Linter/) | V | Infra and DevOps | 2026-11-11 | Simulates Postgres locks across each migration transaction and fails CI on rewrites, scans and lock pileups |
 | [Postgres Role Escalation Path Finder](Postgres%20Role%20Escalation%20Path%20Finder/) | SQL | Security and Supply Chain | 2026-09-25 | Walks the Postgres role membership graph to find every login role that can reach a superuser equivalent |
 | [Prefix Affinity Ring](Prefix%20Affinity%20Ring/) | Erlang | Infra and DevOps | 2026-10-06 | Erlang router that pins prompt prefixes to GPU replicas with bounded load spill, health probes and leases |
+| [PromQL Hazard Linter](PromQL%20Hazard%20Linter/) | Raku | Infra and DevOps | 2026-11-14 | Type checks PromQL rules and flags alerts that parse fine but can never fire, flap or lose labels |
 | [Prompt Cache Cutover](Prompt%20Cache%20Cutover/) | OCaml | Cost and Quota | 2026-05-24 | OCaml CLI that reads route-level token CSV and returns per-route prompt cache break-even and enable verdicts |
 | [Prompt Cache Lease Governor](Prompt%20Cache%20Lease%20Governor/) | Kotlin | Cost and Quota | 2026-08-13 | Kotlin CLI that scores prompt cache blocks on cost, freshness, residency and sensitivity, then pins, refreshes, evicts, bypasses or quarantines each one |
 | [Prompt Cache Planner](Prompt%20Cache%20Planner/) | Python | LLM and Inference | 2026-04-18 | Splits LLM requests into a stable cacheable prefix and live suffix, then explains why prompt caching missed |
