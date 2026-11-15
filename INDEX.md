@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 214  |  **Source files:** 250  |  **Languages used:** 50 of 50  |  **Lines of code:** 161,408  |  **Span:** 2026-04-03 to 2026-11-14
+**Entries:** 215  |  **Source files:** 251  |  **Languages used:** 50 of 50  |  **Lines of code:** 163,712  |  **Span:** 2026-04-03 to 2026-11-15
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -61,7 +61,7 @@ Canonical order. A language at zero is next in line.
 | 34 | D | .d | 3 |
 | 35 | Perl | .pl | 3 |
 | 36 | Raku | .raku | 3 |
-| 37 | Groovy | .groovy | 2 |
+| 37 | Groovy | .groovy | 3 |
 | 38 | Objective-C | .m | 2 |
 | 39 | PowerShell | .ps1 | 2 |
 | 40 | SQL | .sql | 2 |
@@ -85,7 +85,7 @@ Canonical order. A language at zero is next in line.
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
 | Infra and DevOps | 43 |
-| Security and Supply Chain | 22 |
+| Security and Supply Chain | 23 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
 | Edge and Carbon | 10 |
@@ -199,6 +199,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [JSONL Batch Preflight](JSONL%20Batch%20Preflight/) | Bash | LLM and Inference | 2026-04-22 | Bash preflight that validates, dedupes, secret-scans and shards JSONL batch files before provider upload |
 | [JSONL Secret Firewall](JSONL%20Secret%20Firewall/) | C++ | Security and Supply Chain | 2026-04-14 | Your JSONL logs contain bearer tokens |
 | [JUnit Flake Ledger](JUnit%20Flake%20Ledger/) | Groovy | Evals and Experiments | 2026-10-18 | Tells flaky tests from broken ones across CI runs, keeps a quarantine ledger and gates on real failures |
+| [Jenkins Pipeline Hazard Auditor](Jenkins%20Pipeline%20Hazard%20Auditor/) | Groovy | Security and Supply Chain | 2026-11-15 | Parses Jenkinsfiles with the Groovy AST to catch secret leaks, shell injection, CPS traps and hung builds |
 | [Kube Context Guard](Kube%20Context%20Guard/) | Bash | Infra and DevOps | 2026-04-22 | You have credentials for six clusters and your shell remembers only one context |
 | [LLM Chat Turn Machine](LLM%20Chat%20Turn%20Machine/) | Elm | Streaming and Parsing | 2026-09-30 | Pure Elm state machine for streaming chat turns: resume, dedupe, reorder, stall and tool call safety |
 | [LLM Network Cost Sentinel](LLM%20Network%20Cost%20Sentinel/) | Objective-C | Cost and Quota | 2026-09-23 | Swizzles NSURLSession so every LLM API call from an iOS or macOS app is metered, priced and can be blocked |
