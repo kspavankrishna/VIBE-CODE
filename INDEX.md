@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 216  |  **Source files:** 252  |  **Languages used:** 50 of 50  |  **Lines of code:** 165,597  |  **Span:** 2026-04-03 to 2026-11-16
+**Entries:** 217  |  **Source files:** 253  |  **Languages used:** 50 of 50  |  **Lines of code:** 167,123  |  **Span:** 2026-04-03 to 2026-11-17
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -63,7 +63,7 @@ Canonical order. A language at zero is next in line.
 | 36 | Raku | .raku | 3 |
 | 37 | Groovy | .groovy | 3 |
 | 38 | Objective-C | .m | 3 |
-| 39 | PowerShell | .ps1 | 2 |
+| 39 | PowerShell | .ps1 | 3 |
 | 40 | SQL | .sql | 2 |
 | 41 | Solidity | .sol | 2 |
 | 42 | Fortran | .f90 | 2 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
-| Infra and DevOps | 43 |
+| Infra and DevOps | 44 |
 | Security and Supply Chain | 24 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
@@ -291,6 +291,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Terraform Plan Risk Gate](Terraform%20Plan%20Risk%20Gate/) | Perl | Infra and DevOps | 2026-10-16 | Reads terraform show JSON and fails CI on stateful destroys, IAM widening, open ingress and lowered protections |
 | [Test Impact Shard Planner](Test%20Impact%20Shard%20Planner/) | Go | Infra and DevOps | 2026-08-09 | A monorepo has more tests than any pull request deserves, but "run only the tests near the diff" quietly |
 | [Thermal Aware Inference Throttler](Thermal%20Aware%20Inference%20Throttler/) | Swift | LLM and Inference | 2026-09-04 | Swift actor that throttles on-device AI inference concurrency using AIMD driven by thermal state and Low Power Mode |
+| [TLS Renewal Readiness Auditor](TLS%20Renewal%20Readiness%20Auditor/) | PowerShell | Infra and DevOps | 2026-11-17 | Probes every address behind a TLS name for split renewals, missing intermediates and shrinking lifetimes |
 | [Token Budget Manager](Token%20Budget%20Manager/) | Rust | LLM and Inference | 2026-04-07 | Lock-free Rust token budget accountant with RAII leases that auto-release unconsumed LLM context on drop |
 | [Token Egress Budget](Token%20Egress%20Budget/) | C | Cost and Quota | 2026-05-24 | Your token bill looks fine and your network bill does not |
 | [Token Stream Optimizer](Token%20Stream%20Optimizer/) | Python and TypeScript | Streaming and Parsing | 2026-04-03 | An LLM streams tokens as fast as the network delivers them, and whatever sits downstream of your stream loop |
