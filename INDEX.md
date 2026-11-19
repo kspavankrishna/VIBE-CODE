@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 217  |  **Source files:** 253  |  **Languages used:** 50 of 50  |  **Lines of code:** 167,123  |  **Span:** 2026-04-03 to 2026-11-17
+**Entries:** 218  |  **Source files:** 254  |  **Languages used:** 50 of 50  |  **Lines of code:** 168,293  |  **Span:** 2026-04-03 to 2026-11-19
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -64,7 +64,7 @@ Canonical order. A language at zero is next in line.
 | 37 | Groovy | .groovy | 3 |
 | 38 | Objective-C | .m | 3 |
 | 39 | PowerShell | .ps1 | 3 |
-| 40 | SQL | .sql | 2 |
+| 40 | SQL | .sql | 3 |
 | 41 | Solidity | .sol | 2 |
 | 42 | Fortran | .f90 | 2 |
 | 43 | Ada | .adb | 2 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
-| Infra and DevOps | 44 |
+| Infra and DevOps | 45 |
 | Security and Supply Chain | 24 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
@@ -244,6 +244,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Postgres Lock Queue Root Blocker](Postgres%20Lock%20Queue%20Root%20Blocker/) | SQL | Infra and DevOps | 2026-10-22 | Finds the root blocker and the queued DDL behind a Postgres lock pileup and prints safe cancel SQL |
 | [Postgres Migration Lock Linter](Postgres%20Migration%20Lock%20Linter/) | V | Infra and DevOps | 2026-11-11 | Simulates Postgres locks across each migration transaction and fails CI on rewrites, scans and lock pileups |
 | [Postgres Role Escalation Path Finder](Postgres%20Role%20Escalation%20Path%20Finder/) | SQL | Security and Supply Chain | 2026-09-25 | Walks the Postgres role membership graph to find every login role that can reach a superuser equivalent |
+| [Postgres Wraparound Runway](Postgres%20Wraparound%20Runway/) | SQL | Infra and DevOps | 2026-11-19 | Forecasts Postgres XID and multixact wraparound in hours, finds horizon blockers and freeze storms |
 | [Prefix Affinity Ring](Prefix%20Affinity%20Ring/) | Erlang | Infra and DevOps | 2026-10-06 | Erlang router that pins prompt prefixes to GPU replicas with bounded load spill, health probes and leases |
 | [Privacy Manifest Auditor](Privacy%20Manifest%20Auditor/) | Objective-C | Security and Supply Chain | 2026-11-16 | Reads app and SDK binaries for required reason APIs and fails CI before Apple rejects the privacy manifest |
 | [PromQL Hazard Linter](PromQL%20Hazard%20Linter/) | Raku | Infra and DevOps | 2026-11-14 | Type checks PromQL rules and flags alerts that parse fine but can never fire, flap or lose labels |
