@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 218  |  **Source files:** 254  |  **Languages used:** 50 of 50  |  **Lines of code:** 168,293  |  **Span:** 2026-04-03 to 2026-11-19
+**Entries:** 219  |  **Source files:** 255  |  **Languages used:** 50 of 50  |  **Lines of code:** 169,011  |  **Span:** 2026-04-03 to 2026-11-20
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -65,7 +65,7 @@ Canonical order. A language at zero is next in line.
 | 38 | Objective-C | .m | 3 |
 | 39 | PowerShell | .ps1 | 3 |
 | 40 | SQL | .sql | 3 |
-| 41 | Solidity | .sol | 2 |
+| 41 | Solidity | .sol | 3 |
 | 42 | Fortran | .f90 | 2 |
 | 43 | Ada | .adb | 2 |
 | 44 | Racket | .rkt | 2 |
@@ -85,7 +85,7 @@ Canonical order. A language at zero is next in line.
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
 | Infra and DevOps | 45 |
-| Security and Supply Chain | 24 |
+| Security and Supply Chain | 25 |
 | Evals and Experiments | 13 |
 | Data and Vector | 12 |
 | Edge and Carbon | 10 |
@@ -261,6 +261,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Regex Backtrack Prover](Regex%20Backtrack%20Prover/) | Racket | Security and Supply Chain | 2026-10-26 | Racket ReDoS prover that finds regex ambiguity and replays the attack string in a step counting matcher |
 | [Repo Auto Shell](Repo%20Auto%20Shell/) | Nix | Infra and DevOps | 2026-04-17 | Single Nix file that detects a repo's stacks and pins every toolchain cache inside the working tree |
 | [Repository Signal Ranker](Repository%20Signal%20Ranker/) | Ruby | Infra and DevOps | 2026-05-24 | Ranks changed files from git diff --numstat by churn, path risk and CODEOWNERS fan out so reviewers start right |
+| [Reproducible Build Quorum](Reproducible%20Build%20Quorum/) | Solidity | Security and Supply Chain | 2026-11-20 | Solidity quorum that attests a release only when independent rebuilders agree on its digest |
 | [Retry Amplification Analyzer](Retry%20Amplification%20Analyzer/) | Clojure | Infra and DevOps | 2026-11-03 | Computes worst case retry storm load, deadline inversions and unsafe retry policy across a service call graph |
 | [Runner Artifact Attestor](Runner%20Artifact%20Attestor/) | Bash | Security and Supply Chain | 2026-06-04 | Bash CI gate that writes and verifies a sha256 artifact manifest, blocks symlinks, stray files, leaked secrets and mismatched provenance before upload |
 | [SBOM Vulnerability Drift Gate](SBOM%20Vulnerability%20Drift%20Gate/) | Go | Security and Supply Chain | 2026-04-22 | Diffs two Trivy or Grype JSON scans and fails CI only on newly introduced vulnerabilities and severity escalations |
