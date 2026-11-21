@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 219  |  **Source files:** 255  |  **Languages used:** 50 of 50  |  **Lines of code:** 169,011  |  **Span:** 2026-04-03 to 2026-11-20
+**Entries:** 220  |  **Source files:** 256  |  **Languages used:** 50 of 50  |  **Lines of code:** 170,440  |  **Span:** 2026-04-03 to 2026-11-21
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -66,7 +66,7 @@ Canonical order. A language at zero is next in line.
 | 39 | PowerShell | .ps1 | 3 |
 | 40 | SQL | .sql | 3 |
 | 41 | Solidity | .sol | 3 |
-| 42 | Fortran | .f90 | 2 |
+| 42 | Fortran | .f90 | 3 |
 | 43 | Ada | .adb | 2 |
 | 44 | Racket | .rkt | 2 |
 | 45 | Elm | .elm | 2 |
@@ -87,7 +87,7 @@ Canonical order. A language at zero is next in line.
 | Infra and DevOps | 45 |
 | Security and Supply Chain | 25 |
 | Evals and Experiments | 13 |
-| Data and Vector | 12 |
+| Data and Vector | 13 |
 | Edge and Carbon | 10 |
 
 ## All entries
@@ -101,6 +101,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [AI SSE JSON Assembler](AI%20SSE%20JSON%20Assembler/) | C++ | Streaming and Parsing | 2026-04-23 | Reassembles fragmented AI SSE streams into complete validated JSON values with hard memory and depth caps |
 | [AI SSE Resume Ledger](AI%20SSE%20Resume%20Ledger/) | Kotlin | Streaming and Parsing | 2026-05-20 | Bounded in memory SSE replay ledger for resumable LLM token streams with checkpoints and tool dedupe |
 | [AI Stream SSE Reader](AI%20Stream%20SSE%20Reader/) | C# | Streaming and Parsing | 2026-04-14 | Single file C# Server Sent Events reader that joins multi-line data fields, skips heartbeats and caps event size |
+| [ANN Recall Auditor](ANN%20Recall%20Auditor/) | Fortran | Data and Vector | 2026-11-21 | Proven exact ground truth and tie aware recall@k for ANN indexes, gated on a bootstrap CI |
 | [Actions Matrix Expander](Actions%20Matrix%20Expander/) | ReScript | Infra and DevOps | 2026-10-29 | Expands Actions matrices with exact include and exclude rules, flags dead entries and diffs check names |
 | [Actions Workflow Hardening Auditor](Actions%20Workflow%20Hardening%20Auditor/) | Crystal | Security and Supply Chain | 2026-10-10 | Crystal CLI that audits GitHub Actions for script injection, pwn requests, loose pins and token scope with SARIF |
 | [Adaptive Micro Batcher](Adaptive%20Micro%20Batcher/) | Dart | Infra and DevOps | 2026-04-24 | Dart micro batcher that flushes on size, weight or latency and splits failed batches to isolate poison items |
