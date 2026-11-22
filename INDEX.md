@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 220  |  **Source files:** 256  |  **Languages used:** 50 of 50  |  **Lines of code:** 170,440  |  **Span:** 2026-04-03 to 2026-11-21
+**Entries:** 221  |  **Source files:** 258  |  **Languages used:** 50 of 50  |  **Lines of code:** 172,565  |  **Span:** 2026-04-03 to 2026-11-22
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -67,7 +67,7 @@ Canonical order. A language at zero is next in line.
 | 40 | SQL | .sql | 3 |
 | 41 | Solidity | .sol | 3 |
 | 42 | Fortran | .f90 | 3 |
-| 43 | Ada | .adb | 2 |
+| 43 | Ada | .adb | 3 |
 | 44 | Racket | .rkt | 2 |
 | 45 | Elm | .elm | 2 |
 | 46 | PureScript | .purs | 2 |
@@ -84,7 +84,7 @@ Canonical order. A language at zero is next in line.
 | LLM and Inference | 28 |
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
-| Infra and DevOps | 45 |
+| Infra and DevOps | 46 |
 | Security and Supply Chain | 25 |
 | Evals and Experiments | 13 |
 | Data and Vector | 13 |
@@ -238,6 +238,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [OTel Inference Cost Ledger](OTel%20Inference%20Cost%20Ledger/) | C# | Cost and Quota | 2026-05-24 | Joins OpenTelemetry spans with LLM gateway usage to attribute token cost and p95 latency per service and tenant |
 | [On Device Model Fetcher](On%20Device%20Model%20Fetcher/) | Objective-C | LLM and Inference | 2026-10-19 | Resumable SHA-256 pinned model weight downloader for iOS and macOS with range safety and disk preflight |
 | [PATH Shadow Drift Auditor](PATH%20Shadow%20Drift%20Auditor/) | PowerShell | Infra and DevOps | 2026-10-20 | Finds shadowed tools, Store alias stubs, writable PATH dirs and drift from a hash checked baseline |
+| [PDB Drain Planner](PDB%20Drain%20Planner/) | Ada | Infra and DevOps | 2026-11-22 | Simulates Kubernetes node drains under real PDB eviction rules and names the pod and budget blocking each node |
 | [Paged KV Cache Allocator](Paged%20KV%20Cache%20Allocator/) | C++ | LLM and Inference | 2026-09-05 | Block-based KV cache allocator in C++ with prefix hash sharing, copy-on-write forks and LRU eviction |
 | [Paired Eval Gate](Paired%20Eval%20Gate/) | Julia | Evals and Experiments | 2026-04-17 | Stratified cluster paired bootstrap in Julia for LLM eval release gates, with win rates, CIs and margins |
 | [Pod Resource Right Sizer](Pod%20Resource%20Right%20Sizer/) | Crystal | Infra and DevOps | 2026-11-07 | Crystal CLI that sizes Kubernetes requests from usage JSONL and refuses unsafe cuts after OOM kills or crash loops |
