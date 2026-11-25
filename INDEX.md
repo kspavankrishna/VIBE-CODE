@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 221  |  **Source files:** 258  |  **Languages used:** 50 of 50  |  **Lines of code:** 172,565  |  **Span:** 2026-04-03 to 2026-11-22
+**Entries:** 222  |  **Source files:** 259  |  **Languages used:** 50 of 50  |  **Lines of code:** 173,697  |  **Span:** 2026-04-03 to 2026-11-25
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -68,7 +68,7 @@ Canonical order. A language at zero is next in line.
 | 41 | Solidity | .sol | 3 |
 | 42 | Fortran | .f90 | 3 |
 | 43 | Ada | .adb | 3 |
-| 44 | Racket | .rkt | 2 |
+| 44 | Racket | .rkt | 3 |
 | 45 | Elm | .elm | 2 |
 | 46 | PureScript | .purs | 2 |
 | 47 | ReScript | .res | 2 |
@@ -85,7 +85,7 @@ Canonical order. A language at zero is next in line.
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
 | Infra and DevOps | 46 |
-| Security and Supply Chain | 25 |
+| Security and Supply Chain | 26 |
 | Evals and Experiments | 13 |
 | Data and Vector | 13 |
 | Edge and Carbon | 10 |
@@ -233,6 +233,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Model Drift Triage](Model%20Drift%20Triage/) | Haskell | Evals and Experiments | 2026-07-07 | Haskell module that compares baseline vs candidate LLM telemetry windows per slice and returns a typed rollout verdict |
 | [Model Gateway Spend Firewall](Model%20Gateway%20Spend%20Firewall/) | PHP | Cost and Quota | 2026-08-21 | Single file PHP CLI that audits AI gateway events against price books, tenant budgets, quotas and prompt secrets |
 | [MoE Expert Router](MoE%20Expert%20Router/) | CUDA | LLM and Inference | 2026-11-01 | Deterministic atomic free top-k MoE router with capacity drops, rotation, NaN safety and balance losses |
+| [Network Policy Reachability Auditor](Network%20Policy%20Reachability%20Auditor/) | Racket | Security and Supply Chain | 2026-11-25 | Replays Kubernetes NetworkPolicy to explain who reaches whom and gates CI on allow and deny expectations |
 | [Nginx Location Shadow Auditor](Nginx%20Location%20Shadow%20Auditor/) | Perl | Security and Supply Chain | 2026-11-13 | Replays nginx location matching to find auth, allowlist and header rules that a regex location skips |
 | [OTel Agent Critical Path](OTel%20Agent%20Critical%20Path/) | D | Infra and DevOps | 2026-10-15 | D CLI that finds the real critical path in OTel agent traces, ranks LLM and tool time and prices the gain |
 | [OTel Inference Cost Ledger](OTel%20Inference%20Cost%20Ledger/) | C# | Cost and Quota | 2026-05-24 | Joins OpenTelemetry spans with LLM gateway usage to attribute token cost and p95 latency per service and tenant |
