@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 222  |  **Source files:** 259  |  **Languages used:** 50 of 50  |  **Lines of code:** 173,697  |  **Span:** 2026-04-03 to 2026-11-25
+**Entries:** 223  |  **Source files:** 262  |  **Languages used:** 50 of 50  |  **Lines of code:** 176,881  |  **Span:** 2026-04-03 to 2026-11-26
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -69,7 +69,7 @@ Canonical order. A language at zero is next in line.
 | 42 | Fortran | .f90 | 3 |
 | 43 | Ada | .adb | 3 |
 | 44 | Racket | .rkt | 3 |
-| 45 | Elm | .elm | 2 |
+| 45 | Elm | .elm | 3 |
 | 46 | PureScript | .purs | 2 |
 | 47 | ReScript | .res | 2 |
 | 48 | Tcl | .tcl | 2 |
@@ -85,7 +85,7 @@ Canonical order. A language at zero is next in line.
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
 | Infra and DevOps | 46 |
-| Security and Supply Chain | 26 |
+| Security and Supply Chain | 27 |
 | Evals and Experiments | 13 |
 | Data and Vector | 13 |
 | Edge and Carbon | 10 |
@@ -148,6 +148,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Context Window Optimizer](Context%20Window%20Optimizer/) | Python | LLM and Inference | 2026-04-09 | Scores LLM chat history by recency, role and query overlap, then evicts weakest turns to fit a token budget |
 | [Context Window Packer](Context%20Window%20Packer/) | Python | LLM and Inference | 2026-04-09 | Packs chat history into an LLM context window, pinning critical messages and reserving output tokens |
 | [Cron Herd Auditor](Cron%20Herd%20Auditor/) | Raku | Infra and DevOps | 2026-10-17 | Finds cron minutes where jobs pile up, schedules that lie and DST hazards, then plans a stagger |
+| [CSP Policy Evaluator](CSP%20Policy%20Evaluator/) | Elm | Security and Supply Chain | 2026-11-26 | CSP3 accurate Content Security Policy evaluator: per URL allow decisions, bypass hosts and policy conflicts |
 | [Data Residency Route Planner](Data%20Residency%20Route%20Planner/) | Python | LLM and Inference | 2026-05-29 | Routes LLM inference to compliant endpoints, enforcing data residency and retention before cost scoring |
 | [Deadline Timing Wheel](Deadline%20Timing%20Wheel/) | Odin | Infra and DevOps | 2026-11-10 | O(1) hierarchical timing wheel for stream deadlines and idle timeouts with fuzzed model checking |
 | [Deterministic Gradient Reduction](Deterministic%20Gradient%20Reduction/) | Fortran | Infra and DevOps | 2026-09-27 | OpenMP tree reduction that sums gradients bit-identically across thread counts with double-double precision |
