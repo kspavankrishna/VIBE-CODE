@@ -1,0 +1,21 @@
+# One merge queue group of six PRs, listed in queue order.
+# The group ran once on top of main and failed. Which PR do we blame?
+
+flake 0.03
+miss 0.0
+env 0.01
+conflict 0.02
+risk 0.02
+eject 0.95
+runners 3
+budget 12
+prior 0.08
+
+pr 4182 prior=0.04
+pr 4187 prior=0.15
+pr 4190
+pr 4191 prior=0.30
+pr 4195 prior=0.05
+pr 4199
+
+observe all fail
