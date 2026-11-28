@@ -1,0 +1,132 @@
+{
+  "defaults": {
+    "origin": "https://app.example.com",
+    "credentials": "include"
+  },
+  "cases": [
+    {
+      "name": "credentialed JSON PUT with a correct preflight",
+      "url": "https://api.example.com/v1/files/42",
+      "method": "PUT",
+      "headers": {"content-type": "application/json", "x-request-id": "r-1"},
+      "readHeaders": ["x-request-id", "etag"],
+      "preflight": {
+        "status": 204,
+        "headers": {
+          "access-control-allow-origin": "https://app.example.com",
+          "access-control-allow-credentials": "true",
+          "access-control-allow-methods": "GET, PUT, DELETE",
+          "access-control-allow-headers": "content-type, x-request-id",
+          "access-control-max-age": "86400",
+          "vary": "Origin"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "access-control-allow-origin": "https://app.example.com",
+          "access-control-allow-credentials": "true",
+          "access-control-expose-headers": "x-request-id",
+          "content-type": "application/json",
+          "etag": "\"v7\"",
+          "vary": "Origin"
+        }
+      },
+      "expect": "allow"
+    },
+    {
+      "name": "auth middleware rejects the preflight",
+      "url": "https://api.example.com/v1/me",
+      "headers": {"authorization": "Bearer placeholder"},
+      "preflight": {"status": 401, "headers": {"www-authenticate": "Bearer"}},
+      "expect": "allow"
+    },
+    {
+      "name": "lowercase patch never matches PATCH",
+      "url": "https://api.example.com/v1/files/42",
+      "method": "patch",
+      "preflight": {
+        "status": 204,
+        "headers": {
+          "access-control-allow-origin": "https://app.example.com",
+          "access-control-allow-credentials": "true",
+          "access-control-allow-methods": "GET, PATCH",
+          "vary": "Origin"
+        }
+      },
+      "expect": "block"
+    },
+    {
+      "name": "wildcards do not apply to credentialed requests",
+      "url": "https://api.example.com/v1/search",
+      "method": "POST",
+      "headers": {"content-type": "application/json", "authorization": "Bearer placeholder"},
+      "preflight": {
+        "status": 200,
+        "headers": {
+          "access-control-allow-origin": "*",
+          "access-control-allow-credentials": "true",
+          "access-control-allow-methods": "*",
+          "access-control-allow-headers": "*"
+        }
+      },
+      "expect": "block"
+    },
+    {
+      "name": "proxy and app both add the origin header",
+      "url": "https://api.example.com/v1/feed",
+      "credentials": "omit",
+      "response": {
+        "status": 200,
+        "headers": [
+          ["access-control-allow-origin", "https://app.example.com"],
+          ["access-control-allow-origin", "https://app.example.com"],
+          ["content-type", "application/json"]
+        ]
+      },
+      "expect": "block"
+    },
+    {
+      "name": "trailing slash in the allowed origin",
+      "url": "https://api.example.com/v1/feed",
+      "credentials": "omit",
+      "response": {
+        "status": 200,
+        "headers": {"access-control-allow-origin": "https://app.example.com/", "vary": "Origin"}
+      },
+      "expect": "block"
+    },
+    {
+      "name": "cross origin redirect turns the origin into null",
+      "url": "https://api.example.com/download/7",
+      "credentials": "omit",
+      "redirects": [
+        {
+          "status": 302,
+          "headers": {
+            "location": "https://files.examplecdn.net/blob/7",
+            "access-control-allow-origin": "*"
+          }
+        }
+      ],
+      "response": {
+        "status": 200,
+        "headers": {"access-control-allow-origin": "https://app.example.com", "vary": "Origin"}
+      },
+      "expect": "block"
+    },
+    {
+      "name": "form post stays simple and hides custom headers",
+      "url": "https://api.example.com/v1/events",
+      "method": "post",
+      "credentials": "omit",
+      "headers": {"content-type": "text/plain;charset=UTF-8"},
+      "readHeaders": ["x-trace-id"],
+      "response": {
+        "status": 202,
+        "headers": {"access-control-allow-origin": "*", "x-trace-id": "t-9"}
+      },
+      "expect": "allow"
+    }
+  ]
+}

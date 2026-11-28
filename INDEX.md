@@ -2,7 +2,7 @@
 
 Every entry in this repository. One folder per idea. Each folder holds the source file and a README explaining what the code solves, why it exists and how it works.
 
-**Entries:** 224  |  **Source files:** 268  |  **Languages used:** 50 of 50  |  **Lines of code:** 177,827  |  **Span:** 2026-04-03 to 2026-11-27
+**Entries:** 225  |  **Source files:** 269  |  **Languages used:** 50 of 50  |  **Lines of code:** 179,993  |  **Span:** 2026-04-03 to 2026-11-28
 
 This file is the register the daily routine reads. It tallies the Language column, picks whichever language has the fewest entries and writes the next one in that language. Ties break in the canonical order below, so languages sitting at zero get filled first and the spread keeps evening out. Do not delete this file.
 
@@ -71,7 +71,7 @@ Canonical order. A language at zero is next in line.
 | 44 | Racket | .rkt | 3 |
 | 45 | Elm | .elm | 3 |
 | 46 | PureScript | .purs | 3 |
-| 47 | ReScript | .res | 2 |
+| 47 | ReScript | .res | 3 |
 | 48 | Tcl | .tcl | 2 |
 | 49 | Haxe | .hx | 2 |
 | 50 | CUDA | .cu | 2 |
@@ -85,7 +85,7 @@ Canonical order. A language at zero is next in line.
 | Cost and Quota | 23 |
 | Streaming and Parsing | 22 |
 | Infra and DevOps | 47 |
-| Security and Supply Chain | 27 |
+| Security and Supply Chain | 28 |
 | Evals and Experiments | 13 |
 | Data and Vector | 13 |
 | Edge and Carbon | 10 |
@@ -147,6 +147,7 @@ Sorted alphabetically. The routine appends new rows here and keeps this order.
 | [Content Defined Chunker](Content%20Defined%20Chunker/) | Odin | Data and Vector | 2026-09-17 | Odin gear hash FastCDC chunker with stable boundaries and a manifest diff against fixed size chunking |
 | [Context Window Optimizer](Context%20Window%20Optimizer/) | Python | LLM and Inference | 2026-04-09 | Scores LLM chat history by recency, role and query overlap, then evicts weakest turns to fit a token budget |
 | [Context Window Packer](Context%20Window%20Packer/) | Python | LLM and Inference | 2026-04-09 | Packs chat history into an LLM context window, pinning critical messages and reserving output tokens |
+| [CORS Preflight Simulator](CORS%20Preflight%20Simulator/) | ReScript | Security and Supply Chain | 2026-11-28 | Runs the Fetch CORS algorithm on requests, HAR files and live probes to name the exact rule that blocks |
 | [Cron Herd Auditor](Cron%20Herd%20Auditor/) | Raku | Infra and DevOps | 2026-10-17 | Finds cron minutes where jobs pile up, schedules that lie and DST hazards, then plans a stagger |
 | [CSP Policy Evaluator](CSP%20Policy%20Evaluator/) | Elm | Security and Supply Chain | 2026-11-26 | CSP3 accurate Content Security Policy evaluator: per URL allow decisions, bypass hosts and policy conflicts |
 | [Data Residency Route Planner](Data%20Residency%20Route%20Planner/) | Python | LLM and Inference | 2026-05-29 | Routes LLM inference to compliant endpoints, enforcing data residency and retention before cost scoring |
